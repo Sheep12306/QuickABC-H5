@@ -37,18 +37,25 @@ VITE_SERVER_BASE=http://你的服务器:3001
 
 ## 后端准备（重要）
 
-H5 没有 `wx.login`，无法直接走微信登录。本项目使用「浏览器设备 ID 登录」：
+后端已经拆成独立仓库，小程序和 H5 共用：
 
-- `src/utils/auth.js` 生成并保存 `deviceId`，启动时调用 `POST /api/auth/h5-login`。
-- 后端需要部署一个很小的补丁：**`server-patch/`**。按其中 README 操作即可（新增一个控制器 + 一行路由）。
-- 未部署该接口时：首页仍可打开，但学习数据、词书等接口会失败，并提示「登录失败：后端尚未部署 H5 登录接口」。
+**`https://github.com/Sheep12306/QuickABC-Server`**（private）
+
+- 已包含 H5 设备号登录 `POST /api/auth/h5-login`
+- 已包含四六级 AI 出卷 `POST /api/practice/generate`
+- 部署与接口说明见后端仓库的 README
+- 本仓库的 `server-patch/` 仅保留为历史参考，新部署直接使用后端仓库
+
+部署好后端后，把 H5 的 `VITE_API_BASE` / `VITE_SERVER_BASE` 指向它即可：
+
+```bash
+VITE_API_BASE=https://api.你的域名.com/api
+VITE_SERVER_BASE=https://api.你的域名.com
+```
+
+- 未部署登录接口时：首页仍可打开，但学习数据、词书等接口会失败，并提示「登录失败：后端尚未部署 H5 登录接口」。
+- 未部署出卷接口时：页面会提示「后端尚未部署出卷接口」，可先用内置示例试卷预览版式和打印效果。
 - 「我的」页也提供手动 **H5 登录** 按钮（可填写昵称）。
-
-「发现 → 四六级词汇卷」还额外需要后端出卷接口（调用 Claude 实时生成试卷）：
-
-- 按 `server-patch/README.md` 的「后端补丁：四六级词汇卷」部署 `practiceController.js` 和 `/api/practice/generate` 路由。
-- 后端需要 `ANTHROPIC_API_KEY`；前端无需配置新的环境变量。
-- 未部署时页面会提示「后端尚未部署出卷接口」，并可先用内置示例试卷预览版式和打印效果。
 
 ## 构建与部署
 
