@@ -1,0 +1,298 @@
+.page-new-word-review .review-container,
+.page-new-word-review.review-container {
+    min-height: 100vh;
+    background: #F8F8FA;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-new-word-review .review-top,
+.page-new-word-review.review-top {
+    display: flex;
+    align-items: center;
+    padding: 0.32rem 0.4267rem;
+    gap: 0.16rem;
+}
+
+.page-new-word-review .review-title,
+.page-new-word-review.review-title {
+    font-size: 0.3733rem;
+    font-weight: 600;
+    color: #2C3E2D;
+}
+
+.page-new-word-review .review-subtitle,
+.page-new-word-review.review-subtitle {
+    font-size: 0.2933rem;
+    color: #8A9B8B;
+}
+
+.page-new-word-review .top-spacer,
+.page-new-word-review.top-spacer {
+    flex: 1;
+}
+
+.page-new-word-review .nav-shuffle,
+.page-new-word-review.nav-shuffle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0.7467rem;
+    height: 0.7467rem;
+    border-radius: 0.3733rem;
+    background: #F2F2F7;
+}
+
+.page-new-word-review .nav-shuffle:active,
+.page-new-word-review.nav-shuffle:active {
+    background: #E5E5EA;
+}
+
+.page-new-word-review .shuffle-text,
+.page-new-word-review.shuffle-text {
+    font-size: 0.4533rem;
+    font-weight: 600;
+}
+
+.page-new-word-review .word-area,
+.page-new-word-review.word-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.5333rem;
+}
+
+.page-new-word-review .word-main,
+.page-new-word-review.word-main {
+    text-align: center;
+    width: 100%;
+}
+
+.page-new-word-review .word-display,
+.page-new-word-review.word-display {
+    margin-bottom: 0.64rem;
+}
+
+.page-new-word-review .word-en,
+.page-new-word-review.word-en {
+    font-size: 1.1733rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    display: block;
+    margin-bottom: 0.32rem;
+    line-height: 1.2;
+    letter-spacing: 0.0133rem;
+}
+
+.page-new-word-review .word-meta,
+.page-new-word-review.word-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2667rem;
+}
+
+.page-new-word-review .word-phonetic,
+.page-new-word-review.word-phonetic {
+    font-size: 0.4533rem;
+    font-weight: 500;
+}
+
+.page-new-word-review .audio-icon,
+.page-new-word-review.audio-icon {
+    width: 0.6933rem;
+    height: 0.6933rem;
+    border-radius: 0.3467rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-new-word-review .audio-icon:active,
+.page-new-word-review.audio-icon:active {
+    opacity: 0.7;
+}
+
+.page-new-word-review .audio-shape,
+.page-new-word-review.audio-shape {
+    width: 0;
+    height: 0;
+    border-top: 0.12rem solid transparent;
+    border-bottom: 0.12rem solid transparent;
+    border-left: 0.1867rem solid #43A047;
+    margin-left: 0.0533rem;
+}
+
+.page-new-word-review .answer-area,
+.page-new-word-review.answer-area {
+    margin: 0.4267rem 0;
+}
+
+.page-new-word-review .answer-area.show,
+.page-new-word-review.answer-area.show {
+    opacity: 1;
+}
+
+.page-new-word-review .answer-area.hide,
+.page-new-word-review.answer-area.hide {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.page-new-word-review .meaning-text,
+.page-new-word-review.meaning-text {
+    font-size: 0.5867rem;
+    font-weight: 600;
+    color: #1A1A1A;
+}
+
+.page-new-word-review .correct-btn,
+.page-new-word-review.correct-btn {
+    display: inline-block;
+    margin-top: 0.3733rem;
+    padding: 0.1867rem 0.48rem;
+    background: #F2F2F7;
+    border-radius: 0.2667rem;
+    font-size: 0.3467rem;
+    color: #8A9B8B;
+}
+
+.page-new-word-review .correct-btn:active,
+.page-new-word-review.correct-btn:active {
+    background: #E5E5EA;
+}
+
+.page-new-word-review .action-buttons,
+.page-new-word-review.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 0.7467rem;
+}
+
+.page-new-word-review .btn-action,
+.page-new-word-review.btn-action {
+    width: 3.2rem;
+    height: 1.3333rem;
+    border-radius: 0.2667rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.4267rem;
+    font-weight: 600;
+}
+
+.page-new-word-review .btn-active,
+.page-new-word-review.btn-active {
+    transform: scale(0.96);
+    opacity: 0.85;
+}
+
+.page-new-word-review .btn-dont-know,
+.page-new-word-review.btn-dont-know {
+    background: #F2F2F7;
+    color: #8A9B8B;
+}
+
+.page-new-word-review .btn-know,
+.page-new-word-review.btn-know {
+    color: #FFFFFF;
+}
+
+.page-new-word-review .next-btn-area,
+.page-new-word-review.next-btn-area {
+    margin-top: 0.64rem;
+    padding: 0 0.5333rem;
+}
+
+.page-new-word-review .btn-next,
+.page-new-word-review.btn-next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.3733rem 0;
+    border-radius: 0.32rem;
+    font-size: 0.4533rem;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.page-new-word-review .btn-next:active,
+.page-new-word-review.btn-next:active {
+    opacity: 0.85;
+}
+
+.page-new-word-review .finish-btn-area,
+.page-new-word-review.finish-btn-area {
+    margin-top: 0.64rem;
+    padding: 0 0.5333rem;
+}
+
+.page-new-word-review .btn-finish,
+.page-new-word-review.btn-finish {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.3733rem 0;
+    border-radius: 0.32rem;
+    font-size: 0.4533rem;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.page-new-word-review .btn-finish:active,
+.page-new-word-review.btn-finish:active {
+    opacity: 0.85;
+}
+
+.page-new-word-review .stats-section,
+.page-new-word-review.stats-section {
+    padding: 0.3733rem 0.48rem 0.5333rem;
+    flex-shrink: 0;
+}
+
+.page-new-word-review .stats-row,
+.page-new-word-review.stats-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.page-new-word-review .stat-item,
+.page-new-word-review.stat-item {
+    text-align: center;
+    flex: 1;
+}
+
+.page-new-word-review .stat-value,
+.page-new-word-review.stat-value {
+    font-size: 0.48rem;
+    font-weight: 700;
+    color: #2C3E2D;
+    display: block;
+    margin-bottom: 0.08rem;
+}
+
+.page-new-word-review .stat-label,
+.page-new-word-review.stat-label {
+    font-size: 0.2933rem;
+    color: #8A9B8B;
+}
+
+.page-new-word-review .stat-divider,
+.page-new-word-review.stat-divider {
+    width: 0.0133rem;
+    height: 0.48rem;
+    background: #E5E5EA;
+}
+
+.page-new-word-review .empty-tip,
+.page-new-word-review.empty-tip {
+    font-size: 0.4267rem;
+    color: #8A9B8B;
+}

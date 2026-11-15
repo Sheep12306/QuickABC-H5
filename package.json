@@ -1,0 +1,21 @@
+{
+  "name": "quickabc-h5",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "快背单词 H5 版（由微信小程序前端迁移）",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "port": "node scripts/port.mjs"
+  },
+  "dependencies": {
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^6.0.7"
+  }
+}

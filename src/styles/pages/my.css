@@ -1,0 +1,434 @@
+.page-my .my-container,
+.page-my.my-container {
+  min-height: 100vh;
+  padding: 0.3733rem;
+  box-sizing: border-box;
+}
+
+.page-my .user-info-section,
+.page-my.user-info-section {
+  background: rgba(255, 255, 255, 0.62);
+  border-radius: 0.48rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0.0533rem 0.32rem rgba(46, 125, 50, 0.08);
+  padding: 0.4267rem;
+  margin-bottom: 0.2667rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-my .avatar-info,
+.page-my.avatar-info {
+  display: flex;
+  align-items: center;
+}
+
+.page-my .avatar-wrap,
+.page-my.avatar-wrap {
+  position: relative;
+  margin-right: 0.2667rem;
+}
+
+.page-my .avatar,
+.page-my.avatar {
+  width: 1.28rem;
+  height: 1.28rem;
+  border-radius: 0.64rem;
+  background: #D1D1D6;
+}
+
+.page-my .avatar-edit-tip,
+.page-my.avatar-edit-tip {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0.4267rem;
+  height: 0.4267rem;
+  border-radius: 0.2133rem;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-my .avatar-edit-icon,
+.page-my.avatar-edit-icon {
+  font-size: 0.24rem;
+  color: #fff;
+}
+
+.page-my .user-base,
+.page-my.user-base {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.page-my .user-name-row,
+.page-my.user-name-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.0533rem;
+}
+
+.page-my .user-name,
+.page-my.user-name {
+  font-size: 0.4533rem;
+  font-weight: 600;
+  color: #2C3E2D;
+  max-width: 3.2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.page-my .user-name-edit,
+.page-my.user-name-edit {
+  font-size: 0.2933rem;
+  margin-left: 0.1067rem;
+  opacity: 0.6;
+}
+
+.page-my .user-level,
+.page-my.user-level {
+  font-size: 0.32rem;
+  font-weight: 500;
+}
+
+.page-my .phone-bind-text,
+.page-my.phone-bind-text {
+  font-size: 0.32rem;
+  color: #8A9B8B;
+  margin-top: 0.08rem;
+}
+
+.page-my .onekey-login-btn,
+.page-my.onekey-login-btn {
+  padding: 0.1333rem 0.32rem;
+  border-radius: 0.2667rem;
+  display: inline-block;
+  margin-top: 0.08rem;
+  box-shadow: 0 0.0533rem 0.1867rem rgba(46, 125, 50, 0.2);
+}
+
+.page-my .onekey-login-btn:active,
+.page-my.onekey-login-btn:active {
+  opacity: 0.85;
+}
+
+.page-my .login-btn-text,
+.page-my.login-btn-text {
+  font-size: 0.32rem;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.page-my .personal-page,
+.page-my.personal-page {
+  font-size: 0.3467rem;
+  color: #6A7B8B;
+  padding: 0.1333rem 0.2667rem;
+  border-radius: 0.1333rem;
+  background: rgba(232, 245, 233, 0.45);
+}
+
+.page-my .stats-row,
+.page-my.stats-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.1867rem;
+  margin-bottom: 0.2667rem;
+}
+
+.page-my .stat-card,
+.page-my.stat-card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.62);
+  border-radius: 0.3733rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0.0533rem 0.2667rem rgba(46, 125, 50, 0.07);
+  padding: 0.48rem 0.2133rem 0.3733rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page-my .stat-card:active,
+.page-my.stat-card:active {
+  opacity: 0.8;
+}
+
+.page-my .stat-num,
+.page-my.stat-num {
+  font-size: 0.6933rem;
+  font-weight: 700;
+  margin-bottom: 0.1333rem;
+  line-height: 1;
+}
+
+.page-my .stat-label,
+.page-my.stat-label {
+  font-size: 0.32rem;
+  color: #8A9B8B;
+  font-weight: 500;
+}
+
+.page-my .tools-section,
+.page-my.tools-section {
+  background: rgba(255, 255, 255, 0.58);
+  border-radius: 0.3733rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0.04rem 0.2133rem rgba(46, 125, 50, 0.06);
+  padding: 0.32rem 0.2133rem 0.3733rem;
+  margin-bottom: 0.2667rem;
+}
+
+.page-my .section-title,
+.page-my.section-title {
+  font-size: 0.3467rem;
+  font-weight: 600;
+  color: #6A7B6B;
+  padding: 0 0.16rem 0.2667rem;
+  display: block;
+}
+
+.page-my .tools-grid,
+.page-my.tools-grid {
+  display: flex;
+  justify-content: space-around;
+}
+
+.page-my .tool-item,
+.page-my.tool-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.16rem;
+  padding: 0.1067rem 0.2133rem;
+}
+
+.page-my .tool-item:active,
+.page-my.tool-item:active {
+  opacity: 0.65;
+}
+
+.page-my .tool-icon-circle,
+.page-my.tool-icon-circle {
+  width: 0.96rem;
+  height: 0.96rem;
+  border-radius: 0.48rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-my .tool-icon-inner,
+.page-my.tool-icon-inner {
+  font-size: 0.4267rem;
+  font-weight: 700;
+}
+
+.page-my .tool-label,
+.page-my.tool-label {
+  font-size: 0.32rem;
+  color: #4A5B4B;
+  font-weight: 500;
+}
+
+.page-my .data-list-section,
+.page-my.data-list-section {
+  background: rgba(255, 255, 255, 0.58);
+  border-radius: 0.3733rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0.04rem 0.2133rem rgba(46, 125, 50, 0.06);
+  padding: 0 0.3733rem;
+  margin-bottom: 0.2667rem;
+}
+
+.page-my .data-list-item,
+.page-my.data-list-item {
+  display: flex;
+  align-items: center;
+  padding: 0.32rem 0;
+  border-bottom: 0.0133rem solid rgba(46, 125, 50, 0.06);
+}
+
+.page-my .data-list-item:active,
+.page-my.data-list-item:active {
+  opacity: 0.75;
+}
+
+.page-my .data-list-item-last,
+.page-my.data-list-item-last {
+  border-bottom: none;
+}
+
+.page-my .dl-icon-circle,
+.page-my.dl-icon-circle {
+  width: 0.64rem;
+  height: 0.64rem;
+  border-radius: 0.32rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.2133rem;
+}
+
+.page-my .dl-icon-circle.wrong-icon,
+.page-my.dl-icon-circle.wrong-icon {
+  background: rgba(240, 160, 80, 0.10);
+}
+
+.page-my .dl-icon-circle.wrong-icon .dl-icon-inner,
+.page-my.dl-icon-circle.wrong-icon .dl-icon-inner {
+  color: #F0A050;
+}
+
+.page-my .dl-icon-circle.dictation-icon,
+.page-my.dl-icon-circle.dictation-icon {
+  background: rgba(66, 165, 245, 0.10);
+}
+
+.page-my .dl-icon-circle.dictation-icon .dl-icon-inner,
+.page-my.dl-icon-circle.dictation-icon .dl-icon-inner {
+  color: #42A5F5;
+}
+
+.page-my .dl-icon-inner,
+.page-my.dl-icon-inner {
+  font-size: 0.3467rem;
+  font-weight: 700;
+}
+
+.page-my .dl-label,
+.page-my.dl-label {
+  flex: 1;
+  font-size: 0.3733rem;
+  color: #2C3E2D;
+  font-weight: 500;
+}
+
+.page-my .dl-value,
+.page-my.dl-value {
+  font-size: 0.32rem;
+  color: #8A9B8B;
+  margin-right: 0.1067rem;
+}
+
+.page-my .dl-arrow,
+.page-my.dl-arrow {
+  font-size: 0.3467rem;
+  color: #B0B8B0;
+}
+
+.page-my .setting-section,
+.page-my.setting-section {
+  background: rgba(255, 255, 255, 0.58);
+  border-radius: 0.3733rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0.04rem 0.2133rem rgba(46, 125, 50, 0.06);
+  padding: 0 0.3733rem;
+  margin-bottom: 0.2667rem;
+}
+
+.page-my .setting-item,
+.page-my.setting-item {
+  display: flex;
+  align-items: center;
+  padding: 0.3733rem 0;
+  border-bottom: 0.0133rem solid rgba(46, 125, 50, 0.06);
+}
+
+.page-my .setting-item:last-child,
+.page-my.setting-item:last-child {
+  border-bottom: none;
+}
+
+.page-my .setting-item:active,
+.page-my.setting-item:active {
+  opacity: 0.75;
+}
+
+.page-my .setting-icon-circle,
+.page-my.setting-icon-circle {
+  width: 0.5867rem;
+  height: 0.5867rem;
+  border-radius: 0.2933rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.2133rem;
+}
+
+.page-my .setting-icon-circle.config,
+.page-my.setting-icon-circle.config {
+  background: rgba(138, 155, 139, 0.10);
+}
+
+.page-my .setting-icon-inner,
+.page-my.setting-icon-inner {
+  font-size: 0.32rem;
+  font-weight: 700;
+}
+
+.page-my .config-icon,
+.page-my.config-icon {
+  color: #8A9B8B;
+}
+
+.page-my .setting-name,
+.page-my.setting-name {
+  flex: 1;
+  font-size: 0.4rem;
+  color: #2C3E2D;
+  font-weight: 500;
+}
+
+.page-my .setting-value,
+.page-my.setting-value {
+  font-size: 0.32rem;
+  font-weight: 500;
+  margin-right: 0.1067rem;
+}
+
+.page-my .setting-arrow,
+.page-my.setting-arrow {
+  font-size: 0.3733rem;
+  color: #B0B8B0;
+}
+
+.page-my .theme-footer,
+.page-my.theme-footer {
+  text-align: center;
+  padding: 0.2667rem 0 0.48rem;
+}
+
+.page-my .theme-foot-text,
+.page-my.theme-foot-text {
+  font-size: 0.2933rem;
+  color: #A5B8A5;
+}
+
+.page-my .skin-controls,
+.page-my.skin-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.16rem;
+  margin-left: auto;
+}
+
+.page-my .skin-arrow,
+.page-my.skin-arrow {
+  font-size: 0.32rem;
+  color: #888;
+  padding: 0.1067rem;
+}
+
+.page-my .skin-name,
+.page-my.skin-name {
+  min-width: 1.0667rem;
+  text-align: center;
+}

@@ -1,0 +1,121 @@
+body {
+  
+  --g-green-900: #1B5E20;
+  --g-green-700: #2E7D32;
+  --g-green-500: #43A047;
+  --g-green-400: #66BB6A;
+  --g-green-200: #A5D6A7;
+  --g-green-100: #C8E6C9;
+  --g-green-50: #E8F5E9;
+
+  
+  --g-glass-white: rgba(255, 255, 255, 0.82);
+  --g-glass-light: rgba(255, 255, 255, 0.65);
+  --g-glass-green: rgba(232, 245, 233, 0.70);
+  --g-glass-border: rgba(255, 255, 255, 0.45);
+  --g-glass-border-green: rgba(76, 175, 80, 0.12);
+
+  
+  --g-text-white: #FFFFFF;
+  --g-text-light: rgba(255, 255, 255, 0.85);
+  --g-text-muted: rgba(255, 255, 255, 0.60);
+  --g-text-dark: #2C3E2D;
+  --g-text-body: #4A5B4B;
+  --g-text-subtle: #8A9B8B;
+
+  
+  --g-shadow-card: 0 0.0533rem 0.32rem rgba(46, 125, 50, 0.10);
+  --g-shadow-soft: 0 0.0267rem 0.16rem rgba(46, 125, 50, 0.07);
+  --g-shadow-glow: 0 0 0.5333rem rgba(67, 160, 71, 0.12);
+
+  
+  --g-radius-lg: 0.4267rem;
+  --g-radius-md: 0.32rem;
+  --g-radius-sm: 0.2133rem;
+  --g-radius-xs: 0.1333rem;
+
+  
+  --g-space-xs: 0.1067rem;
+  --g-space-sm: 0.1867rem;
+  --g-space-md: 0.2933rem;
+  --g-space-lg: 0.4rem;
+  --g-space-xl: 0.5333rem;
+
+  background: #F0F7F0;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  font-size: 0.3733rem;
+  color: var(--g-text-dark);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+
+.glass-card {
+  background: var(--g-glass-white);
+  border-radius: var(--g-radius-lg);
+  border: 0.0133rem solid var(--g-glass-border);
+  box-shadow: var(--g-shadow-card);
+}
+
+.glass-card-light {
+  background: var(--g-glass-light);
+  border-radius: var(--g-radius-lg);
+  border: 0.0133rem solid var(--g-glass-border);
+  box-shadow: var(--g-shadow-soft);
+}
+
+.glass-card-green {
+  background: var(--g-glass-green);
+  border-radius: var(--g-radius-lg);
+  border: 0.0133rem solid var(--g-glass-border-green);
+  box-shadow: var(--g-shadow-soft);
+}
+
+
+button {
+  border-radius: var(--g-radius-sm);
+  font-size: 0.3733rem;
+  font-weight: 500;
+}
+button:active {
+  opacity: 0.85;
+}
+
+
+.van-nav-bar {
+  background: rgba(46, 125, 50, 0.85) !important;
+  backdrop-filter: blur(10px);
+}
+.van-nav-bar__title {
+  color: white !important;
+  font-weight: 600;
+}
+
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.6rem var(--g-space-lg);
+}
+.empty-state-text {
+  font-size: 0.3733rem;
+  color: var(--g-text-subtle);
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.0667rem 0;
+}
+.loading-text {
+  color: var(--g-green-500);
+  font-size: 0.3733rem;
+}
+
+
+.safe-area {
+  padding-bottom: env(safe-area-inset-bottom);
+}

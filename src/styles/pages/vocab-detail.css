@@ -1,0 +1,118 @@
+.page-vocab-detail .detail-container,
+.page-vocab-detail.detail-container {
+  min-height: 100vh;
+  padding: 0.3733rem;
+  box-sizing: border-box;
+}
+
+.page-vocab-detail .score-card,
+.page-vocab-detail.score-card {
+  background: rgba(255, 255, 255, 0.62);
+  border-radius: 0.48rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0.0533rem 0.32rem rgba(46, 125, 50, 0.08);
+  padding: 0.64rem 0.2667rem 0.48rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.2667rem;
+}
+
+.page-vocab-detail .score-label,
+.page-vocab-detail.score-label {
+  font-size: 0.3733rem;
+  color: #6A7B6B;
+  margin-bottom: 0.16rem;
+}
+
+.page-vocab-detail .score-num,
+.page-vocab-detail.score-num {
+  font-size: 1.0667rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.3733rem;
+}
+
+.page-vocab-detail .test-btn,
+.page-vocab-detail.test-btn {
+  padding: 0.2667rem 0.6933rem;
+  border-radius: 0.3733rem;
+  box-shadow: 0 0.08rem 0.2667rem rgba(46, 125, 50, 0.16);
+}
+
+.page-vocab-detail .test-btn:active,
+.page-vocab-detail.test-btn:active {
+  opacity: 0.85;
+}
+
+.page-vocab-detail .test-btn-text,
+.page-vocab-detail.test-btn-text {
+  font-size: 0.4rem;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.page-vocab-detail .history-card,
+.page-vocab-detail.history-card {
+  background: rgba(255, 255, 255, 0.58);
+  border-radius: 0.3733rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0.04rem 0.2133rem rgba(46, 125, 50, 0.06);
+  padding: 0.3733rem;
+}
+
+.page-vocab-detail .history-title,
+.page-vocab-detail.history-title {
+  font-size: 0.3733rem;
+  font-weight: 600;
+  color: #2C3E2D;
+  margin-bottom: 0.2133rem;
+  display: block;
+}
+
+.page-vocab-detail .no-history,
+.page-vocab-detail.no-history {
+  text-align: center;
+  padding: 0.5333rem 0;
+  font-size: 0.3467rem;
+  color: #8A9B8B;
+}
+
+.page-vocab-detail .history-item,
+.page-vocab-detail.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.2667rem 0;
+  border-bottom: 0.0133rem solid rgba(46, 125, 50, 0.06);
+}
+
+.page-vocab-detail .history-item:last-child,
+.page-vocab-detail.history-item:last-child {
+  border-bottom: none;
+}
+
+.page-vocab-detail .item-left,
+.page-vocab-detail.item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.0533rem;
+}
+
+.page-vocab-detail .test-time,
+.page-vocab-detail.test-time {
+  font-size: 0.3467rem;
+  color: #2C3E2D;
+}
+
+.page-vocab-detail .test-desc,
+.page-vocab-detail.test-desc {
+  font-size: 0.2933rem;
+  color: #8A9B8B;
+}
+
+.page-vocab-detail .test-score,
+.page-vocab-detail.test-score {
+  font-size: 0.3733rem;
+  font-weight: 500;
+}

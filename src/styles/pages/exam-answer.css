@@ -1,0 +1,109 @@
+.page-exam-answer .exam-answer-container,
+.page-exam-answer.exam-answer-container {
+    min-height: 100vh;
+    background: #f5f7fa;
+    padding: 0.2667rem;
+    box-sizing: border-box;
+  }
+
+.page-exam-answer .exam-header,
+.page-exam-answer.exam-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 0.2667rem;
+    border-radius: 0.16rem;
+    margin-bottom: 0.4rem;
+    box-shadow: 0 0.0267rem 0.1067rem rgba(0,0,0,0.06);
+  }
+
+.page-exam-answer .progress,
+.page-exam-answer.progress {
+    font-size: 0.3733rem;
+    color: #333333;
+    font-weight: 500;
+  }
+
+.page-exam-answer .timer,
+.page-exam-answer.timer {
+    font-size: 0.3733rem;
+    color: #F44336;
+    font-weight: 500;
+  }
+
+.page-exam-answer .question-card,
+.page-exam-answer.question-card {
+    background: #ffffff;
+    border-radius: 0.2133rem;
+    padding: 0.5333rem 0.4rem;
+    box-shadow: 0 0.0533rem 0.16rem rgba(0,0,0,0.08);
+    margin-bottom: 0.4rem;
+  }
+
+.page-exam-answer .question-text,
+.page-exam-answer.question-text {
+    font-size: 0.4267rem;
+    color: #333333;
+    line-height: 1.6;
+    margin-bottom: 0.5333rem;
+  }
+
+.page-exam-answer .options,
+.page-exam-answer.options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2667rem;
+  }
+
+.page-exam-answer .option,
+.page-exam-answer.option {
+    padding: 0.3333rem;
+    background: #f5f5f5;
+    border-radius: 0.16rem;
+    font-size: 0.3733rem;
+    color: #333333;
+    transition: all 0.2s;
+  }
+
+.page-exam-answer .option.selected,
+.page-exam-answer.option.selected {
+    background: #4CAF50;
+    color: #ffffff;
+  }
+
+.page-exam-answer .btn-group,
+.page-exam-answer.btn-group {
+    display: flex;
+    gap: 0.2667rem;
+  }
+
+.page-exam-answer .prev-btn,
+.page-exam-answer.prev-btn,
+.page-exam-answer .next-btn,
+.page-exam-answer.next-btn,
+.page-exam-answer .submit-btn,
+.page-exam-answer.submit-btn {
+    flex: 1;
+    padding: 0.3333rem;
+    border-radius: 0.16rem;
+    font-size: 0.3733rem;
+  }
+
+.page-exam-answer .prev-btn,
+.page-exam-answer.prev-btn {
+    background: #eeeeee;
+    color: #666666;
+  }
+
+.page-exam-answer .next-btn,
+.page-exam-answer.next-btn {
+    background: #4CAF50;
+    color: #ffffff;
+  }
+
+.page-exam-answer .submit-btn,
+.page-exam-answer.submit-btn {
+    background: #F44336;
+    color: #ffffff;
+  }

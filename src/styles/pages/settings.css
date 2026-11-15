@@ -1,0 +1,85 @@
+.page-settings .settings-container,
+.page-settings.settings-container {
+  min-height: 100vh;
+  padding: 0.3733rem;
+  box-sizing: border-box;
+}
+
+.page-settings .settings-group,
+.page-settings.settings-group {
+  background: rgba(255, 255, 255, 0.58);
+  border-radius: 0.3733rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0.04rem 0.2133rem rgba(46, 125, 50, 0.06);
+  padding: 0 0.3733rem;
+  margin-bottom: 0.48rem;
+}
+
+.page-settings .settings-item,
+.page-settings.settings-item {
+  display: flex;
+  align-items: center;
+  padding: 0.3733rem 0;
+  border-bottom: 0.0133rem solid rgba(46, 125, 50, 0.06);
+}
+
+.page-settings .settings-item:active,
+.page-settings.settings-item:active {
+  opacity: 0.75;
+}
+
+.page-settings .settings-item-last,
+.page-settings.settings-item-last {
+  border-bottom: none;
+}
+
+.page-settings .settings-icon-circle,
+.page-settings.settings-icon-circle {
+  width: 0.5867rem;
+  height: 0.5867rem;
+  border-radius: 0.2933rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.2133rem;
+}
+
+.page-settings .settings-icon-inner,
+.page-settings.settings-icon-inner {
+  font-size: 0.32rem;
+  font-weight: 700;
+}
+
+.page-settings .settings-label,
+.page-settings.settings-label {
+  flex: 1;
+  font-size: 0.4rem;
+  color: #2C3E2D;
+  font-weight: 500;
+}
+
+.page-settings .settings-arrow,
+.page-settings.settings-arrow {
+  font-size: 0.3733rem;
+  color: #B0B8B0;
+}
+
+.page-settings .version-info,
+.page-settings.version-info {
+  text-align: center;
+  padding: 0.5333rem 0;
+}
+
+.page-settings .version-text,
+.page-settings.version-text {
+  font-size: 0.32rem;
+  color: #A5B8A5;
+  display: block;
+  margin-bottom: 0.08rem;
+}
+
+.page-settings .version-sub,
+.page-settings.version-sub {
+  font-size: 0.2933rem;
+  color: #C0C8C0;
+}

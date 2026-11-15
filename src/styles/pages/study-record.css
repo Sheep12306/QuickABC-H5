@@ -1,0 +1,126 @@
+.page-study-record .record-container,
+.page-study-record.record-container {
+  min-height: 100vh;
+  padding: 0.3733rem;
+  box-sizing: border-box;
+}
+
+.page-study-record .calendar-header,
+.page-study-record.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.2133rem 0.1067rem 0.2667rem;
+}
+
+.page-study-record .month-btn,
+.page-study-record.month-btn {
+  font-size: 0.4267rem;
+  color: #8A9B8B;
+  padding: 0.1067rem 0.2667rem;
+  background: transparent;
+  border: none;
+}
+
+.page-study-record .current-month,
+.page-study-record.current-month {
+  font-size: 0.4267rem;
+  color: #2C3E2D;
+  font-weight: 600;
+}
+
+.page-study-record .week-header,
+.page-study-record.week-header {
+  display: flex;
+  padding: 0.16rem 0;
+}
+
+.page-study-record .week-item,
+.page-study-record.week-item {
+  flex: 1;
+  text-align: center;
+  font-size: 0.3467rem;
+  color: #8A9B8B;
+  font-weight: 500;
+}
+
+.page-study-record .calendar-body,
+.page-study-record.calendar-body {
+  display: flex;
+  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.62);
+  border-radius: 0.32rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0.0533rem 0.2667rem rgba(46, 125, 50, 0.06);
+  padding: 0.1067rem 0;
+}
+
+.page-study-record .date-item,
+.page-study-record.date-item {
+  width: calc(100% / 7);
+  height: 1.3333rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.page-study-record .date-text,
+.page-study-record.date-text {
+  font-size: 0.3733rem;
+  color: #2C3E2D;
+  padding: 0.1333rem;
+  border-radius: 50%;
+}
+
+.page-study-record .not-current,
+.page-study-record.not-current {
+  color: #CCCFCC;
+  pointer-events: none;
+}
+
+.page-study-record .check-in,
+.page-study-record.check-in {
+  font-weight: bold;
+}
+
+.page-study-record .selected,
+.page-study-record.selected {
+  color: #FFFFFF !important;
+}
+
+.page-study-record .check-mark,
+.page-study-record.check-mark {
+  width: 0.1333rem;
+  height: 0.1333rem;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0.24rem;
+}
+
+.page-study-record .detail-card,
+.page-study-record.detail-card {
+  background: rgba(255, 255, 255, 0.62);
+  border-radius: 0.32rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0.0533rem 0.2667rem rgba(46, 125, 50, 0.06);
+  margin-top: 0.2667rem;
+  padding: 0.4267rem 0.3733rem;
+  text-align: center;
+}
+
+.page-study-record .detail-title,
+.page-study-record.detail-title {
+  font-size: 0.3733rem;
+  color: #2C3E2D;
+  margin-bottom: 0.2133rem;
+  display: block;
+}
+
+.page-study-record .detail-content,
+.page-study-record.detail-content {
+  font-size: 0.4267rem;
+  font-weight: 500;
+}

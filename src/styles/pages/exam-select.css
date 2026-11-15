@@ -1,0 +1,84 @@
+.page-exam-select .exam-select-container,
+.page-exam-select.exam-select-container {
+    min-height: 100vh;
+    background: #f5f7fa;
+    padding: 0.2667rem;
+    box-sizing: border-box;
+  }
+
+.page-exam-select .header,
+.page-exam-select.header {
+    margin-bottom: 0.4rem;
+    padding: 0.1333rem 0;
+  }
+
+.page-exam-select .title,
+.page-exam-select.title {
+    font-size: 0.48rem;
+    font-weight: bold;
+    color: #333333;
+    text-align: left; 
+    margin-left: 0.1333rem;
+  }
+
+.page-exam-select .scope-list,
+.page-exam-select.scope-list {
+    background: #ffffff;
+    border-radius: 0.2133rem;
+    padding: 0.2667rem;
+    box-shadow: 0 0.0533rem 0.16rem rgba(0,0,0,0.08);
+    margin-bottom: 0.4rem;
+  }
+
+.page-exam-select .scope-item,
+.page-exam-select.scope-item {
+    padding: 0.3333rem 0.1333rem;
+    border-bottom: 0.0133rem solid #f0f0f0;
+  }
+
+.page-exam-select .scope-item:last-child,
+.page-exam-select.scope-item:last-child {
+    border-bottom: none;
+  }
+
+.page-exam-select .checkbox-label,
+.page-exam-select.checkbox-label {
+    display: flex;
+    align-items: center;
+  }
+
+.page-exam-select input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-right: 0.2667rem;
+  }
+
+.page-exam-select .scope-name,
+.page-exam-select.scope-name {
+    font-size: 0.4rem;
+    color: #333333;
+  }
+
+.page-exam-select .count-tip,
+.page-exam-select.count-tip {
+    font-size: 0.3467rem;
+    color: #666666;
+    text-align: center;
+    margin-bottom: 0.4rem;
+  }
+
+.page-exam-select .start-btn,
+.page-exam-select.start-btn {
+    width: 100%;
+    background: linear-gradient(to right, #4CAF50, #2E7D32);
+    color: #ffffff;
+    border: none;
+    border-radius: 0.16rem;
+    padding: 0.4rem;
+    font-size: 0.4267rem;
+  }
+
+.page-exam-select .start-btn[disabled],
+.page-exam-select.start-btn[disabled] {
+    background: #cccccc;
+    color: #999999;
+  }

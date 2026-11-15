@@ -1,0 +1,365 @@
+.page-dictation .dictation-bg,
+.page-dictation.dictation-bg {
+  min-height: 100vh;
+  background: linear-gradient(175deg, #C8E6C9 0%, #E8F5E9 30%, #F1F8F4 100%);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.page-dictation .dictation-top,
+.page-dictation.dictation-top {
+  display: flex;
+  align-items: center;
+  padding: 0.32rem 0.4267rem;
+  gap: 0.16rem;
+}
+
+.page-dictation .dictation-title,
+.page-dictation.dictation-title {
+  font-size: 0.3733rem;
+  font-weight: 600;
+  color: #2C3E2D;
+}
+
+.page-dictation .dictation-progress,
+.page-dictation.dictation-progress {
+  font-size: 0.2933rem;
+  color: #8A9B8B;
+}
+
+.page-dictation .top-spacer,
+.page-dictation.top-spacer {
+  flex: 1;
+}
+
+.page-dictation .interval-group,
+.page-dictation.interval-group {
+  display: flex;
+  gap: 0.1333rem;
+}
+
+.page-dictation .interval-btn,
+.page-dictation.interval-btn {
+  font-size: 0.32rem;
+  color: #8A9B8B;
+  padding: 0.1067rem 0.24rem;
+  border-radius: 0.2133rem;
+  background: rgba(255, 255, 255, 0.55);
+  font-weight: 500;
+}
+
+.page-dictation .dictation-main,
+.page-dictation.dictation-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5333rem;
+}
+
+.page-dictation .dictation-card,
+.page-dictation.dictation-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.page-dictation .word-section,
+.page-dictation.word-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0.8rem;
+}
+
+.page-dictation .dict-phonetic-row,
+.page-dictation.dict-phonetic-row {
+  display: flex;
+  align-items: center;
+  gap: 0.1867rem;
+  margin-bottom: 0.2667rem;
+}
+
+.page-dictation .audio-btn-sm,
+.page-dictation.audio-btn-sm {
+  width: 0.64rem;
+  height: 0.64rem;
+  border-radius: 0.32rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.page-dictation .audio-btn-sm:active,
+.page-dictation.audio-btn-sm:active {
+  opacity: 0.7;
+  transform: scale(0.92);
+}
+
+.page-dictation .audio-tri-sm,
+.page-dictation.audio-tri-sm {
+  width: 0;
+  height: 0;
+  border-top: 0.1333rem solid transparent;
+  border-bottom: 0.1333rem solid transparent;
+  border-left: 0.2133rem solid #43A047;
+  margin-left: 0.0533rem;
+}
+
+.page-dictation .dict-word,
+.page-dictation.dict-word {
+  font-size: 1.1733rem;
+  font-weight: 700;
+  color: #1A1A1A;
+  letter-spacing: 0.0133rem;
+  margin-bottom: 0.2133rem;
+}
+
+.page-dictation .dict-phonetic,
+.page-dictation.dict-phonetic {
+  font-size: 0.4267rem;
+  font-weight: 500;
+}
+
+.page-dictation .dict-meaning,
+.page-dictation.dict-meaning {
+  font-size: 0.5867rem;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.page-dictation .hidden-section,
+.page-dictation.hidden-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.7467rem;
+}
+
+.page-dictation .hidden-tip,
+.page-dictation.hidden-tip {
+  font-size: 0.48rem;
+  color: #8A9B8B;
+}
+
+.page-dictation .hidden-hint,
+.page-dictation.hidden-hint {
+  font-size: 0.32rem;
+  color: #B0B8B0;
+  margin-top: 0.16rem;
+}
+
+.page-dictation .empty-card,
+.page-dictation.empty-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-dictation .empty-tip,
+.page-dictation.empty-tip {
+  font-size: 0.4267rem;
+  color: #8A9B8B;
+}
+
+.page-dictation .dictation-bar,
+.page-dictation.dictation-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.32rem 0.5333rem 0.5867rem;
+  flex-shrink: 0;
+}
+
+.page-dictation .bar-item,
+.page-dictation.bar-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.16rem;
+}
+
+.page-dictation .bar-item:active,
+.page-dictation.bar-item:active {
+  opacity: 0.5;
+}
+
+.page-dictation .bar-icon,
+.page-dictation.bar-icon {
+  font-size: 0.5867rem;
+  line-height: 1;
+}
+
+.page-dictation .bar-eye.eye-off,
+.page-dictation.bar-eye.eye-off {
+  opacity: 0.35;
+}
+
+.page-dictation .bar-text,
+.page-dictation.bar-text {
+  font-size: 0.3467rem;
+  color: #4A5B4B;
+  font-weight: 500;
+}
+
+.page-dictation .bar-play,
+.page-dictation.bar-play {
+  width: 1.1733rem;
+  height: 1.1733rem;
+  border-radius: 0.5867rem;
+  background: #E8F5E9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-dictation .bar-play:active,
+.page-dictation.bar-play:active {
+  opacity: 0.7;
+  transform: scale(0.92);
+}
+
+.page-dictation .play-shape,
+.page-dictation.play-shape {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-dictation .play-shape.play,
+.page-dictation.play-shape.play {
+  width: 0;
+  height: 0;
+  border-top: 0.2667rem solid transparent;
+  border-bottom: 0.2667rem solid transparent;
+  border-left: 0.4rem solid #43A047;
+  margin-left: 0.08rem;
+}
+
+.page-dictation .play-shape.pause,
+.page-dictation.play-shape.pause {
+  display: flex;
+  gap: 0.1333rem;
+}
+
+.page-dictation .pause-bar,
+.page-dictation.pause-bar {
+  width: 0.1067rem;
+  height: 0.4533rem;
+  background: #43A047;
+  border-radius: 0.0533rem;
+}
+
+.page-dictation .skip-icon,
+.page-dictation.skip-icon {
+  display: flex;
+  align-items: center;
+}
+
+.page-dictation .skip-bar,
+.page-dictation.skip-bar {
+  width: 0.0667rem;
+  height: 0.48rem;
+  border-radius: 0.04rem;
+}
+
+.page-dictation .skip-tri,
+.page-dictation.skip-tri {
+  width: 0;
+  height: 0;
+  border-top: 0.1867rem solid transparent;
+  border-bottom: 0.1867rem solid transparent;
+}
+
+.page-dictation .skip-prev .skip-tri,
+.page-dictation.skip-prev .skip-tri {
+  border-right: 0.2133rem solid;
+}
+
+.page-dictation .skip-next .skip-tri,
+.page-dictation.skip-next .skip-tri {
+  border-left: 0.2133rem solid;
+}
+
+.page-dictation .mask,
+.page-dictation.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 99;
+}
+
+.page-dictation .word-list-popup,
+.page-dictation.word-list-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  max-height: 70vh;
+  background: #FFFFFF;
+  border-radius: 0.3733rem;
+  z-index: 100;
+  box-shadow: 0 0.1067rem 0.48rem rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+.page-dictation .popup-header,
+.page-dictation.popup-header {
+  padding: 0.3733rem 0.4267rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 0.0133rem solid #F0F0F0;
+}
+
+.page-dictation .popup-title,
+.page-dictation.popup-title {
+  font-size: 0.4rem;
+  color: #2C3E2D;
+  font-weight: 600;
+}
+
+.page-dictation .close-btn,
+.page-dictation.close-btn {
+  font-size: 0.5333rem;
+  color: #8A9B8B;
+  width: 0.7467rem;
+  height: 0.7467rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-dictation .list-content,
+.page-dictation.list-content {
+  padding: 0.2133rem 0.4267rem;
+  max-height: 60vh;
+}
+
+.page-dictation .list-item,
+.page-dictation.list-item {
+  padding: 0.2933rem 0;
+  border-bottom: 0.0133rem solid #F5F5F5;
+}
+
+.page-dictation .list-en,
+.page-dictation.list-en {
+  font-size: 0.4267rem;
+  color: #2C3E2D;
+  display: block;
+  margin-bottom: 0.0533rem;
+  font-weight: 500;
+}
+
+.page-dictation .list-meaning,
+.page-dictation.list-meaning {
+  font-size: 0.32rem;
+  color: #8A9B8B;
+}

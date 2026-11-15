@@ -1,0 +1,293 @@
+.page-discover .discover-container,
+.page-discover.discover-container {
+  min-height: 100vh;
+  padding: 0.3733rem;
+}
+
+.page-discover .top-modules,
+.page-discover.top-modules {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.2133rem;
+  margin-bottom: 0.3733rem;
+}
+
+.page-discover .module-card,
+.page-discover.module-card {
+  background: rgba(255, 255, 255, 0.60);
+  border-radius: 0.3733rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0.04rem 0.2133rem rgba(46, 125, 50, 0.06);
+  padding: 0.4267rem 0.24rem;
+  text-align: center;
+}
+
+.page-discover .module-card:active,
+.page-discover.module-card:active {
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.page-discover .module-icon-circle,
+.page-discover.module-icon-circle {
+  width: 0.7467rem;
+  height: 0.7467rem;
+  border-radius: 0.3733rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.2133rem;
+}
+
+.page-discover .module-icon-circle.reading,
+.page-discover.module-icon-circle.reading {
+  background: rgba(255, 152, 0, 0.08);
+}
+
+.page-discover .module-icon-circle.exam,
+.page-discover.module-icon-circle.exam {
+  background: rgba(33, 150, 243, 0.08);
+}
+
+.page-discover .module-icon-inner,
+.page-discover.module-icon-inner {
+  font-size: 0.3733rem;
+  font-weight: 700;
+}
+
+.page-discover .module-title,
+.page-discover.module-title {
+  font-size: 0.3733rem;
+  font-weight: 600;
+  color: #2C3E2D;
+  margin-bottom: 0.08rem;
+}
+
+.page-discover .module-desc,
+.page-discover.module-desc {
+  font-size: 0.2933rem;
+  color: #8A9B8B;
+  line-height: 1.4;
+}
+
+.page-discover .commute-module,
+.page-discover.commute-module {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.62);
+  border-radius: 0.48rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0.08rem 0.4rem rgba(46, 125, 50, 0.09);
+  padding: 0.4267rem;
+  margin-bottom: 0.3733rem;
+}
+
+.page-discover .commute-module:active,
+.page-discover.commute-module:active {
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.page-discover .commute-left,
+.page-discover.commute-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.page-discover .commute-icon-circle,
+.page-discover.commute-icon-circle {
+  width: 1.1733rem;
+  height: 1.1733rem;
+  border-radius: 0.5867rem;
+  background: rgba(67, 160, 71, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.32rem;
+}
+
+.page-discover .commute-icon,
+.page-discover.commute-icon {
+  font-size: 0.5867rem;
+}
+
+.page-discover .commute-info,
+.page-discover.commute-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1067rem;
+}
+
+.page-discover .commute-title,
+.page-discover.commute-title {
+  font-size: 0.4533rem;
+  font-weight: 700;
+  color: #2C3E2D;
+}
+
+.page-discover .commute-desc,
+.page-discover.commute-desc {
+  font-size: 0.32rem;
+  color: #8A9B8B;
+}
+
+.page-discover .commute-btn,
+.page-discover.commute-btn {
+  border-radius: 0.32rem;
+  background: linear-gradient(135deg, #43A047 0%, #2E7D32 100%);
+  padding: 0.24rem 0.4rem;
+  box-shadow: 0 0.1067rem 0.2667rem rgba(46, 125, 50, 0.22);
+}
+
+.page-discover .commute-btn:active,
+.page-discover.commute-btn:active {
+  opacity: 0.85;
+}
+
+.page-discover .commute-btn-text,
+.page-discover.commute-btn-text {
+  font-size: 0.3467rem;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.page-discover .exam-module,
+.page-discover.exam-module {
+  background: rgba(255, 255, 255, 0.62);
+  border-radius: 0.48rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0.08rem 0.4rem rgba(46, 125, 50, 0.09);
+  padding: 0.4267rem;
+}
+
+.page-discover .exam-header,
+.page-discover.exam-header {
+  margin-bottom: 0.32rem;
+}
+
+.page-discover .exam-title,
+.page-discover.exam-title {
+  font-size: 0.48rem;
+  font-weight: 700;
+  color: #2C3E2D;
+  margin-bottom: 0.1067rem;
+}
+
+.page-discover .exam-desc,
+.page-discover.exam-desc {
+  font-size: 0.3467rem;
+  color: #6A7B6B;
+  line-height: 1.5;
+}
+
+.page-discover .exam-btn,
+.page-discover.exam-btn {
+  width: 100%;
+  border-radius: 0.32rem;
+  padding: 0.32rem 0;
+  text-align: center;
+  box-shadow: 0 0.1067rem 0.32rem rgba(46, 125, 50, 0.18);
+}
+
+.page-discover .exam-btn:active,
+.page-discover.exam-btn:active {
+  opacity: 0.85;
+}
+
+.page-discover .exam-btn-text,
+.page-discover.exam-btn-text {
+  font-size: 0.4rem;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+/* ===== 四六级词汇卷 ===== */
+.page-discover .paper-module,
+.page-discover.paper-module {
+  background: rgba(255, 255, 255, 0.62);
+  border-radius: 0.48rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0.08rem 0.4rem rgba(46, 125, 50, 0.09);
+  padding: 0.4267rem;
+  margin-bottom: 0.3733rem;
+}
+
+.page-discover .paper-module-head,
+.page-discover.paper-module-head {
+  display: flex;
+  align-items: center;
+  gap: 0.2667rem;
+  margin-bottom: 0.32rem;
+}
+
+.page-discover .paper-module-icon,
+.page-discover.paper-module-icon {
+  flex: 0 0 auto;
+  width: 1.0667rem;
+  height: 1.0667rem;
+  border-radius: 0.32rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #43A047 0%, #2E7D32 100%);
+  color: #FFFFFF;
+  font-size: 0.28rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0.08rem 0.24rem rgba(46, 125, 50, 0.22);
+}
+
+.page-discover .paper-module-info,
+.page-discover.paper-module-info {
+  min-width: 0;
+}
+
+.page-discover .paper-module-title,
+.page-discover.paper-module-title {
+  font-size: 0.48rem;
+  font-weight: 700;
+  color: #2C3E2D;
+  margin-bottom: 0.1067rem;
+}
+
+.page-discover .paper-module-desc,
+.page-discover.paper-module-desc {
+  font-size: 0.32rem;
+  color: #6A7B6B;
+  line-height: 1.5;
+}
+
+.page-discover .paper-level-row,
+.page-discover.paper-level-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.24rem;
+}
+
+.page-discover .paper-level-btn,
+.page-discover.paper-level-btn {
+  border-radius: 0.2933rem;
+  padding: 0.2667rem 0;
+  font-size: 0.36rem;
+  font-weight: 600;
+  border: 0.0133rem solid transparent;
+}
+
+.page-discover .paper-level-btn.cet4,
+.page-discover.paper-level-btn.cet4 {
+  color: #2E7D32;
+  background: rgba(67, 160, 71, 0.12);
+  border-color: rgba(67, 160, 71, 0.28);
+}
+
+.page-discover .paper-level-btn.cet6,
+.page-discover.paper-level-btn.cet6 {
+  color: #1565C0;
+  background: rgba(25, 118, 210, 0.10);
+  border-color: rgba(25, 118, 210, 0.28);
+}
+
+.page-discover .paper-level-btn:active,
+.page-discover.paper-level-btn:active {
+  opacity: 0.72;
+}

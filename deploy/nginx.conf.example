@@ -1,0 +1,55 @@
+# 快背单词 H5 部署示例
+# 作用：
+#   1. 托管 dist 静态文件（Vue Router 使用 hash 模式，无需额外重写规则）
+#   2. 把 /api 反向代理到 Node 后端，避免 HTTPS 页面请求 HTTP 接口造成的混合内容问题
+#
+# 构建前把环境变量设为相对路径：
+#   VITE_API_BASE=/api
+#   VITE_SERVER_BASE=
+# 然后 npm run build
+
+server {
+    listen 80;
+    server_name your-domain.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name your-domain.com;
+
+    ssl_certificate     /etc/nginx/ssl/your-domain.com.pem;
+    ssl_certificate_key /etc/nginx/ssl/your-domain.com.key;
+
+    root /var/www/quickabc-h5/dist;
+    index index.html;
+
+    # 静态资源缓存
+    location /assets/ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # 前端路由（hash 模式下其实只会请求 index.html）
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # 后端 API 反向代理（Node 服务默认 3001 端口）
+    location /api/ {
+        proxy_pass http://127.0.0.1:3001/api/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 120s;
+        client_max_body_size 10m;
+    }
+
+    # 头像等静态上传文件
+    location /uploads/ {
+        proxy_pass http://127.0.0.1:3001/uploads/;
+        proxy_set_header Host $host;
+    }
+}

@@ -1,0 +1,157 @@
+.page-profile .profile-container,
+.page-profile.profile-container {
+  min-height: 100vh;
+  padding: 0.3733rem;
+  box-sizing: border-box;
+}
+
+.page-profile .avatar-card,
+.page-profile.avatar-card {
+  background: rgba(255, 255, 255, 0.62);
+  border-radius: 0.48rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0.0533rem 0.2667rem rgba(46, 125, 50, 0.06);
+  padding: 0.5867rem 0 0.48rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.2667rem;
+}
+
+.page-profile .avatar-card:active,
+.page-profile.avatar-card:active {
+  opacity: 0.85;
+}
+
+.page-profile .avatar-img,
+.page-profile.avatar-img {
+  width: 1.8667rem;
+  height: 1.8667rem;
+  border-radius: 0.9333rem;
+  background: #E8E8E8;
+  box-shadow: 0 0.0533rem 0.2133rem rgba(0, 0, 0, 0.08);
+}
+
+.page-profile .avatar-hint,
+.page-profile.avatar-hint {
+  display: flex;
+  align-items: center;
+  margin-top: 0.2667rem;
+  gap: 0.1333rem;
+}
+
+.page-profile .avatar-hint-icon,
+.page-profile.avatar-hint-icon {
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 0.24rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-profile .avatar-plus,
+.page-profile.avatar-plus {
+  font-size: 0.32rem;
+  color: #FFFFFF;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.page-profile .avatar-hint-text,
+.page-profile.avatar-hint-text {
+  font-size: 0.32rem;
+  color: #8A9B8B;
+}
+
+.page-profile .form-card,
+.page-profile.form-card {
+  background: rgba(255, 255, 255, 0.62);
+  border-radius: 0.3733rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0.0533rem 0.2667rem rgba(46, 125, 50, 0.06);
+  padding: 0 0.3733rem;
+  margin-bottom: 0.64rem;
+}
+
+.page-profile .form-item,
+.page-profile.form-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.3733rem 0;
+  border-bottom: 0.0133rem solid rgba(46, 125, 50, 0.06);
+}
+
+.page-profile .form-item-last,
+.page-profile.form-item-last {
+  border-bottom: none;
+}
+
+.page-profile .form-label,
+.page-profile.form-label {
+  font-size: 0.4rem;
+  color: #2C3E2D;
+  font-weight: 500;
+  flex-shrink: 0;
+  width: 1.6rem;
+}
+
+.page-profile .form-input,
+.page-profile.form-input {
+  flex: 1;
+  text-align: right;
+  font-size: 0.3733rem;
+  color: #2C3E2D;
+}
+
+.page-profile .picker-display,
+.page-profile.picker-display {
+  display: flex;
+  align-items: center;
+  gap: 0.1067rem;
+}
+
+.page-profile .picker-selected,
+.page-profile.picker-selected {
+  font-size: 0.3733rem;
+  color: #2C3E2D;
+}
+
+.page-profile .picker-placeholder,
+.page-profile.picker-placeholder {
+  font-size: 0.3733rem;
+  color: #B0B8B0;
+}
+
+.page-profile .picker-arrow,
+.page-profile.picker-arrow {
+  font-size: 0.3733rem;
+  font-weight: 600;
+}
+
+.page-profile .save-btn,
+.page-profile.save-btn {
+  width: 100%;
+  padding: 0.3733rem 0;
+  border-radius: 0.32rem;
+  text-align: center;
+  box-shadow: 0 0.1067rem 0.32rem rgba(46, 125, 50, 0.18);
+}
+
+.page-profile .save-btn:active,
+.page-profile.save-btn:active {
+  opacity: 0.85;
+}
+
+.page-profile .save-btn.saving,
+.page-profile.save-btn.saving {
+  opacity: 0.7;
+}
+
+.page-profile .save-text,
+.page-profile.save-text {
+  font-size: 0.4533rem;
+  font-weight: 600;
+  color: #FFFFFF;
+}

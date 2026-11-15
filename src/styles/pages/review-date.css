@@ -1,0 +1,319 @@
+.page-review-date .review-container,
+.page-review-date.review-container {
+    min-height: 100vh;
+    background: #F8F8FA;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-review-date .review-top,
+.page-review-date.review-top {
+    display: flex;
+    align-items: center;
+    padding: 0.32rem 0.4267rem;
+    gap: 0.16rem;
+}
+
+.page-review-date .review-title,
+.page-review-date.review-title {
+    font-size: 0.3733rem;
+    font-weight: 600;
+    color: #2C3E2D;
+}
+
+.page-review-date .review-subtitle,
+.page-review-date.review-subtitle {
+    font-size: 0.2933rem;
+    color: #8A9B8B;
+}
+
+.page-review-date .top-spacer,
+.page-review-date.top-spacer {
+    flex: 1;
+}
+
+.page-review-date .nav-shuffle,
+.page-review-date.nav-shuffle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0.7467rem;
+    height: 0.7467rem;
+    border-radius: 0.3733rem;
+    background: #F2F2F7;
+}
+
+.page-review-date .nav-shuffle:active,
+.page-review-date.nav-shuffle:active {
+    background: #E5E5EA;
+}
+
+.page-review-date .shuffle-text,
+.page-review-date.shuffle-text {
+    font-size: 0.4533rem;
+    font-weight: 600;
+}
+
+.page-review-date .word-area,
+.page-review-date.word-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.5333rem;
+}
+
+.page-review-date .word-main,
+.page-review-date.word-main {
+    text-align: center;
+    width: 100%;
+}
+
+.page-review-date .word-display,
+.page-review-date.word-display {
+    margin-bottom: 0.64rem;
+}
+
+.page-review-date .word-en,
+.page-review-date.word-en {
+    font-size: 1.1733rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    display: block;
+    margin-bottom: 0.32rem;
+    line-height: 1.2;
+    letter-spacing: 0.0133rem;
+}
+
+.page-review-date .word-meta,
+.page-review-date.word-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2667rem;
+}
+
+.page-review-date .word-phonetic,
+.page-review-date.word-phonetic {
+    font-size: 0.4533rem;
+    font-weight: 500;
+}
+
+.page-review-date .audio-icon,
+.page-review-date.audio-icon {
+    width: 0.6933rem;
+    height: 0.6933rem;
+    border-radius: 0.3467rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-review-date .audio-icon:active,
+.page-review-date.audio-icon:active {
+    opacity: 0.7;
+}
+
+.page-review-date .audio-shape,
+.page-review-date.audio-shape {
+    width: 0;
+    height: 0;
+    border-top: 0.12rem solid transparent;
+    border-bottom: 0.12rem solid transparent;
+    border-left: 0.1867rem solid #43A047;
+    margin-left: 0.0533rem;
+}
+
+.page-review-date .answer-area,
+.page-review-date.answer-area {
+    margin: 0.4267rem 0;
+}
+
+.page-review-date .answer-area.show,
+.page-review-date.answer-area.show {
+    opacity: 1;
+}
+
+.page-review-date .answer-area.hide,
+.page-review-date.answer-area.hide {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.page-review-date .meaning-text,
+.page-review-date.meaning-text {
+    font-size: 0.5867rem;
+    font-weight: 600;
+    color: #1A1A1A;
+}
+
+.page-review-date .correct-btn,
+.page-review-date.correct-btn {
+    display: inline-block;
+    margin-top: 0.3733rem;
+    padding: 0.1867rem 0.48rem;
+    background: #F2F2F7;
+    border-radius: 0.2667rem;
+    font-size: 0.3467rem;
+    color: #8A9B8B;
+}
+
+.page-review-date .correct-btn:active,
+.page-review-date.correct-btn:active {
+    background: #E5E5EA;
+}
+
+.page-review-date .action-buttons,
+.page-review-date.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 0.7467rem;
+}
+
+.page-review-date .btn-action,
+.page-review-date.btn-action {
+    width: 3.2rem;
+    height: 1.3333rem;
+    border-radius: 0.2667rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.4267rem;
+    font-weight: 600;
+}
+
+.page-review-date .btn-active,
+.page-review-date.btn-active {
+    transform: scale(0.96);
+    opacity: 0.85;
+}
+
+.page-review-date .btn-dont-know,
+.page-review-date.btn-dont-know {
+    background: #F2F2F7;
+    color: #8A9B8B;
+}
+
+.page-review-date .btn-know,
+.page-review-date.btn-know {
+    color: #FFFFFF;
+}
+
+.page-review-date .next-btn-area,
+.page-review-date.next-btn-area {
+    margin-top: 0.64rem;
+    padding: 0 0.5333rem;
+}
+
+.page-review-date .btn-next,
+.page-review-date.btn-next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.3733rem 0;
+    border-radius: 0.32rem;
+    font-size: 0.4533rem;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.page-review-date .btn-next:active,
+.page-review-date.btn-next:active {
+    opacity: 0.85;
+}
+
+.page-review-date .finish-btn-area,
+.page-review-date.finish-btn-area {
+    margin-top: 0.64rem;
+    padding: 0 0.5333rem;
+}
+
+.page-review-date .btn-finish,
+.page-review-date.btn-finish {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.3733rem 0;
+    border-radius: 0.32rem;
+    font-size: 0.4533rem;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.page-review-date .btn-finish:active,
+.page-review-date.btn-finish:active {
+    opacity: 0.85;
+}
+
+.page-review-date .stats-section,
+.page-review-date.stats-section {
+    padding: 0.3733rem 0.48rem 0.5333rem;
+    flex-shrink: 0;
+}
+
+.page-review-date .stats-row,
+.page-review-date.stats-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.page-review-date .stat-item,
+.page-review-date.stat-item {
+    text-align: center;
+    flex: 1;
+}
+
+.page-review-date .stat-value,
+.page-review-date.stat-value {
+    font-size: 0.48rem;
+    font-weight: 700;
+    color: #2C3E2D;
+    display: block;
+    margin-bottom: 0.08rem;
+}
+
+.page-review-date .stat-label,
+.page-review-date.stat-label {
+    font-size: 0.2933rem;
+    color: #8A9B8B;
+}
+
+.page-review-date .stat-divider,
+.page-review-date.stat-divider {
+    width: 0.0133rem;
+    height: 0.48rem;
+    background: #E5E5EA;
+}
+
+.page-review-date .empty-tip,
+.page-review-date.empty-tip {
+    font-size: 0.4267rem;
+    color: #8A9B8B;
+}
+
+.page-review-date .checkin-area,
+.page-review-date.checkin-area {
+  position: relative;
+}
+
+.page-review-date .checkin-guide,
+.page-review-date.checkin-guide {
+  position: absolute;
+  bottom: -0.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.2933rem;
+  color: #43A047;
+  white-space: nowrap;
+}
+
+.page-review-date .checkin-area:active,
+.page-review-date.checkin-area:active {
+  opacity: 0.8;
+}

@@ -1,0 +1,149 @@
+.page-level-answer .answer-container,
+.page-level-answer.answer-container {
+    min-height: 100vh;
+    background: #f5f7fa;
+    box-sizing: border-box;
+  }
+
+.page-level-answer .level-header,
+.page-level-answer.level-header {
+    display: flex;
+    align-items: center;
+    background: #4CAF50;
+    padding: 0.2667rem;
+    color: #ffffff;
+  }
+
+.page-level-answer .back-btn,
+.page-level-answer.back-btn {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 0.3733rem;
+    padding: 0 0.1333rem;
+  }
+
+.page-level-answer .level-info,
+.page-level-answer.level-info {
+    flex: 1;
+    text-align: center;
+  }
+
+.page-level-answer .level-name,
+.page-level-answer.level-name {
+    font-size: 0.4267rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.0667rem;
+  }
+
+.page-level-answer .progress,
+.page-level-answer.progress {
+    font-size: 0.32rem;
+    opacity: 0.9;
+  }
+
+.page-level-answer .question-container,
+.page-level-answer.question-container {
+    padding: 0.4rem 0.2667rem;
+    height: calc(100vh - 1.3333rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.page-level-answer .question-card,
+.page-level-answer.question-card {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 0.2133rem;
+    padding: 0.5333rem;
+    box-shadow: 0 0.0533rem 0.16rem rgba(0,0,0,0.08);
+  }
+
+.page-level-answer .question-text,
+.page-level-answer.question-text {
+    font-size: 0.4267rem;
+    color: #333333;
+    line-height: 1.6;
+    margin-bottom: 0.5333rem;
+  }
+
+.page-level-answer .options,
+.page-level-answer.options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2667rem;
+    margin-bottom: 0.5333rem;
+  }
+
+.page-level-answer .option,
+.page-level-answer.option {
+    padding: 0.3333rem;
+    background: #f5f5f5;
+    border-radius: 0.16rem;
+    font-size: 0.3733rem;
+    color: #333333;
+    transition: all 0.2s;
+  }
+
+.page-level-answer .option.selected,
+.page-level-answer.option.selected {
+    background: #4CAF50;
+    color: #ffffff;
+  }
+
+.page-level-answer .fill-input,
+.page-level-answer.fill-input {
+    margin-bottom: 0.5333rem;
+  }
+
+.page-level-answer .fill-input input,
+.page-level-answer.fill-input input {
+    width: 100%;
+    padding: 0.3333rem;
+    background: #f5f5f5;
+    border-radius: 0.16rem;
+    font-size: 0.3733rem;
+    box-sizing: border-box;
+  }
+
+.page-level-answer .btn-group,
+.page-level-answer.btn-group {
+    display: flex;
+    gap: 0.2667rem;
+  }
+
+.page-level-answer .prev-btn,
+.page-level-answer.prev-btn,
+.page-level-answer .next-btn,
+.page-level-answer.next-btn,
+.page-level-answer .submit-btn,
+.page-level-answer.submit-btn {
+    flex: 1;
+    padding: 0.3333rem;
+    border-radius: 0.16rem;
+    font-size: 0.3733rem;
+  }
+
+.page-level-answer .prev-btn,
+.page-level-answer.prev-btn {
+    background: #eeeeee;
+    color: #666666;
+  }
+
+.page-level-answer .next-btn,
+.page-level-answer.next-btn,
+.page-level-answer .submit-btn,
+.page-level-answer.submit-btn {
+    background: #4CAF50;
+    color: #ffffff;
+  }
+
+.page-level-answer .next-btn[disabled],
+.page-level-answer.next-btn[disabled],
+.page-level-answer .submit-btn[disabled],
+.page-level-answer.submit-btn[disabled] {
+    background: #cccccc;
+    color: #999999;
+  }

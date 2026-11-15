@@ -1,0 +1,205 @@
+.page-commute .commute-page,
+.page-commute.commute-page {
+  min-height: 100vh;
+  padding: 0.4267rem 0.3733rem 0.8rem;
+  background: linear-gradient(175deg, #C8E6C9 0%, #E8F5E9 30%, #F1F8F4 100%);
+  box-sizing: border-box;
+}
+
+.page-commute .hero,
+.page-commute.hero {
+  background: rgba(255, 255, 255, 0.62);
+  border-radius: 0.48rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0.08rem 0.4rem rgba(46, 125, 50, 0.09);
+  padding: 0.5333rem 0.4267rem;
+  margin-bottom: 0.3733rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-commute .hero-greeting,
+.page-commute.hero-greeting {
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: #2C3E2D;
+  margin-bottom: 0.1067rem;
+}
+
+.page-commute .hero-date,
+.page-commute.hero-date {
+  font-size: 0.3467rem;
+  color: #6A7B6B;
+  margin-bottom: 0.2667rem;
+}
+
+.page-commute .hero-quote,
+.page-commute.hero-quote {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1067rem;
+  padding-top: 0.2667rem;
+  border-top: 0.0133rem solid rgba(67, 160, 71, 0.12);
+}
+
+.page-commute .quote-en,
+.page-commute.quote-en {
+  font-size: 0.4rem;
+  font-weight: 600;
+  color: #43A047;
+  line-height: 1.4;
+}
+
+.page-commute .quote-cn,
+.page-commute.quote-cn {
+  font-size: 0.3467rem;
+  color: #6A7B6B;
+  line-height: 1.5;
+}
+
+.page-commute .task-card,
+.page-commute.task-card {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.60);
+  border-radius: 0.3733rem;
+  border: 0.0133rem solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0.04rem 0.2133rem rgba(46, 125, 50, 0.06);
+  padding: 0.4267rem 0.3733rem;
+  margin-bottom: 0.2667rem;
+}
+
+.page-commute .task-card:active,
+.page-commute.task-card:active {
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.page-commute .task-icon,
+.page-commute.task-icon {
+  font-size: 0.5867rem;
+  margin-right: 0.32rem;
+}
+
+.page-commute .task-info,
+.page-commute.task-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+}
+
+.page-commute .task-title,
+.page-commute.task-title {
+  font-size: 0.4267rem;
+  font-weight: 600;
+  color: #2C3E2D;
+}
+
+.page-commute .task-desc,
+.page-commute.task-desc {
+  font-size: 0.32rem;
+  color: #8A9B8B;
+}
+
+.page-commute .task-arrow,
+.page-commute.task-arrow {
+  font-size: 0.3733rem;
+  color: #43A047;
+}
+
+.page-commute .mode-section,
+.page-commute.mode-section {
+  margin: 0.48rem 0 0.3733rem;
+}
+
+.page-commute .section-title,
+.page-commute.section-title {
+  font-size: 0.3733rem;
+  font-weight: 600;
+  color: #2C3E2D;
+  margin-bottom: 0.2667rem;
+  display: block;
+}
+
+.page-commute .mode-row,
+.page-commute.mode-row {
+  display: flex;
+  gap: 0.2133rem;
+}
+
+.page-commute .mode-item,
+.page-commute.mode-item {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.60);
+  border-radius: 0.32rem;
+  border: 0.0267rem solid transparent;
+  padding: 0.2933rem 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.0533rem;
+}
+
+.page-commute .mode-item.active,
+.page-commute.mode-item.active {
+  border-color: #43A047;
+  background: rgba(67, 160, 71, 0.10);
+}
+
+.page-commute .mode-label,
+.page-commute.mode-label {
+  font-size: 0.3733rem;
+  font-weight: 600;
+  color: #2C3E2D;
+}
+
+.page-commute .mode-item.active .mode-label,
+.page-commute.mode-item.active .mode-label {
+  color: #43A047;
+}
+
+.page-commute .mode-desc,
+.page-commute.mode-desc {
+  font-size: 0.2933rem;
+  color: #8A9B8B;
+}
+
+.page-commute .start-btn,
+.page-commute.start-btn {
+  width: 100%;
+  border-radius: 0.3733rem;
+  padding: 0.3733rem 0;
+  text-align: center;
+  background: linear-gradient(135deg, #43A047 0%, #2E7D32 100%);
+  box-shadow: 0 0.1333rem 0.3733rem rgba(46, 125, 50, 0.28);
+}
+
+.page-commute .start-btn:active,
+.page-commute.start-btn:active {
+  opacity: 0.85;
+}
+
+.page-commute .start-btn-text,
+.page-commute.start-btn-text {
+  font-size: 0.4533rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.page-commute .streak-tip,
+.page-commute.streak-tip {
+  text-align: center;
+  margin-top: 0.32rem;
+  font-size: 0.3467rem;
+  color: #F57C00;
+}
+
+.page-commute .loading,
+.page-commute.loading,
+.page-commute .error,
+.page-commute.error {
+  text-align: center;
+  margin-top: 0.5333rem;
+  font-size: 0.3467rem;
+  color: #8A9B8B;
+}

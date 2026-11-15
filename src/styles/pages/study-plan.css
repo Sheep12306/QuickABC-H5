@@ -1,0 +1,177 @@
+.page-study-plan .plan-bg,
+.page-study-plan.plan-bg {
+  min-height: 100vh;
+  padding: 0.3733rem;
+  box-sizing: border-box;
+}
+
+.page-study-plan .plan-header,
+.page-study-plan.plan-header {
+  margin-bottom: 0.3733rem;
+}
+
+.page-study-plan .plan-title,
+.page-study-plan.plan-title {
+  font-size: 0.48rem;
+  font-weight: 700;
+  color: #2C3E2D;
+  display: block;
+  margin-bottom: 0.1067rem;
+}
+
+.page-study-plan .plan-desc,
+.page-study-plan.plan-desc {
+  font-size: 0.3467rem;
+  color: #8A9B8B;
+}
+
+.page-study-plan .goal-card,
+.page-study-plan.goal-card {
+  background: rgba(255,255,255,0.62);
+  border-radius: 0.3733rem;
+  border: 0.0133rem solid rgba(255,255,255,0.65);
+  box-shadow: 0 0.0533rem 0.2667rem rgba(46,125,50,0.06);
+  padding: 0.48rem 0.4267rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.2667rem;
+}
+
+.page-study-plan .goal-label,
+.page-study-plan.goal-label {
+  font-size: 0.3467rem;
+  color: #8A9B8B;
+  margin-bottom: 0.16rem;
+}
+
+.page-study-plan .goal-display,
+.page-study-plan.goal-display {
+  display: flex;
+  align-items: baseline;
+  gap: 0.1067rem;
+  margin-bottom: 0.16rem;
+}
+
+.page-study-plan .goal-num,
+.page-study-plan.goal-num {
+  font-size: 1.1733rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.page-study-plan .goal-unit,
+.page-study-plan.goal-unit {
+  font-size: 0.3733rem;
+  font-weight: 500;
+}
+
+.page-study-plan .goal-hint,
+.page-study-plan.goal-hint {
+  font-size: 0.2933rem;
+  color: #B0B8B0;
+}
+
+.page-study-plan .options-card,
+.page-study-plan.options-card {
+  background: rgba(255,255,255,0.58);
+  border-radius: 0.3733rem;
+  border: 0.0133rem solid rgba(255,255,255,0.5);
+  padding: 0.32rem 0.3733rem;
+  margin-bottom: 0.2667rem;
+}
+
+.page-study-plan .options-title,
+.page-study-plan.options-title {
+  font-size: 0.3467rem;
+  font-weight: 600;
+  color: #2C3E2D;
+  display: block;
+  margin-bottom: 0.2667rem;
+}
+
+.page-study-plan .options-grid,
+.page-study-plan.options-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2133rem;
+}
+
+.page-study-plan .option-btn,
+.page-study-plan.option-btn {
+  padding: 0.24rem 0.4267rem;
+  border-radius: 0.2133rem;
+  background: rgba(0,0,0,0.04);
+}
+
+.page-study-plan .option-btn:active,
+.page-study-plan.option-btn:active { opacity: 0.7; }
+
+.page-study-plan .option-btn.active,
+.page-study-plan.option-btn.active { box-shadow: 0 0.0533rem 0.2133rem rgba(46,125,50,0.15); }
+
+.page-study-plan .option-text,
+.page-study-plan.option-text {
+  font-size: 0.3733rem;
+  font-weight: 500;
+  color: #4A5B4B;
+}
+
+.page-study-plan .custom-card,
+.page-study-plan.custom-card {
+  background: rgba(255,255,255,0.58);
+  border-radius: 0.3733rem;
+  border: 0.0133rem solid rgba(255,255,255,0.5);
+  padding: 0.32rem 0.3733rem;
+}
+
+.page-study-plan .custom-label,
+.page-study-plan.custom-label {
+  font-size: 0.3467rem;
+  font-weight: 600;
+  color: #2C3E2D;
+  display: block;
+  margin-bottom: 0.2133rem;
+}
+
+.page-study-plan .custom-row,
+.page-study-plan.custom-row {
+  display: flex;
+  align-items: center;
+  padding: 0.2133rem 0.32rem;
+  border-radius: 0.2133rem;
+  background: rgba(0,0,0,0.03);
+  margin-bottom: 0.2667rem;
+}
+
+.page-study-plan .custom-input,
+.page-study-plan.custom-input {
+  flex: 1;
+  font-size: 0.4267rem;
+  color: #2C3E2D;
+  font-weight: 600;
+}
+
+.page-study-plan .custom-unit,
+.page-study-plan.custom-unit {
+  font-size: 0.3467rem;
+  color: #8A9B8B;
+  flex-shrink: 0;
+}
+
+.page-study-plan .custom-save,
+.page-study-plan.custom-save {
+  padding: 0.2667rem 0;
+  border-radius: 0.2667rem;
+  text-align: center;
+}
+
+.page-study-plan .custom-save:active,
+.page-study-plan.custom-save:active { opacity: 0.85; }
+
+.page-study-plan .custom-save-text,
+.page-study-plan.custom-save-text {
+  font-size: 0.4rem;
+  color: #fff;
+  font-weight: 600;
+}

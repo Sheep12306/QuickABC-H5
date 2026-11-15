@@ -1,0 +1,206 @@
+.page-learn .learn-container,
+.page-learn.learn-container {
+    min-height: 100vh;
+    background: #F8F8FA;
+}
+
+.page-learn .learn-header,
+.page-learn.learn-header {
+    padding: 0.2667rem 0.4267rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #F8F8FA;
+}
+
+.page-learn .nav-left,
+.page-learn.nav-left {
+    display: flex;
+    align-items: baseline;
+    gap: 0.16rem;
+}
+
+.page-learn .book-name,
+.page-learn.book-name {
+    font-size: 0.3467rem;
+    font-weight: 500;
+    color: #8A9B8B;
+}
+
+.page-learn .group-text,
+.page-learn.group-text {
+    font-size: 0.48rem;
+    font-weight: 700;
+    color: #2C3E2D;
+}
+
+.page-learn .today-badge,
+.page-learn.today-badge {
+    font-size: 0.32rem;
+    font-weight: 400;
+    color: #8A9B8B;
+}
+
+.page-learn .nav-right,
+.page-learn.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.page-learn .nav-review,
+.page-learn.nav-review {
+    display: flex;
+    align-items: center;
+    padding: 0.1867rem 0.3733rem;
+    border-radius: 0.2667rem;
+    border: 0.0133rem solid;
+    background: #E8F5E9;
+}
+
+.page-learn .nav-review:active,
+.page-learn.nav-review:active {
+    opacity: 0.7;
+}
+
+.page-learn .review-text,
+.page-learn.review-text {
+    font-size: 0.3467rem;
+    color: #43A047;
+    font-weight: 500;
+}
+
+.page-learn .words-section,
+.page-learn.words-section {
+    padding: 0.4267rem 0.3733rem 1.6rem;
+}
+
+.page-learn .word-card,
+.page-learn.word-card {
+    background: white;
+    border-radius: 0.2667rem;
+    padding: 0.4rem;
+    margin-bottom: 0.2667rem;
+    box-shadow: 0 0.0267rem 0.16rem rgba(0, 0, 0, 0.05);
+    border: 0.0267rem solid #E8F5E9;
+}
+
+.page-learn .word-card:active,
+.page-learn.word-card:active {
+    background: #F9F9F9;
+}
+
+.page-learn .word-main,
+.page-learn.word-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.2667rem;
+}
+
+.page-learn .word-en,
+.page-learn.word-en {
+    font-size: 0.5867rem;
+    font-weight: 700;
+    color: #1A1A1A;
+}
+
+.page-learn .word-phonetic,
+.page-learn.word-phonetic {
+    font-size: 0.3733rem;
+    font-weight: 500;
+}
+
+.page-learn .word-info,
+.page-learn.word-info {
+    overflow: hidden;
+}
+
+.page-learn .word-info.show,
+.page-learn.word-info.show {
+    max-height: 1.3333rem;
+    opacity: 1;
+}
+
+.page-learn .word-info.hide,
+.page-learn.word-info.hide {
+    max-height: 0;
+    opacity: 0;
+}
+
+.page-learn .word-part,
+.page-learn.word-part {
+    display: flex;
+    align-items: center;
+    padding: 0.2rem 0;
+}
+
+.page-learn .part-meaning,
+.page-learn.part-meaning {
+    font-size: 0.4267rem;
+    color: #4A4A4A;
+}
+
+.page-learn .click-indicator,
+.page-learn.click-indicator {
+    display: flex;
+    justify-content: center;
+    gap: 0.2rem;
+    margin-top: 0.2667rem;
+    padding-top: 0.2667rem;
+    border-top: 0.0133rem solid #E5E5EA;
+}
+
+.page-learn .indicator-dot,
+.page-learn.indicator-dot {
+    width: 0.2667rem;
+    height: 0.2667rem;
+    background: #E5E5EA;
+    border-radius: 50%;
+}
+
+.page-learn .indicator-dot.active,
+.page-learn.indicator-dot.active {
+    transform: scale(1.2);
+}
+
+.page-learn .bottom-controls,
+.page-learn.bottom-controls {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #FFFFFF;
+    padding: 0.2667rem 0.3733rem;
+    border-top: 0.0133rem solid #E5E5EA;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-learn .btn-control,
+.page-learn.btn-control {
+    border-radius: 0.2667rem;
+    padding: 0.2667rem 0.48rem;
+    font-size: 0.3733rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.6667rem;
+    background: #E8E8E8;
+    color: #555555;
+}
+
+.page-learn .btn-control:active,
+.page-learn.btn-control:active {
+    opacity: 0.8;
+}
+
+.page-learn .btn-control.disabled,
+.page-learn.btn-control.disabled {
+    background: #EBEDF0 !important;
+    color: #C0C4C0 !important;
+}
