@@ -1,0 +1,72 @@
+name: Deploy H5
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-h5
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_PORT: ${{ secrets.DEPLOY_PORT || '22' }}
+      DEPLOY_PATH: ${{ secrets.DEPLOY_PATH || '/opt/QuickABC/vocab-server/h5' }}
+      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # 生产构建：API 走同域 /api，由 Nginx 反向代理到 127.0.0.1:3001
+      - name: Build
+        env:
+          VITE_API_BASE: /api
+          VITE_SERVER_BASE: ''
+          VITE_AUTO_LOGIN: 'true'
+        run: npm run build
+
+      - name: Check deploy secrets
+        id: check
+        run: |
+          if [ -z "$DEPLOY_HOST" ] || [ -z "$DEPLOY_USER" ] || [ -z "$DEPLOY_SSH_KEY" ]; then
+            echo "::warning::DEPLOY_HOST / DEPLOY_USER / DEPLOY_SSH_KEY 未配置，跳过部署步骤"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Configure SSH
+        if: steps.check.outputs.skip != 'true'
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p "$DEPLOY_PORT" -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+
+      - name: Upload dist
+        if: steps.check.outputs.skip != 'true'
+        run: |
+          rsync -az --delete --delay-updates --chmod=D755,F644 \
+            -e "ssh -p $DEPLOY_PORT -i ~/.ssh/id_ed25519" \
+            dist/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
+
+      - name: Verify deployment
+        if: steps.check.outputs.skip != 'true'
+        run: |
+          ssh -p "$DEPLOY_PORT" -i ~/.ssh/id_ed25519 \
+            "$DEPLOY_USER@$DEPLOY_HOST" \
+            "test -f '$DEPLOY_PATH/index.html' && echo 'deploy ok: $DEPLOY_PATH/index.html'"
