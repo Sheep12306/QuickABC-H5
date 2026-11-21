@@ -72,6 +72,8 @@ sudo /root/.acme.sh/acme.sh --install-cert -d quickabc.kuaikeli.tech \
 
 安装证书后把站点配置切换为 `deploy/nginx-quickabc.kuaikeli.tech.conf` 的 443 版本。
 
+续期定时任务已写入 root crontab（每天 03:00 执行 `acme.sh --cron`），到期前会自动续签并 reload Nginx。
+
 ## 手动部署（备用）
 
 ```bash

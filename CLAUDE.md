@@ -61,6 +61,7 @@ VITE_AUTO_LOGIN=true
 - AI 出卷需要后端配置 `ANTHROPIC_API_KEY`，当前未验证真实生成。
 - 已接入思源宋体 + Inter webfont：首屏核心片 20KB、101 个分片异步加载；全部页面已按 `docs/font-spec.md` 接入字体 token（标题/释义用宋体、英文单词用 Inter、数字用 Georgia、UI 小字用系统无衬线）。
 - 视觉已切到纸张底色 + 墨绿（`#326d43`）：Home / Discover / My / Learn / Review / NewWordReview / Settings 为手写重做，并新增 `AppIcon` / `AppSketch` / `LiquidGlassTabbar` / `PagePlaceholder` / `/search` 随身听独立页。
+- 已上线 `https://quickabc.kuaikeli.tech`：push `main` 后 GitHub Actions 自动构建并 rsync 到服务器 `/opt/QuickABC/vocab-server/h5`，Nginx 同域反代 `/api` 到 3001，证书由 acme.sh 自动续期（见 `deploy/README.md`）。
 - 错词本「连续两次认识才移出」只在 H5 实现，小程序源码待同步。
 
 ## 约定与坑
