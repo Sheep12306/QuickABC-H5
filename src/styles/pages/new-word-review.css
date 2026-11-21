@@ -1,298 +1,335 @@
+/* ===== 复习：首页同款纸张版式 ===== */
 .page-new-word-review .review-container,
 .page-new-word-review.review-container {
-    min-height: 100vh;
-    background: #F8F8FA;
-    display: flex;
-    flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--page-paper);
+  color: var(--page-ink);
 }
 
 .page-new-word-review .review-top,
 .page-new-word-review.review-top {
-    display: flex;
-    align-items: center;
-    padding: 0.32rem 0.4267rem;
-    gap: 0.16rem;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.16rem;
+  padding: 0.419rem 0.49rem 0.209rem;
 }
 
 .page-new-word-review .review-title,
 .page-new-word-review.review-title {
-    font-size: 0.3733rem;
-    font-weight: 600;
-    color: #2C3E2D;
+  font-family: var(--font-serif);
+  font-size: 0.465rem;
+  font-weight: 700;
+  letter-spacing: 0.012rem;
+  color: var(--page-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .page-new-word-review .review-subtitle,
 .page-new-word-review.review-subtitle {
-    font-size: 0.2933rem;
-    color: #8A9B8B;
+  flex: 0 0 auto;
+  font-family: var(--font-num);
+  font-size: 0.302rem;
+  color: var(--page-muted);
 }
 
 .page-new-word-review .top-spacer,
 .page-new-word-review.top-spacer {
-    flex: 1;
+  flex: 1;
 }
 
 .page-new-word-review .nav-shuffle,
 .page-new-word-review.nav-shuffle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 0.7467rem;
-    height: 0.7467rem;
-    border-radius: 0.3733rem;
-    background: #F2F2F7;
+  flex: 0 0 auto;
+  width: 0.744rem;
+  height: 0.744rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0.093rem 0.279rem rgba(58, 88, 58, 0.07);
+  transition: transform 0.16s ease;
 }
 
 .page-new-word-review .nav-shuffle:active,
 .page-new-word-review.nav-shuffle:active {
-    background: #E5E5EA;
+  transform: scale(0.94);
 }
 
 .page-new-word-review .shuffle-text,
 .page-new-word-review.shuffle-text {
-    font-size: 0.4533rem;
-    font-weight: 600;
+  display: flex;
+  align-items: center;
+  font-size: 0.349rem;
+  font-weight: 600;
+  line-height: 1;
 }
 
+/* ---- 单词 ---- */
 .page-new-word-review .word-area,
 .page-new-word-review.word-area {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 0.5333rem;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5333rem 0.2667rem;
 }
 
 .page-new-word-review .word-main,
 .page-new-word-review.word-main {
-    text-align: center;
-    width: 100%;
+  width: 100%;
+  text-align: center;
 }
 
 .page-new-word-review .word-display,
 .page-new-word-review.word-display {
-    margin-bottom: 0.64rem;
+  margin-bottom: 0.64rem;
 }
 
 .page-new-word-review .word-en,
 .page-new-word-review.word-en {
-    font-size: 1.1733rem;
-    font-weight: 700;
-    color: #1A1A1A;
-    display: block;
-    margin-bottom: 0.32rem;
-    line-height: 1.2;
-    letter-spacing: 0.0133rem;
+  display: block;
+  margin-bottom: 0.32rem;
+  font-family: var(--font-word);
+  font-size: 1.1733rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.0133rem;
+  color: var(--page-ink);
 }
 
 .page-new-word-review .word-meta,
 .page-new-word-review.word-meta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.2667rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2667rem;
 }
 
 .page-new-word-review .word-phonetic,
 .page-new-word-review.word-phonetic {
-    font-size: 0.4533rem;
-    font-weight: 500;
+  font-size: 0.4533rem;
+  font-weight: 500;
 }
 
 .page-new-word-review .audio-icon,
 .page-new-word-review.audio-icon {
-    width: 0.6933rem;
-    height: 0.6933rem;
-    border-radius: 0.3467rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 0.6933rem;
+  height: 0.6933rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.16s ease;
 }
 
 .page-new-word-review .audio-icon:active,
 .page-new-word-review.audio-icon:active {
-    opacity: 0.7;
+  transform: scale(0.93);
 }
 
-.page-new-word-review .audio-shape,
-.page-new-word-review.audio-shape {
-    width: 0;
-    height: 0;
-    border-top: 0.12rem solid transparent;
-    border-bottom: 0.12rem solid transparent;
-    border-left: 0.1867rem solid #43A047;
-    margin-left: 0.0533rem;
+.page-new-word-review .audio-glyph,
+.page-new-word-review.audio-glyph {
+  font-size: 0.326rem;
+  color: var(--page-green);
 }
 
+/* ---- 释义 / 操作 ---- */
 .page-new-word-review .answer-area,
 .page-new-word-review.answer-area {
-    margin: 0.4267rem 0;
+  margin: 0.4267rem 0;
 }
 
 .page-new-word-review .answer-area.show,
 .page-new-word-review.answer-area.show {
-    opacity: 1;
+  opacity: 1;
 }
 
 .page-new-word-review .answer-area.hide,
 .page-new-word-review.answer-area.hide {
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    pointer-events: none;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .page-new-word-review .meaning-text,
 .page-new-word-review.meaning-text {
-    font-size: 0.5867rem;
-    font-weight: 600;
-    color: #1A1A1A;
+  font-family: var(--font-serif);
+  font-size: 0.5867rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.019em;
+  color: var(--page-ink);
 }
 
 .page-new-word-review .correct-btn,
 .page-new-word-review.correct-btn {
-    display: inline-block;
-    margin-top: 0.3733rem;
-    padding: 0.1867rem 0.48rem;
-    background: #F2F2F7;
-    border-radius: 0.2667rem;
-    font-size: 0.3467rem;
-    color: #8A9B8B;
+  display: inline-block;
+  margin-top: 0.3733rem;
+  padding: 0.1867rem 0.48rem;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 0.373rem;
+  background: rgba(255, 255, 255, 0.55);
+  color: #6f7569;
+  font-size: 0.3467rem;
+  transition: background 0.16s ease;
 }
 
 .page-new-word-review .correct-btn:active,
 .page-new-word-review.correct-btn:active {
-    background: #E5E5EA;
+  background: rgba(255, 255, 255, 0.85);
 }
 
 .page-new-word-review .action-buttons,
 .page-new-word-review.action-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 0.8rem;
-    margin-top: 0.7467rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 0.7467rem;
 }
 
 .page-new-word-review .btn-action,
 .page-new-word-review.btn-action {
-    width: 3.2rem;
-    height: 1.3333rem;
-    border-radius: 0.2667rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.4267rem;
-    font-weight: 600;
+  width: 3.2rem;
+  height: 1.3333rem;
+  border-radius: 0.233rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.4267rem;
+  font-weight: 650;
+  letter-spacing: 0.023rem;
+  transition:
+    transform 0.16s ease,
+    opacity 0.16s ease;
 }
 
-.page-new-word-review .btn-active,
-.page-new-word-review.btn-active {
-    transform: scale(0.96);
-    opacity: 0.85;
+.page-new-word-review .btn-action:active,
+.page-new-word-review.btn-action:active {
+  transform: scale(0.97);
 }
 
 .page-new-word-review .btn-dont-know,
 .page-new-word-review.btn-dont-know {
-    background: #F2F2F7;
-    color: #8A9B8B;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.6);
+  color: #6f7569;
+  box-shadow: 0 0.093rem 0.279rem rgba(58, 88, 58, 0.05);
 }
 
 .page-new-word-review .btn-know,
 .page-new-word-review.btn-know {
-    color: #FFFFFF;
+  color: #ffffff;
+  box-shadow: 0 0.093rem 0.233rem rgba(45, 104, 62, 0.12);
 }
 
 .page-new-word-review .next-btn-area,
 .page-new-word-review.next-btn-area {
-    margin-top: 0.64rem;
-    padding: 0 0.5333rem;
+  margin-top: 0.64rem;
+  padding: 0 0.5333rem;
 }
 
 .page-new-word-review .btn-next,
 .page-new-word-review.btn-next {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 0.3733rem 0;
-    border-radius: 0.32rem;
-    font-size: 0.4533rem;
-    font-weight: 600;
-    color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.3733rem 0;
+  border-radius: 0.233rem;
+  font-size: 0.4533rem;
+  font-weight: 650;
+  letter-spacing: 0.023rem;
+  color: #ffffff;
+  box-shadow: 0 0.093rem 0.233rem rgba(45, 104, 62, 0.12);
 }
 
 .page-new-word-review .btn-next:active,
 .page-new-word-review.btn-next:active {
-    opacity: 0.85;
-}
-
-.page-new-word-review .finish-btn-area,
-.page-new-word-review.finish-btn-area {
-    margin-top: 0.64rem;
-    padding: 0 0.5333rem;
-}
-
-.page-new-word-review .btn-finish,
-.page-new-word-review.btn-finish {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 0.3733rem 0;
-    border-radius: 0.32rem;
-    font-size: 0.4533rem;
-    font-weight: 600;
-    color: #FFFFFF;
-}
-
-.page-new-word-review .btn-finish:active,
-.page-new-word-review.btn-finish:active {
-    opacity: 0.85;
-}
-
-.page-new-word-review .stats-section,
-.page-new-word-review.stats-section {
-    padding: 0.3733rem 0.48rem 0.5333rem;
-    flex-shrink: 0;
-}
-
-.page-new-word-review .stats-row,
-.page-new-word-review.stats-row {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.page-new-word-review .stat-item,
-.page-new-word-review.stat-item {
-    text-align: center;
-    flex: 1;
-}
-
-.page-new-word-review .stat-value,
-.page-new-word-review.stat-value {
-    font-size: 0.48rem;
-    font-weight: 700;
-    color: #2C3E2D;
-    display: block;
-    margin-bottom: 0.08rem;
-}
-
-.page-new-word-review .stat-label,
-.page-new-word-review.stat-label {
-    font-size: 0.2933rem;
-    color: #8A9B8B;
-}
-
-.page-new-word-review .stat-divider,
-.page-new-word-review.stat-divider {
-    width: 0.0133rem;
-    height: 0.48rem;
-    background: #E5E5EA;
+  opacity: 0.88;
 }
 
 .page-new-word-review .empty-tip,
 .page-new-word-review.empty-tip {
-    font-size: 0.4267rem;
-    color: #8A9B8B;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.186rem;
+  font-size: 0.4rem;
+  color: #a7aa9f;
+}
+
+/* ---- 底部统计：一枚纸卡 ---- */
+.page-new-word-review .stats-section,
+.page-new-word-review.stats-section {
+  flex-shrink: 0;
+  padding: 0.2333rem 0.49rem 0.5333rem;
+}
+
+.page-new-word-review .stats-row,
+.page-new-word-review.stats-row {
+  display: flex;
+  align-items: center;
+  padding: 0.349rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 0.465rem;
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.page-new-word-review .stat-item,
+.page-new-word-review.stat-item {
+  flex: 1;
+  text-align: center;
+}
+
+.page-new-word-review .stat-value,
+.page-new-word-review.stat-value {
+  display: block;
+  margin-bottom: 0.08rem;
+  font-family: var(--font-num);
+  font-size: 0.48rem;
+  font-weight: 700;
+  color: var(--page-green);
+}
+
+.page-new-word-review .stat-label,
+.page-new-word-review.stat-label {
+  font-size: 0.256rem;
+  color: var(--page-muted);
+}
+
+.page-new-word-review .stat-divider,
+.page-new-word-review.stat-divider {
+  width: 1px;
+  height: 0.48rem;
+  background: var(--page-line);
+}
+
+.page-new-word-review .checkin-area,
+.page-new-word-review.checkin-area {
+  position: relative;
+}
+
+.page-new-word-review .checkin-area:active,
+.page-new-word-review.checkin-area:active {
+  opacity: 0.8;
+}
+
+.page-new-word-review .checkin-guide,
+.page-new-word-review.checkin-guide {
+  position: absolute;
+  bottom: -0.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.2933rem;
+  color: var(--page-green);
+  white-space: nowrap;
 }

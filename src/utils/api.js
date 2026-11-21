@@ -54,6 +54,7 @@ async function request(method, path, data, options = {}) {
       headers: buildHeaders(),
       body: data === undefined ? undefined : JSON.stringify(data),
       signal: controller ? controller.signal : undefined,
+      keepalive: !!options.keepalive,
     });
     const text = await res.text();
     if (res.status === 404) {
@@ -96,6 +97,8 @@ const api = {
   getWordsByBookId: ({ bookId, groupNum = 1, groupSize = 5 }) =>
     request('GET', `/wordbooks/${bookId}/words?groupNum=${groupNum}&groupSize=${groupSize}`),
   getWordsByIds: (wordIds) => request('POST', '/words/batch', { wordIds }),
+  searchWords: (keyword, limit = 20) =>
+    request('GET', `/words/search?keyword=${encodeURIComponent(keyword)}&limit=${limit}`),
 
   // 学习进度
   getBookLearningData: (bookId) => request('GET', `/study/progress/${bookId}`),
@@ -103,13 +106,19 @@ const api = {
   // 已学单词
   getLearnedWordIds: (bookId, groupNum) =>
     request('GET', `/study/learned-words/${bookId}?groupNum=${groupNum}`),
-  saveLearnedWords: (bookId, groupNum, wordIds) =>
-    request('PUT', `/study/learned-words/${bookId}`, { groupNum, wordIds }),
+  saveLearnedWords: (bookId, groupNum, wordIds, options) =>
+    request('PUT', `/study/learned-words/${bookId}`, { groupNum, wordIds }, options),
 
   // 学习记录
   getLearnRecord: (bookId) => request('GET', `/study/learn-record/${bookId}`),
-  saveLearnRecord: (bookId, learnRecord) =>
-    request('PUT', `/study/learn-record/${bookId}`, { learnRecord }),
+  saveLearnRecord: (bookId, learnRecord, options) =>
+    request('PUT', `/study/learn-record/${bookId}`, { learnRecord }, options),
+
+  // 今日复习
+  getReviewWords: (bookId, groups) =>
+    request('GET', `/study/review-words/${bookId}?groups=${groups.join(',')}`),
+  markGroupsReviewed: (bookId, groups) =>
+    request('PUT', `/study/reviewed-groups/${bookId}`, { groups }),
 
   // 用户
   getProfile: () => request('GET', '/user/profile'),
@@ -148,8 +157,13 @@ const api = {
   getQuestionList: (scopeIds) => request('GET', `/questions?scopeIds=${scopeIds.join(',')}`),
 
   // 四六级词汇卷（后端调用 Claude 实时生成，耗时较长）
-  generatePracticePaper: ({ level, words }) =>
-    request('POST', '/practice/generate', { level, words }, { timeout: 180000 }),
+  generatePracticePaper: ({ level, words, apiKey, baseUrl, model }) =>
+    request(
+      'POST',
+      '/practice/generate',
+      { level, words, apiKey, baseUrl, model },
+      { timeout: 180000 }
+    ),
 
   // 通勤英语
   getCommuteToday: () => request('GET', '/commute/today'),

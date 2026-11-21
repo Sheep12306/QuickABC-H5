@@ -71,7 +71,7 @@
           <span class="history-level" :class="item.level">{{ item.level === 'cet4' ? '四级' : '六级' }}</span>
           <span class="history-date">{{ formatDate(item.createdAt) }}</span>
           <span class="history-words">{{ item.words.length }} 词</span>
-          <span class="history-arrow">›</span>
+          <span class="history-arrow"><AppIcon name="chevron-right" /></span>
         </button>
       </div>
     </div>
@@ -79,7 +79,7 @@
     <!-- 试卷 -->
     <div v-else class="paper-view">
       <div class="paper-toolbar">
-        <button type="button" class="tool-btn" @click="backToSetup">← 重新出卷</button>
+        <button type="button" class="tool-btn" @click="backToSetup"><AppIcon name="arrow-left" class="tool-btn-icon" />重新出卷</button>
         <div class="toolbar-meta">
           <span class="toolbar-level" :class="level">{{ levelName }}</span>
           <span v-if="isSample" class="toolbar-sample">示例</span>
@@ -167,6 +167,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import wx from '@/mp/wx';
 import api from '@/utils/api';
+import { getPracticeApiSettings } from '@/utils/practiceApi';
 
 const HISTORY_KEY = 'vocabPaperHistory';
 const MAX_HISTORY = 8;
@@ -271,7 +272,7 @@ function collectTodayWords() {
   return out.slice(-30);
 }
 
-// 今日没有记录时的兜底：历年 learnedWords 缓存 + 生词本 + 错词本
+// 今日没有记录时的兜底：历年 learnedWords 缓存 + 错词本
 function collectRecentWords() {
   const out = [];
   const seen = new Set();
@@ -281,7 +282,7 @@ function collectRecentWords() {
       const list = wx.getStorageSync(key);
       if (Array.isArray(list)) list.forEach((word) => pushWord(out, seen, word));
     });
-  ['newWords', 'wrong_words'].forEach((key) => {
+  ['wrong_words'].forEach((key) => {
     const list = wx.getStorageSync(key);
     if (Array.isArray(list)) list.forEach((word) => pushWord(out, seen, word));
   });
@@ -292,7 +293,7 @@ function applyWords(list, isToday) {
   wordInput.value = list.map((item) => (item.meaning ? `${item.word} ${item.meaning}` : item.word)).join('\n');
   fillHint.value = isToday
     ? `已填入今日学习的 ${list.length} 个单词。`
-    : `今天还没有 H5 学习记录，已填入最近学过/生词本中的 ${list.length} 个单词。`;
+    : `今天还没有 H5 学习记录，已填入最近学过的 ${list.length} 个单词。`;
 }
 
 function fillFromLocal() {
@@ -309,6 +310,9 @@ function fillFromLocal() {
 
 function explainError(err) {
   const message = String((err && err.message) || '出卷失败');
+  if (/api[ _-]?key|ANTHROPIC_API_KEY/i.test(message)) {
+    return 'AI 出卷的 API Key 未配置或无效，请到「我的 → 设置 → 四六级出题」填写后重试。';
+  }
   if (/Not Found/i.test(message)) {
     return '后端尚未部署出卷接口，请参考 server-patch/README.md 部署后重试；也可以先查看示例试卷。';
   }
@@ -339,7 +343,11 @@ async function generate() {
   }, 1000);
 
   try {
-    const res = await api.generatePracticePaper({ level: level.value, words });
+    const res = await api.generatePracticePaper({
+      level: level.value,
+      words,
+      ...getPracticeApiSettings()
+    });
     if (!res || res.code !== 200 || !res.data || !res.data.paper) {
       throw new Error((res && res.msg) || '出卷失败');
     }

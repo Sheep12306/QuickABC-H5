@@ -1,6 +1,6 @@
 # 快背单词 · H5
 
-由微信小程序（`miniprogram-1/miniprogram`）迁移而来的 H5 版本。页面结构、配色、玻璃拟态样式、交互逻辑和后端接口均与小程序保持一致。
+由微信小程序（`miniprogram-1/miniprogram`）迁移而来的 H5 版本。后端接口与小程序共用；H5 页面已切换到纸张底色 + 墨绿的视觉体系，首页 / 发现 / 我的 / 学习 / 复习 / 设置等页面为手写重做，不再与小程序逐像素一致。
 
 技术栈：**Vue 3 + Vite + Vue Router（hash 模式）**，无 UI 框架依赖。
 
@@ -9,13 +9,14 @@
 - 首页单词预览、切换词书、连续打卡
 - 分组学习：点击单词计数、发音、进度恢复（本地 + 云端）
 - 复习：当日复习、混组复习、抗遗忘打卡（按日期）
-- 错词本、生词本（本地存储）
-- 听写：自动播放、5/10/15 秒间隔、单词列表、隐藏/显示
+- 错词本（本地存储，连续两次「认识」才移出）
+- 听写：5/10/15 秒间隔、单词列表、隐藏/显示（浏览器需先点击播放）
 - 词汇量测试、学习计划（每日目标）、打卡日历
+- 单词搜索（H5 独有，`/search`）
 - 通勤英语：英语早报 + 昨日单词听觉复习（后端 Edge TTS）
+- 随身听：首页入口进入独立播放页（`public/uihtml/quickabc_walkman.html`）
 - 四六级词汇卷：按今日单词调用 Claude 生成 CET-4/CET-6 选词填空 + 阅读理解 + 答案解析，支持打印/保存 PDF
 - 我的：主题换肤、个人资料、头像上传、手机号、设置
-- 打卡海报：H5 Canvas 生成图片，可直接下载 / 分享
 
 ## 快速开始
 
@@ -74,6 +75,14 @@ VITE_API_BASE=/api VITE_SERVER_BASE= npm run build
 
 示例配置见 `deploy/nginx.conf.example`。
 
+### CI/CD
+
+push 到 `main` 后，GitHub Actions（`.github/workflows/deploy.yml`）会自动构建并 rsync 到
+`115.29.149.87:/opt/QuickABC/vocab-server/h5`，线上地址 `https://h5.kuaikeli.tech`。
+
+首次使用需要在仓库 Settings → Secrets 配置 `DEPLOY_HOST` / `DEPLOY_USER` / `DEPLOY_SSH_KEY`，
+详见 [deploy/README.md](deploy/README.md)。
+
 ## 目录结构
 
 ```
@@ -89,13 +98,16 @@ src/
 │   ├── api.js              # 后端接口（fetch）
 │   ├── auth.js             # H5 设备号登录
 │   ├── tts.js              # 后端 Edge TTS
-│   └── commute.js          # 通勤复习词工具
+│   ├── commute.js          # 通勤复习词工具
+│   ├── checkin.js          # 每日打卡（按组计目标）
+│   ├── ebbinghaus.js       # 抗遗忘复习 / 错词到期计算
+│   └── practiceApi.js      # 四六级出卷的本地 API 配置
 ├── pages/                  # 26 个页面组件
-├── components/             # MpProgress / MpUI
+├── components/             # AppIcon / AppSketch / LiquidGlassTabbar / MpProgress / MpUI / PagePlaceholder
 └── styles/
-    ├── app-base.css        # 由小程序 app.wxss 转换
-    ├── global.css          # H5 外壳样式
-    └── pages/*.css         # 由各页面 wxss 转换（按 .page-xxx 作用域隔离）
+    ├── app-base.css        # 字体 / 颜色 / 圆角 token（手写维护，不再由 app.wxss 覆盖）
+    ├── global.css          # H5 外壳、纸张版式、Toast/Modal 等共用样式
+    └── pages/*.css         # 页面样式；重做页用 .xxx-page，其余仍按 .page-xxx 隔离
 ```
 
 ## 页面 / 路由对照
@@ -119,26 +131,30 @@ src/
 | pages/levelAnswer/levelAnswer | `/level-answer` | 语法闯关 |
 | pages/examSelect/examSelect | `/exam-select` | 选择考试范围 |
 | pages/examAnswer/examAnswer | `/exam-answer` | 模拟考试 |
-| pages/wordBookList/wordBookList | `/word-book-list` | 生词本 |
 | pages/study-plan/study-plan | `/study-plan` | 学习计划 |
-| pages/checkin-poster/checkin-poster | `/checkin-poster` | 打卡海报 |
 | pages/commute/index | `/commute` | 通勤英语 |
 | pages/commute/play | `/commute/play` | 通勤播放 |
 | pages/profile/profile | `/profile` | 个人资料 |
 | pages/settings/settings | `/settings` | 设置 |
+| —（H5 手写） | `/vocab-paper` | 四六级词汇卷 |
+| —（H5 手写） | `/search` | 单词搜索 |
+| pages/game/game | `/game` | 游戏（占位页） |
+| pages/course-detail/course-detail | `/course-detail` | 课程详情（占位页） |
+
+> 小程序里的 `checkin-poster`（打卡海报）和 `wordBookList`（生词本）已在 H5 移除；H5 不再生成分享海报。
 
 ## 小程序 → H5 的适配说明
 
 - **API 兼容层**：页面代码基本保持原样，`wx.getStorageSync`、`wx.showToast`、`wx.navigateTo`、`wx.createInnerAudioContext` 等均由 `src/mp/wx.js` 提供；`Page({...})` 经 `src/mp/page.js` 适配为 Vue 组件，`this.setData()`、`this.data`（已转换为 `this.$data`）、事件对象的 `currentTarget.dataset` / `detail.value` 均可用。
-- **尺寸**：`rpx` 按 `1rpx = 1/75 rem` 转换，`html` 字号为 `min(10vw, 48px)`；桌面端应用最大宽度 480px 居中。页面样式用 `.page-xxx` 前缀隔离，避免不同页面同名类冲突。
+- **尺寸**：`rpx` 按 `1rpx = 1/75 rem` 转换，`html` 字号为 `min(10vw, 48px)`；桌面端应用最大宽度 480px 居中。重做页面用 `.xxx-page` 根类，其余页面仍用 `.page-xxx` 前缀隔离，避免同名类冲突。
 - **登录**：H5 设备号登录（见「后端准备」）。小程序原有的微信登录逻辑保留但不再使用。
-- **音频自动播放**：浏览器要求用户手势后才能出声，因此听写页不再自动播放（提示点击播放），通勤播放页也需要点击 ▶ 开始。单词发音使用有道词典接口，无需登录。
-- **保存海报**：由 `wx.canvasToTempFilePath` + 保存相册，改为 Canvas 2D 绘制 + `toDataURL` + 浏览器下载；分享使用 Web Share API（不支持时复制文案）。
+- **音频自动播放**：浏览器要求用户手势后才能出声，因此听写页不自动播放（提示点击播放），通勤播放页和随身听也需要点击播放。单词发音使用有道词典接口，无需登录。
 - **头像**：`wx.chooseMedia` 用隐藏的 `<input type="file">` 实现，上传走 `FormData`（字段名仍为 `avatar`）。
 - **分享/微信专属能力**：小程序 `open-type="share"`、`wx.login`、`wx.getUserProfile` 等已替换或降级。
-- **顶部导航**：小程序原生导航栏由 `App.vue` 中的 H5 导航栏代替；底部 Tab 使用小程序原图标。
+- **顶部导航**：小程序原生导航栏由 `App.vue` 中的 H5 导航栏代替；底部 Tab 由 `LiquidGlassTabbar` 使用 `AppIcon` 绘制。
+- **随身听**：`public/uihtml/quickabc_walkman.html` 是独立播放页，已接入同一套字体 webfont 与墨绿主题 token。
 
-## 迁移脚本（一次性）
+## 迁移脚本（可选）
 
 `scripts/port.mjs` 是从小程序源码自动生成页面模板/样式/JS 的工具，源路径写死为：
 
@@ -147,10 +163,16 @@ C:/Users/alex/WeChatProjects/miniprogram-1/miniprogram
 ```
 
 ```bash
-npm run port
+npm run port            # 输出到 port-out/，只用于人工比对，不改 src
 ```
 
-> ⚠️ 重新运行会**覆盖** `src/pages/*.vue` 和 `src/styles/pages/*.css`，本仓库中针对 H5 的手工适配（登录、音频自动播放、海报、头像、下拉框、复选等）会丢失。仅在重新从上游小程序同步时使用，并注意合并手工改动。
+确需回写时手动执行（会覆盖生成页）：
+
+```bash
+node scripts/port.mjs --in-place --force
+```
+
+> ⚠️ 回写会跳过手写重做的 Home / Discover / My / Learn / Review / NewWordReview / Settings，但其它页面的字体 token、AppIcon 等 H5 手工改动仍会被小程序旧版本覆盖。`src/styles/app-base.css`（字体与配色 token）永不覆盖，生成结果只写到 `port-out/app-base.css`。
 
 ## 可选：运行时冒烟测试
 
@@ -174,7 +196,7 @@ node scripts/flow.mjs              # 首页→复习→打卡→听写 完整流
 
 ## 已知限制
 
-- 后端未部署 `server-patch` 时无法加载在线数据（本地生词本、学习流程、海报等仍可用）。
+- 后端未部署 `server-patch` 时无法加载在线数据（本地错词本、学习流程等仍可用）。
 - 长单词列表（复习/听写）通过 URL 传递，地址栏会较长；页面刷新后若 URL 被截断可能丢失本次列表（数据仍在本地存储中）。
 - 微信生态能力（分享到微信好友、保存到相册、微信登录）在 H5 上改为浏览器等价能力。
 - 浏览器自动播放限制导致部分音频需要用户先点击一次。

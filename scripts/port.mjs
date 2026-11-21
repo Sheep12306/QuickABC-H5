@@ -1,10 +1,35 @@
 // 小程序 WXML/WXSS/JS → Vue SFC + CSS + 页面 JS 的自动迁移脚本
-// 用法：npm run port
+// 用法：
+//   npm run port                                  # 输出到 port-out/，供人工比对，不改 src
+//   node scripts/port.mjs --in-place --force      # 写回 src（跳过手写页面，不覆盖 app-base.css）
 import fs from 'node:fs';
 import path from 'node:path';
 
 const SRC = 'C:/Users/alex/WeChatProjects/miniprogram-1/miniprogram';
-const OUT = 'C:/Users/alex/Desktop/QuickABC-H5/src';
+const PROJECT = 'C:/Users/alex/Desktop/QuickABC-H5';
+const IN_PLACE = process.argv.includes('--in-place') && process.argv.includes('--force');
+const OUT = IN_PLACE ? path.join(PROJECT, 'src') : path.join(PROJECT, 'port-out');
+
+if (process.argv.includes('--in-place') && !process.argv.includes('--force')) {
+  console.error('--in-place 会覆盖生成页，请确认后追加 --force 再执行。');
+  process.exit(1);
+}
+
+// 这些页面已在 H5 手写重做，回写时跳过，避免覆盖字体 token / AppIcon / 新交互。
+const HAND_WRITTEN_IDS = new Set([
+  'index',
+  'discover',
+  'my',
+  'learn',
+  'review',
+  'new-word-review',
+  'settings',
+]);
+
+if (!fs.existsSync(SRC)) {
+  console.error(`小程序源码不存在：${SRC}`);
+  process.exit(1);
+}
 
 const PAGES = [
   { id: 'index', name: 'Home', dir: 'pages/index/index', title: '快背单词', tab: true },
@@ -24,9 +49,7 @@ const PAGES = [
   { id: 'level-answer', name: 'LevelAnswer', dir: 'pages/levelAnswer/levelAnswer', title: '语法闯关' },
   { id: 'exam-select', name: 'ExamSelect', dir: 'pages/examSelect/examSelect', title: '选择考试范围' },
   { id: 'exam-answer', name: 'ExamAnswer', dir: 'pages/examAnswer/examAnswer', title: '模拟考试' },
-  { id: 'word-book-list', name: 'WordBookList', dir: 'pages/wordBookList/wordBookList', title: '生词本' },
   { id: 'study-plan', name: 'StudyPlan', dir: 'pages/study-plan/study-plan', title: '学习计划' },
-  { id: 'checkin-poster', name: 'CheckinPoster', dir: 'pages/checkin-poster/checkin-poster', title: '打卡成功' },
   { id: 'commute', name: 'CommuteHome', dir: 'pages/commute/index', title: '通勤英语' },
   { id: 'commute-play', name: 'CommutePlay', dir: 'pages/commute/play', title: '通勤播放' },
   { id: 'profile', name: 'Profile', dir: 'pages/profile/profile', title: '个人资料' },
@@ -530,6 +553,11 @@ PAGES.forEach((page) => {
   const wxmlFile = dir + '.wxml';
   const jsFile = dir + '.js';
 
+  if (IN_PLACE && HAND_WRITTEN_IDS.has(page.id)) {
+    console.log(`跳过手写页面：${page.name} (${page.id})`);
+    return;
+  }
+
   if (fs.existsSync(wxmlFile)) {
     const template = convertWxml(fs.readFileSync(wxmlFile, 'utf8'), page.id);
     const js = fs.existsSync(jsFile) ? convertJs(fs.readFileSync(jsFile, 'utf8')) : 'export default {};';
@@ -552,6 +580,16 @@ PAGES.forEach((page) => {
   }
 });
 
-write(path.join(OUT, 'styles', 'app-base.css'), convertAppWxss());
+// src/styles/app-base.css 已手写维护（字体 token + 低饱和配色），不再由 app.wxss 覆盖。
+// 无论哪种模式，都把小程序转换结果单独写到 port-out/app-base.css 供比对。
+const appBaseOut = IN_PLACE
+  ? path.join(PROJECT, 'port-out', 'app-base.css')
+  : path.join(OUT, 'styles', 'app-base.css');
+write(appBaseOut, convertAppWxss());
 
 console.log('迁移完成：', PAGES.length, '个页面');
+console.log('输出目录：', OUT);
+if (IN_PLACE) {
+  console.log('已跳过手写页面；app-base.css 生成结果写到 port-out/app-base.css，未覆盖 src。');
+}
+

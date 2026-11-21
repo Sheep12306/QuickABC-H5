@@ -1,7 +1,7 @@
 .page-dictation .dictation-bg,
 .page-dictation.dictation-bg {
   min-height: 100vh;
-  background: linear-gradient(175deg, #C8E6C9 0%, #E8F5E9 30%, #F1F8F4 100%);
+  background: var(--page-paper);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -11,21 +11,24 @@
 .page-dictation.dictation-top {
   display: flex;
   align-items: center;
-  padding: 0.32rem 0.4267rem;
+  padding: 0.419rem 0.49rem 0.209rem;
   gap: 0.16rem;
 }
 
 .page-dictation .dictation-title,
 .page-dictation.dictation-title {
-  font-size: 0.3733rem;
-  font-weight: 600;
-  color: #2C3E2D;
+  display: none;
+  font-family: var(--font-serif);
+  font-size: 0.465rem;
+  font-weight: 700;
+  letter-spacing: 0.012rem;
+  color: var(--page-ink);
 }
 
 .page-dictation .dictation-progress,
 .page-dictation.dictation-progress {
   font-size: 0.2933rem;
-  color: #8A9B8B;
+  color: #8c9187;
 }
 
 .page-dictation .top-spacer,
@@ -41,12 +44,13 @@
 
 .page-dictation .interval-btn,
 .page-dictation.interval-btn {
-  font-size: 0.32rem;
-  color: #8A9B8B;
-  padding: 0.1067rem 0.24rem;
-  border-radius: 0.2133rem;
-  background: rgba(255, 255, 255, 0.55);
-  font-weight: 500;
+  font-size: 0.302rem;
+  color: #6f7569;
+  padding: 0.093rem 0.233rem;
+  border-radius: 0.233rem;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  font-weight: 600;
 }
 
 .page-dictation .dictation-main,
@@ -99,21 +103,17 @@
   transform: scale(0.92);
 }
 
-.page-dictation .audio-tri-sm,
-.page-dictation.audio-tri-sm {
-  width: 0;
-  height: 0;
-  border-top: 0.1333rem solid transparent;
-  border-bottom: 0.1333rem solid transparent;
-  border-left: 0.2133rem solid #43A047;
-  margin-left: 0.0533rem;
+.page-dictation .audio-glyph-sm,
+.page-dictation.audio-glyph-sm {
+  font-size: 0.279rem;
 }
 
 .page-dictation .dict-word,
 .page-dictation.dict-word {
+  font-family: var(--font-word);
   font-size: 1.1733rem;
   font-weight: 700;
-  color: #1A1A1A;
+  color: #24372b;
   letter-spacing: 0.0133rem;
   margin-bottom: 0.2133rem;
 }
@@ -126,9 +126,12 @@
 
 .page-dictation .dict-meaning,
 .page-dictation.dict-meaning {
+  font-family: var(--font-serif);
   font-size: 0.5867rem;
-  font-weight: 600;
-  color: #1A1A1A;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.019em;
+  color: #24372b;
 }
 
 .page-dictation .hidden-section,
@@ -142,27 +145,29 @@
 .page-dictation .hidden-tip,
 .page-dictation.hidden-tip {
   font-size: 0.48rem;
-  color: #8A9B8B;
+  color: #8c9187;
 }
 
 .page-dictation .hidden-hint,
 .page-dictation.hidden-hint {
   font-size: 0.32rem;
-  color: #B0B8B0;
+  color: #b6b8ae;
   margin-top: 0.16rem;
 }
 
 .page-dictation .empty-card,
 .page-dictation.empty-card {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.186rem;
 }
 
 .page-dictation .empty-tip,
 .page-dictation.empty-tip {
-  font-size: 0.4267rem;
-  color: #8A9B8B;
+  font-size: 0.4rem;
+  color: #a7aa9f;
 }
 
 .page-dictation .dictation-bar,
@@ -170,8 +175,13 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 0.32rem 0.5333rem 0.5867rem;
+  margin: 0 0.49rem calc(0.419rem + env(safe-area-inset-bottom));
+  padding: 0.209rem 0.349rem;
   flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  border-radius: 0.66rem;
+  background: var(--page-card);
+  box-shadow: var(--page-shadow-card);
 }
 
 .page-dictation .bar-item,
@@ -189,8 +199,18 @@
 
 .page-dictation .bar-icon,
 .page-dictation.bar-icon {
-  font-size: 0.5867rem;
+  font-size: 0.419rem;
   line-height: 1;
+}
+
+.page-dictation .bar-skip,
+.page-dictation.bar-skip {
+  font-size: 0.442rem;
+}
+
+.page-dictation .bar-play-icon,
+.page-dictation.bar-play-icon {
+  font-size: 0.442rem;
 }
 
 .page-dictation .bar-eye.eye-off,
@@ -201,16 +221,16 @@
 .page-dictation .bar-text,
 .page-dictation.bar-text {
   font-size: 0.3467rem;
-  color: #4A5B4B;
+  color: #4f574c;
   font-weight: 500;
 }
 
 .page-dictation .bar-play,
 .page-dictation.bar-play {
-  width: 1.1733rem;
-  height: 1.1733rem;
-  border-radius: 0.5867rem;
-  background: #E8F5E9;
+  width: 1.06rem;
+  height: 1.06rem;
+  border-radius: 50%;
+  background: #e6efe2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -235,7 +255,7 @@
   height: 0;
   border-top: 0.2667rem solid transparent;
   border-bottom: 0.2667rem solid transparent;
-  border-left: 0.4rem solid #43A047;
+  border-left: 0.4rem solid #326d43;
   margin-left: 0.08rem;
 }
 
@@ -249,7 +269,7 @@
 .page-dictation.pause-bar {
   width: 0.1067rem;
   height: 0.4533rem;
-  background: #43A047;
+  background: #326d43;
   border-radius: 0.0533rem;
 }
 
@@ -303,8 +323,8 @@
   transform: translate(-50%, -50%);
   width: 85%;
   max-height: 70vh;
-  background: #FFFFFF;
-  border-radius: 0.3733rem;
+  background: #fbfaf3;
+  border-radius: 0.512rem;
   z-index: 100;
   box-shadow: 0 0.1067rem 0.48rem rgba(0, 0, 0, 0.12);
   overflow: hidden;
@@ -316,20 +336,22 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 0.0133rem solid #F0F0F0;
+  border-bottom: 1px solid var(--page-line);
 }
 
 .page-dictation .popup-title,
 .page-dictation.popup-title {
-  font-size: 0.4rem;
-  color: #2C3E2D;
-  font-weight: 600;
+  font-family: var(--font-serif);
+  font-size: 0.419rem;
+  color: var(--page-ink);
+  font-weight: 700;
+  letter-spacing: 0.012rem;
 }
 
 .page-dictation .close-btn,
 .page-dictation.close-btn {
-  font-size: 0.5333rem;
-  color: #8A9B8B;
+  font-size: 0.4rem;
+  color: #8c9187;
   width: 0.7467rem;
   height: 0.7467rem;
   display: flex;
@@ -346,13 +368,14 @@
 .page-dictation .list-item,
 .page-dictation.list-item {
   padding: 0.2933rem 0;
-  border-bottom: 0.0133rem solid #F5F5F5;
+  border-bottom: 1px solid var(--page-line);
 }
 
 .page-dictation .list-en,
 .page-dictation.list-en {
+  font-family: var(--font-word);
   font-size: 0.4267rem;
-  color: #2C3E2D;
+  color: #24372b;
   display: block;
   margin-bottom: 0.0533rem;
   font-weight: 500;
@@ -360,6 +383,6 @@
 
 .page-dictation .list-meaning,
 .page-dictation.list-meaning {
-  font-size: 0.32rem;
-  color: #8A9B8B;
+  font-size: 0.293rem;
+  color: var(--page-muted);
 }

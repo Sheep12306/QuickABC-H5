@@ -1,6 +1,6 @@
 # QuickABC 项目交接与当前状态
 
-更新日期：2026-11-15
+更新日期：2026-11-21
 
 ## 仓库与本地路径
 
@@ -19,6 +19,9 @@
 - 后端独立仓库；已合入 `POST /api/auth/h5-login` 与 `POST /api/practice/generate`。
 - 本地端到端联调：登录、词书、学习记录、今日单词自动填入、示例试卷。
 - 后端 AI 调用增加 120 秒超时和 1 次重试；未配置 Key 时返回明确中文提示。
+- H5 视觉切换到纸张底色 + 墨绿体系：思源宋体 / Inter webfont、`AppIcon` / `AppSketch` / `LiquidGlassTabbar`，首页 / 发现 / 我的 / 学习 / 复习 / 错词本 / 设置重做。
+- 新增 `/search` 单词搜索、随身听独立播放页（`public/uihtml/quickabc_walkman.html`）。
+- 错词本实现「连续两次认识才移出」，目前仅 H5。
 
 ## 本地运行方式
 
@@ -36,7 +39,9 @@
 3. 构建并部署 H5，把 `VITE_API_BASE` 指向线上后端。
 4. 手动删除 GitHub 上的重复仓库 `Sheep12306/-QuickABC-Server`。
 5. 在 `WeChatProjects/miniprogram-1` 执行 `git pull`，同步已删除的 `vocab-server/`。
-6. 视需要停止临时 MySQL / 后端 / H5 进程。
+6. 把错词本「连续两次认识才移出」同步到两份小程序源码（`WeChatProjects/miniprogram-1`、`Desktop/QuickABC`）。
+7. 小程序两份本地副本目前不一致：`WeChatProjects` 工作副本有未提交的通勤模块 / Discover 改动，`Desktop/QuickABC` 落后一个提交。
+8. 视需要停止临时 MySQL / 后端 / H5 进程。
 
 ## 已知限制
 

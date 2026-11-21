@@ -1,0 +1,22 @@
+/* 首屏骨架样式：必须在 JS 加载前就生效，所以放在 index.html 里用 link 引入。
+   （内联 <style> 会触发当前 Vite 版本的 html-proxy 构建错误） */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #f6f5ed;
+}
+
+#app {
+  min-height: 100dvh;
+}
+
+.boot-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100dvh;
+  color: #326d43;
+  font-size: 15px;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+}

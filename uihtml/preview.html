@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>切换词书</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  background:#dce0d4;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",
+  "Microsoft YaHei",sans-serif;
+  color:#303830;
+}
+.status{
+  height:41px;
+  padding:9px 16px;
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  font-weight:600;
+  color:#343a34;
+}
+.sheet{
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:calc(100% - 41px);
+  min-height:500px;
+  background:#f7f6ef;
+  border-radius:21px 21px 0 0;
+  padding:10px 15px 17px;
+  box-shadow:0 -5px 25px rgba(0,0,0,.08);
+  display:flex;
+  flex-direction:column;
+}
+.handle{
+  width:39px;height:4px;
+  border-radius:10px;
+  background:#d3d3ca;
+  margin:0 auto 12px;
+}
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 1px 16px;
+}
+.header h2{
+  margin:0;
+  font-size:17px;
+  font-weight:650;
+}
+.close{
+  border:0;
+  background:none;
+  font-size:23px;
+  color:#303830;
+  padding:0 0 0 12px;
+}
+.book-list{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  flex:1;
+}
+.book{
+  display:flex;
+  align-items:center;
+  height:73px;
+  padding:7px 12px;
+  border-radius:13px;
+  cursor:pointer;
+  transition:background .18s;
+}
+.book.active{background:#e5eddf}
+.cover{
+  width:43px;
+  height:58px;
+  border-radius:5px;
+  flex-shrink:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  box-shadow:2px 3px 6px rgba(0,0,0,.13);
+  position:relative;
+  overflow:hidden;
+}
+.cover:before{
+  content:"";
+  position:absolute;
+  left:4px;top:0;bottom:0;
+  width:1px;background:rgba(255,255,255,.35);
+}
+.cover b{
+  font-family:Georgia,serif;
+  font-size:11px;
+}
+.cover small{font-size:6px;margin-top:4px}
+.cet4{background:linear-gradient(145deg,#6eaa82,#39734d)}
+.cet6{background:linear-gradient(145deg,#eee3ca,#c8b58f);color:#76664b}
+.kaoyan{background:linear-gradient(145deg,#91a9c5,#627e9e)}
+.toefl{background:linear-gradient(145deg,#a99cbd,#786a96)}
+.info{
+  margin-left:19px;
+  flex:1;
+  min-width:0;
+}
+.name{
+  font-size:14px;
+  font-weight:600;
+  margin-bottom:6px;
+}
+.detail{
+  font-size:11px;
+  color:#92948a;
+}
+.progress{
+  width:17px;height:17px;
+  border:2px solid #dedfd7;
+  border-radius:50%;
+  flex-shrink:0;
+  margin-left:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:11px;
+}
+.active .progress{
+  background:#438253;
+  border-color:#438253;
+}
+.active .progress:after{content:"✓"}
+.percent{
+  font-size:14px;
+  font-weight:600;
+  color:#92948b;
+  margin-left:12px;
+  min-width:30px;
+  text-align:right;
+}
+.active .percent{color:#438253}
+.manage{
+  height:44px;
+  flex-shrink:0;
+  border:0;
+  border-radius:25px;
+  background:#eae9df;
+  color:#41483f;
+  font-size:14px;
+  font-weight:650;
+  margin:8px 3px 0;
+}
+.manage:active{background:#dedfd3}
+@media(min-width:600px){
+  body{max-width:430px;margin:auto;min-height:850px;position:relative}
+  .sheet{height:calc(100% - 41px)}
+}
+</style>
+</head>
+<body>
+<div class="status">
+  <span>9:41</span>
+  <span>▮▮▮　◔　▰</span>
+</div>
+
+<main class="sheet">
+  <div class="handle"></div>
+
+  <header class="header">
+    <h2>切换词书</h2>
+    <button class="close" onclick="history.back()">×</button>
+  </header>
+
+  <section class="book-list" id="books">
+    <div class="book active" onclick="selectBook(this)">
+      <div class="cover cet4">
+        <b>CET-4</b><small>核心词汇</small>
+      </div>
+      <div class="info">
+        <div class="name">CET-4 核心词汇</div>
+        <div class="detail">5500 词 · 已掌握 2310 词</div>
+      </div>
+      <div class="percent">42%</div>
+      <div class="progress"></div>
+    </div>
+
+    <div class="book" onclick="selectBook(this)">
+      <div class="cover cet6">
+        <b>CET-6</b><small>核心词汇</small>
+      </div>
+      <div class="info">
+        <div class="name">CET-6 核心词汇</div>
+        <div class="detail">6000 词 · 未开始</div>
+      </div>
+      <div class="percent">0%</div>
+      <div class="progress"></div>
+    </div>
+
+    <div class="book" onclick="selectBook(this)">
+      <div class="cover kaoyan">
+        <b style="font-size:8px">考研英语</b>
+        <small>核心词汇</small>
+      </div>
+      <div class="info">
+        <div class="name">考研英语</div>
+        <div class="detail">5500 词 · 未开始</div>
+      </div>
+      <div class="percent">0%</div>
+      <div class="progress"></div>
+    </div>
+
+    <div class="book" onclick="selectBook(this)">
+      <div class="cover toefl">
+        <b>TOEFL</b><small>核心词汇</small>
+      </div>
+      <div class="info">
+        <div class="name">TOEFL 核心词汇</div>
+        <div class="detail">4000 词 · 未开始</div>
+      </div>
+      <div class="percent">0%</div>
+      <div class="progress"></div>
+    </div>
+  </section>
+
+  <button class="manage" onclick="alert('进入词库管理')">
+    管理词库
+  </button>
+</main>
+
+<script>
+function selectBook(element){
+  document.querySelectorAll('.book').forEach(book=>{
+    book.classList.remove('active');
+  });
+  element.classList.add('active');
+}
+</script>
+</body>
+</html>

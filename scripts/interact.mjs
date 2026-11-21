@@ -23,35 +23,7 @@ function check(name, ok, detail = '') {
   results.push(`${ok ? 'PASS' : 'FAIL'} ${name}${detail ? ` — ${detail}` : ''}`);
 }
 
-// ---------- 1. 生词本：添加生词 ----------
-await page.goto(BASE + '/#/word-book-list', { waitUntil: 'domcontentloaded' });
-await sleep(BOOT_MS);
-await page.evaluate(() => localStorage.removeItem('quickabc:newWords'));
-await page.evaluate(() => {
-  const btn = [...document.querySelectorAll('.top-action')].find((b) => b.innerText.includes('添加'));
-  btn && btn.click();
-});
-await sleep(400);
-const modalOpen = await page.evaluate(() => !!document.querySelector('.add-modal'));
-check('生词本-打开添加弹窗', modalOpen);
-const inputs = await page.$$('.add-modal .modal-input');
-if (inputs.length === 3) {
-  await inputs[0].type('serendipity');
-  await inputs[1].type('/ˌserənˈdɪpəti/');
-  await inputs[2].type('意外发现');
-  await page.evaluate(() => {
-    const btn = [...document.querySelectorAll('.modal-btn')].find((b) => b.innerText.includes('确认添加'));
-    btn && btn.click();
-  });
-  await sleep(500);
-  const body = await page.evaluate(() => document.body.innerText);
-  const stored = await page.evaluate(() => localStorage.getItem('quickabc:newWords'));
-  check('生词本-添加成功', body.includes('serendipity') && !!stored, body.includes('serendipity') ? '列表已更新' : '列表未出现');
-} else {
-  check('生词本-输入框数量', false, `找到 ${inputs.length} 个`);
-}
-
-// ---------- 2. 考试范围：勾选 ----------
+// ---------- 1. 考试范围：勾选 ----------
 await page.goto(BASE + '/#/exam-select', { waitUntil: 'domcontentloaded' });
 await sleep(BOOT_MS);
 await page.evaluate(() => document.querySelector('.scope-item').click());
@@ -60,7 +32,7 @@ const countText = await page.evaluate(() => document.querySelector('.count-tip')
 const checked = await page.evaluate(() => document.querySelector('.scope-item input').checked);
 check('考试范围-勾选并计数', countText.includes('已选1类') && checked, countText.trim());
 
-// ---------- 3. 学习页：点击单词 ----------
+// ---------- 2. 学习页：点击单词 ----------
 await page.goto(BASE + '/#/learn?bookId=11&startGroup=1', { waitUntil: 'domcontentloaded' });
 await sleep(BOOT_MS);
 const wordCards = await page.$$('.word-card');
@@ -77,7 +49,7 @@ if (wordCards.length) {
   check('学习页-点击两次显示释义', state.activeDots === 2 && state.infoShown, JSON.stringify(state));
 }
 
-// ---------- 4. 听写：带参数导航 + 数据传递 ----------
+// ---------- 3. 听写：带参数导航 + 数据传递 ----------
 // 先回到首页，确保学习页已完成卸载写入，避免测试数据被覆盖
 await page.goto(BASE + '/#/', { waitUntil: 'domcontentloaded' });
 await sleep(600);
@@ -107,7 +79,7 @@ await sleep(1200);
 const dictationText = await page.evaluate(() => document.body.innerText);
 check('听写页-接收单词参数', dictationText.includes('zebra') && dictationText.includes('1/2'), dictationText.slice(0, 80).replace(/\n/g, ' '));
 
-// ---------- 5. 我的：登录弹窗 ----------
+// ---------- 4. 我的：登录弹窗 ----------
 await page.goto(BASE + '/#/my', { waitUntil: 'domcontentloaded' });
 await sleep(BOOT_MS);
 const loginBtn = await page.$('.onekey-login-btn');

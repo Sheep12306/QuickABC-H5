@@ -4,6 +4,8 @@ import router from './router';
 import wx, { getApp } from './mp/wx';
 import { setRouter, initStack, getCurrentPages } from './mp/nav';
 import MpProgress from './components/MpProgress.vue';
+import AppIcon from './components/AppIcon.vue';
+import AppSketch from './components/AppSketch.vue';
 import { ensureLogin } from './utils/auth';
 import api from './utils/api';
 
@@ -21,6 +23,8 @@ initStack(router.currentRoute.value.fullPath);
 
 const app = createApp(App);
 app.component('MpProgress', MpProgress);
+app.component('AppIcon', AppIcon);
+app.component('AppSketch', AppSketch);
 app.use(router);
 
 const autoLogin = import.meta.env.VITE_AUTO_LOGIN !== 'false';

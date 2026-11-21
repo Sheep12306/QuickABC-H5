@@ -1,14 +1,15 @@
 <template>
-<div class="record-container page-study-record" :style="&quot;background:&quot; + (cardThemes[themeIdx].bg) + &quot;;&quot;"><div class="calendar-header"><span @click="mp('prevMonth', $event)" class="month-btn">＜</span><span class="current-month">{{currentYear}}年{{currentMonth}}月</span><span @click="mp('nextMonth', $event)" class="month-btn">＞</span></div><div class="week-header"><span class="week-item">日</span><span class="week-item">一</span><span class="week-item">二</span><span class="week-item">三</span><span class="week-item">四</span><span class="week-item">五</span><span class="week-item">六</span></div><div class="calendar-body"><div v-for="(item, index) in calendarDays" :key="index" @click="mp('selectDate', $event)" class="date-item" :data-date="item.date" :data-wordnum="item.wordNum"><span :class="&quot;date-text &quot; + (!item.isCurrentMonth ? 'not-current' : '') + (item.isCheckIn ? 'check-in' : '') + (item.date === selectedDate ? 'selected' : '')" :style="(item.date === selectedDate ? 'background:' + themeColors[themeIdx].accent + ';' : '') + (item.isCheckIn && item.date !== selectedDate ? 'color:' + themeColors[themeIdx].accent + ';' : '')">
+<div class="record-container page-study-record"><div class="calendar-header"><span @click="mp('prevMonth', $event)" class="month-btn"><AppIcon name="chevron-left" /></span><span class="current-month">{{currentYear}}年{{currentMonth}}月</span><span @click="mp('nextMonth', $event)" class="month-btn"><AppIcon name="chevron-right" /></span></div><div class="week-header"><span class="week-item">日</span><span class="week-item">一</span><span class="week-item">二</span><span class="week-item">三</span><span class="week-item">四</span><span class="week-item">五</span><span class="week-item">六</span></div><div class="calendar-body"><div v-for="(item, index) in calendarDays" :key="index" @click="mp('selectDate', $event)" class="date-item" :data-date="item.date" :data-wordnum="item.wordNum"><span :class="&quot;date-text &quot; + (!item.isCurrentMonth ? 'not-current' : '') + (item.isCheckIn ? 'check-in' : '') + (item.date === selectedDate ? 'selected' : '')" :style="(item.date === selectedDate ? 'background:' + themeColors[themeIdx].accent + ';' : '') + (item.isCheckIn && item.date !== selectedDate ? 'color:' + themeColors[themeIdx].accent + ';' : '')">
         {{item.day}}
       </span><div v-if="item.isCheckIn && item.isCurrentMonth" class="check-mark" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"></div></div></div><div v-if="selectedDate" class="detail-card"><span class="detail-title">{{selectedDate}} 打卡详情</span><span class="detail-content" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">
-      {{selectedWordNum > 0 ? '当日背单词数：' + selectedWordNum + ' 个' : '当日未打卡'}}
+      {{selectedWordNum > 0 ? '当日背单词数：' + selectedWordNum + ' 个' : '当日未背单词'}}
     </span></div></div>
 </template>
 
 <script>
 
 import { createPage } from '@/mp/page';
+import { dateKey } from '@/utils/ebbinghaus';
 
 export default createPage({
     data: {
@@ -19,19 +20,19 @@ export default createPage({
       selectedWordNum: 0,
       checkInData: {},
       themeColors: [
-        { accent: '#43A047', light: '#E8F5E9' },
-        { accent: '#00897B', light: '#E0F2F1' },
-        { accent: '#F57C00', light: '#FFF3E0' },
-        { accent: '#7B1FA2', light: '#F3E5F5' },
-        { accent: '#1976D2', light: '#E3F2FD' }
+        { accent: '#326d43', light: '#e6efe2' },
+        { accent: '#2f6f6a', light: '#e2efed' },
+        { accent: '#a9692c', light: '#f6e9da' },
+        { accent: '#6f5686', light: '#eee7f4' },
+        { accent: '#3c6382', light: '#e6edf2' }
       ],
       themeIdx: 0,
       cardThemes: [
-        { bg: 'linear-gradient(175deg, #C8E6C9 0%, #E8F5E9 30%, #F1F8F4 100%)' },
-        { bg: 'linear-gradient(175deg, #B2DFDB 0%, #E0F2F1 30%, #F1F8F7 100%)' },
-        { bg: 'linear-gradient(175deg, #FFE0B2 0%, #FFF3E0 30%, #FFF8F5 100%)' },
-        { bg: 'linear-gradient(175deg, #E1BEE7 0%, #F3E5F5 30%, #F8F4FA 100%)' },
-        { bg: 'linear-gradient(175deg, #BBDEFB 0%, #E3F2FD 30%, #F5F8FC 100%)' }
+        { bg: 'linear-gradient(175deg, #C8E6C9 0%, #e6efe2 30%, #F1F8F4 100%)' },
+        { bg: 'linear-gradient(175deg, #B2DFDB 0%, #e2efed 30%, #F1F8F7 100%)' },
+        { bg: 'linear-gradient(175deg, #FFE0B2 0%, #f6e9da 30%, #FFF8F5 100%)' },
+        { bg: 'linear-gradient(175deg, #E1BEE7 0%, #eee7f4 30%, #F8F4FA 100%)' },
+        { bg: 'linear-gradient(175deg, #BBDEFB 0%, #e6edf2 30%, #F5F8FC 100%)' }
       ]
     },
 
@@ -47,21 +48,49 @@ export default createPage({
 
     loadCheckInData() {
       try {
-        const checkInData = {};
-        // Read daily learned words from storage across all book IDs and dates
-        for (let i = 0; i < 60; i++) {
-          const d = new Date();
-          d.setDate(d.getDate() - i);
-          const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-          // Check common book IDs
-          for (const bookId of ['primary_school', '1', 1]) {
-            const key = `dailyLearnedWords_${bookId}_${dateStr}`;
-            const words = wx.getStorageSync(key) || [];
-            if (words.length > 0) {
-              checkInData[dateStr] = (checkInData[dateStr] || 0) + words.length;
-            }
+        // 日历只统计「当天背了多少词」：扫描所有词书的 dailyLearnedWords_<bookId>_<date>，
+        // 同一天多本书的同一个单词只算一次。
+        const prefix = 'dailyLearnedWords_';
+        let keys = [];
+        try {
+          keys = (wx.getStorageInfoSync().keys || []).filter(key => key.startsWith(prefix));
+        } catch (err) {
+          keys = [];
+        }
+
+        // 拿不到 key 列表时，按当前词书兜底扫描最近 60 天。
+        if (!keys.length) {
+          const book = wx.getStorageSync('currentBook') || {};
+          const bookId = book.id || 1;
+          for (let i = 0; i < 60; i++) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            keys.push(`${prefix}${bookId}_${dateKey(d)}`);
           }
         }
+
+        const wordsByDate = {};
+        keys.forEach(key => {
+          const match = key.slice(prefix.length).match(/^(.+)_(\d{4}-\d{2}-\d{2})$/);
+          if (!match) return;
+          const date = match[2];
+          const words = wx.getStorageSync(key);
+          if (!Array.isArray(words) || !words.length) return;
+
+          const bucket = wordsByDate[date] || (wordsByDate[date] = new Map());
+          words.forEach((word, index) => {
+            if (!word) return;
+            const id = word.id != null ? String(word.id) : (word.en || `index-${index}`);
+            bucket.set(id, word);
+          });
+        });
+
+        const checkInData = {};
+        Object.keys(wordsByDate).forEach(date => {
+          const count = wordsByDate[date].size;
+          if (count > 0) checkInData[date] = count;
+        });
+
         this.setData({ checkInData });
       } catch (e) {
         // keep empty

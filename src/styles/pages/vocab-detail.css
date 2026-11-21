@@ -1,43 +1,51 @@
 .page-vocab-detail .detail-container,
 .page-vocab-detail.detail-container {
   min-height: 100vh;
-  padding: 0.3733rem;
+  padding: 0.419rem 0.49rem 0.64rem;
   box-sizing: border-box;
+  background: var(--page-paper);
+  color: var(--page-ink);
 }
 
 .page-vocab-detail .score-card,
 .page-vocab-detail.score-card {
-  background: rgba(255, 255, 255, 0.62);
-  border-radius: 0.48rem;
-  border: 0.0133rem solid rgba(255, 255, 255, 0.65);
-  box-shadow: 0 0.0533rem 0.32rem rgba(46, 125, 50, 0.08);
-  padding: 0.64rem 0.2667rem 0.48rem;
+  background: var(--page-card);
+  border-radius: 0.512rem;
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  box-shadow: var(--page-shadow-card);
+  padding: 0.746rem 0.2667rem 0.5333rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 0.2667rem;
+  margin-bottom: 0.279rem;
 }
 
 .page-vocab-detail .score-label,
 .page-vocab-detail.score-label {
-  font-size: 0.3733rem;
-  color: #6A7B6B;
-  margin-bottom: 0.16rem;
+  font-size: 0.326rem;
+  color: var(--page-muted);
+  margin-bottom: 0.209rem;
+  letter-spacing: 0.012rem;
 }
 
 .page-vocab-detail .score-num,
 .page-vocab-detail.score-num {
-  font-size: 1.0667rem;
+  font-family: var(--font-num);
+  font-size: 1.28rem;
   font-weight: 700;
   line-height: 1;
-  margin-bottom: 0.3733rem;
+  margin-bottom: 0.419rem;
 }
 
 .page-vocab-detail .test-btn,
 .page-vocab-detail.test-btn {
-  padding: 0.2667rem 0.6933rem;
-  border-radius: 0.3733rem;
-  box-shadow: 0 0.08rem 0.2667rem rgba(46, 125, 50, 0.16);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 0.907rem;
+  padding: 0 0.7467rem;
+  border-radius: 0.233rem;
+  box-shadow: 0 0.093rem 0.233rem rgba(45, 104, 62, 0.12);
 }
 
 .page-vocab-detail .test-btn:active,
@@ -54,28 +62,34 @@
 
 .page-vocab-detail .history-card,
 .page-vocab-detail.history-card {
-  background: rgba(255, 255, 255, 0.58);
-  border-radius: 0.3733rem;
-  border: 0.0133rem solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0.04rem 0.2133rem rgba(46, 125, 50, 0.06);
-  padding: 0.3733rem;
+  background: var(--page-card-soft);
+  border-radius: 0.465rem;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: var(--page-shadow-soft);
+  padding: 0.372rem;
 }
 
 .page-vocab-detail .history-title,
 .page-vocab-detail.history-title {
-  font-size: 0.3733rem;
-  font-weight: 600;
-  color: #2C3E2D;
-  margin-bottom: 0.2133rem;
+  font-family: var(--font-serif);
+  font-size: 0.4rem;
+  font-weight: 700;
+  letter-spacing: 0.012rem;
+  color: var(--page-ink);
+  margin-bottom: 0.16rem;
   display: block;
 }
 
 .page-vocab-detail .no-history,
 .page-vocab-detail.no-history {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.186rem;
   text-align: center;
   padding: 0.5333rem 0;
   font-size: 0.3467rem;
-  color: #8A9B8B;
+  color: #8c9187;
 }
 
 .page-vocab-detail .history-item,
@@ -83,8 +97,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.2667rem 0;
-  border-bottom: 0.0133rem solid rgba(46, 125, 50, 0.06);
+  padding: 0.279rem 0;
+  border-bottom: 1px solid var(--page-line);
 }
 
 .page-vocab-detail .history-item:last-child,
@@ -102,17 +116,18 @@
 .page-vocab-detail .test-time,
 .page-vocab-detail.test-time {
   font-size: 0.3467rem;
-  color: #2C3E2D;
+  color: #24372b;
 }
 
 .page-vocab-detail .test-desc,
 .page-vocab-detail.test-desc {
   font-size: 0.2933rem;
-  color: #8A9B8B;
+  color: #8c9187;
 }
 
 .page-vocab-detail .test-score,
 .page-vocab-detail.test-score {
-  font-size: 0.3733rem;
-  font-weight: 500;
+  font-family: var(--font-num);
+  font-size: 0.4rem;
+  font-weight: 700;
 }

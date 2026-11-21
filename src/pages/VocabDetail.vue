@@ -1,5 +1,5 @@
 <template>
-<div class="detail-container page-vocab-detail" :style="&quot;background:&quot; + (cardThemes[themeIdx].bg) + &quot;;&quot;"><div class="score-card"><span class="score-label">上次测试词汇量</span><span class="score-num" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">{{lastVocabScore || 0}}</span><div @click="mp('goToVocabTest', $event)" class="test-btn" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span class="test-btn-text">测试我的词汇量</span></div></div><div class="history-card"><span class="history-title">历史测试记录</span><div v-if="vocabHistory.length === 0" class="no-history"><span >暂无词汇量测试记录，快去测试吧</span></div><div v-else class="history-list"><template v-for="(item, index) in vocabHistory" :key="item.id"><div v-if="index < 10" @click="mp('showRecordDetail', $event)" class="history-item" :data-record-json="JSON.stringify(item)"><div class="item-left"><span class="test-time">{{item.testTime}}</span><span class="test-desc">词汇量测试{{item.bookResults ? ' · ' + item.bookResults.length + '本书' : ''}}</span></div><span class="test-score" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">{{item.estimatedVocab || item.score}} 词</span></div></template></div></div></div>
+<div class="detail-container page-vocab-detail"><div class="score-card"><span class="score-label">上次测试词汇量</span><span class="score-num" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">{{lastVocabScore || 0}}</span><div @click="mp('goToVocabTest', $event)" class="test-btn" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span class="test-btn-text">测试我的词汇量</span></div></div><div class="history-card"><span class="history-title">历史测试记录</span><div v-if="vocabHistory.length === 0" class="no-history"><AppIcon name="gauge" class="empty-state-icon" /><span>暂无词汇量测试记录，快去测试吧</span></div><div v-else class="history-list"><template v-for="(item, index) in vocabHistory" :key="item.id"><div v-if="index < 10" @click="mp('showRecordDetail', $event)" class="history-item" :data-record-json="JSON.stringify(item)"><div class="item-left"><span class="test-time">{{item.testTime}}</span><span class="test-desc">词汇量测试{{item.bookResults ? ' · ' + item.bookResults.length + '本书' : ''}}</span></div><span class="test-score" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">{{item.estimatedVocab || item.score}} 词</span></div></template></div></div></div>
 </template>
 
 <script>
@@ -13,19 +13,19 @@ export default createPage({
       lastVocabScore: 0,
       vocabHistory: [],
       themeColors: [
-        { accent: '#43A047', light: '#E8F5E9' },
-        { accent: '#00897B', light: '#E0F2F1' },
-        { accent: '#F57C00', light: '#FFF3E0' },
-        { accent: '#7B1FA2', light: '#F3E5F5' },
-        { accent: '#1976D2', light: '#E3F2FD' }
+        { accent: '#326d43', light: '#e6efe2' },
+        { accent: '#2f6f6a', light: '#e2efed' },
+        { accent: '#a9692c', light: '#f6e9da' },
+        { accent: '#6f5686', light: '#eee7f4' },
+        { accent: '#3c6382', light: '#e6edf2' }
       ],
       themeIdx: 0,
       cardThemes: [
-        { bg: 'linear-gradient(175deg, #C8E6C9 0%, #E8F5E9 30%, #F1F8F4 100%)' },
-        { bg: 'linear-gradient(175deg, #B2DFDB 0%, #E0F2F1 30%, #F1F8F7 100%)' },
-        { bg: 'linear-gradient(175deg, #FFE0B2 0%, #FFF3E0 30%, #FFF8F5 100%)' },
-        { bg: 'linear-gradient(175deg, #E1BEE7 0%, #F3E5F5 30%, #F8F4FA 100%)' },
-        { bg: 'linear-gradient(175deg, #BBDEFB 0%, #E3F2FD 30%, #F5F8FC 100%)' }
+        { bg: 'linear-gradient(175deg, #C8E6C9 0%, #e6efe2 30%, #F1F8F4 100%)' },
+        { bg: 'linear-gradient(175deg, #B2DFDB 0%, #e2efed 30%, #F1F8F7 100%)' },
+        { bg: 'linear-gradient(175deg, #FFE0B2 0%, #f6e9da 30%, #FFF8F5 100%)' },
+        { bg: 'linear-gradient(175deg, #E1BEE7 0%, #eee7f4 30%, #F8F4FA 100%)' },
+        { bg: 'linear-gradient(175deg, #BBDEFB 0%, #e6edf2 30%, #F5F8FC 100%)' }
       ]
     },
 

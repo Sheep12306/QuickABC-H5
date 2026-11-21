@@ -1,5 +1,5 @@
 <template>
-<div class="review-container page-review-date"><div class="review-top"><span class="review-title">{{reviewDate}}抗遗忘打卡</span><span class="review-subtitle">{{currentIndex + 1}}/{{totalWords || 0}}</span><div class="top-spacer"></div><div @click="mp('shuffleWords', $event)" class="nav-shuffle"><span class="shuffle-text" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">↻</span></div></div><div class="word-area"><div v-if="currentWord" class="word-main"><div class="word-display"><span class="word-en">{{currentWord.en}}</span><div class="word-meta"><span class="word-phonetic" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">[{{currentWord.phonetic}}]</span><div @click="mp('playCurrentAudio', $event)" class="audio-icon" :style="&quot;background:&quot; + (themeColors[themeIdx].light) + &quot;;&quot;"><div class="audio-shape" :style="&quot;border-left-color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"></div></div></div></div><div :class="&quot;answer-area &quot; + (showAnswer ? 'show' : 'hide')"><div class="meaning-text">{{currentWord.part}} {{currentWord.meaning}}</div><div v-if="showAnswer && currentMarkedAsKnow" @click="mp('correctToDontKnow', $event)" class="correct-btn"><span >更正为不认识</span></div></div><div v-if="!hasMadeChoice" class="action-buttons"><div @click="mp('markDontKnow', $event)" class="btn-action btn-dont-know"><span >不认识</span></div><div @click="mp('markKnow', $event)" class="btn-action btn-know" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span >认识</span></div></div><div v-if="hasMadeChoice && (currentIndex < (totalWords || 0) - 1)" class="next-btn-area"><div @click="mp('nextWord', $event)" class="btn-next" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span >下一个</span></div></div></div><div v-else class="empty-tip"><span >暂无复习单词</span></div></div><div class="stats-section"><div class="stats-row"><div class="stat-item"><span class="stat-value">{{knowCount || 0}}</span><span class="stat-label">已掌握</span></div><div class="stat-divider"></div><div class="stat-item"><span class="stat-value">{{dontKnowCount || 0}}</span><span class="stat-label">需复习</span></div><div class="stat-divider"></div><div @click="mp('handleCheckIn', $event)" class="stat-item checkin-area"><span class="stat-value">{{checkCount || 0}}</span><span class="stat-label">打卡次数</span><div v-if="showCheckInTip" class="checkin-guide">太棒了，快去打卡吧</div></div></div></div></div>
+<div class="review-container page-review-date"><div class="review-top"><span class="review-title">{{reviewDate}}抗遗忘打卡</span><span class="review-subtitle">{{currentIndex + 1}}/{{totalWords || 0}}</span><div class="top-spacer"></div><div @click="mp('shuffleWords', $event)" class="nav-shuffle"><span class="shuffle-text" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><AppIcon name="refresh" /></span></div></div><div class="word-area"><div v-if="currentWord" class="word-main"><div class="word-display"><span class="word-en">{{currentWord.en}}</span><div class="word-meta"><span class="word-phonetic" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">[{{currentWord.phonetic}}]</span><div @click="mp('playCurrentAudio', $event)" class="audio-icon" :style="&quot;background:&quot; + (themeColors[themeIdx].light) + &quot;;&quot;"><AppIcon name="volume" class="audio-glyph" /></div></div></div><div :class="&quot;answer-area &quot; + (showAnswer ? 'show' : 'hide')"><div class="meaning-text">{{currentWord.part}} {{currentWord.meaning}}</div><div v-if="showAnswer && currentMarkedAsKnow" @click="mp('correctToDontKnow', $event)" class="correct-btn"><span >更正为不认识</span></div></div><div v-if="!hasMadeChoice" class="action-buttons"><div @click="mp('markDontKnow', $event)" class="btn-action btn-dont-know"><span >不认识</span></div><div @click="mp('markKnow', $event)" class="btn-action btn-know" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span >认识</span></div></div><div v-if="hasMadeChoice && (currentIndex < (totalWords || 0) - 1)" class="next-btn-area"><div @click="mp('nextWord', $event)" class="btn-next" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span >下一个</span></div></div></div><div v-else class="empty-tip"><AppIcon name="book-open" class="empty-state-icon" /><span>暂无复习单词</span></div></div><div class="stats-section"><div class="stats-row"><div class="stat-item"><span class="stat-value">{{knowCount || 0}}</span><span class="stat-label">已掌握</span></div><div class="stat-divider"></div><div class="stat-item"><span class="stat-value">{{dontKnowCount || 0}}</span><span class="stat-label">需复习</span></div><div class="stat-divider"></div><div @click="mp('handleCheckIn', $event)" class="stat-item checkin-area"><span class="stat-value">{{checkCount || 0}}</span><span class="stat-label">打卡次数</span><div v-if="showCheckInTip" class="checkin-guide">太棒了，快去打卡吧</div></div></div></div></div>
 </template>
 
 <script>
@@ -19,15 +19,16 @@ export default createPage({
       knowCount: 0,
       dontKnowCount: 0,
       checkCount: 0,
+      checkedIn: false, // 本次进入页面是否已打卡，防止重复点击
       index: 0, // 抗遗忘列表的索引，用于更新打卡次数
       reviewDate: '',
       showCheckInTip: false,
       themeColors: [
-        { accent: '#43A047', light: '#E8F5E9' },
-        { accent: '#00897B', light: '#E0F2F1' },
-        { accent: '#F57C00', light: '#FFF3E0' },
-        { accent: '#7B1FA2', light: '#F3E5F5' },
-        { accent: '#1976D2', light: '#E3F2FD' }
+        { accent: '#326d43', light: '#e6efe2' },
+        { accent: '#2f6f6a', light: '#e2efed' },
+        { accent: '#a9692c', light: '#f6e9da' },
+        { accent: '#6f5686', light: '#eee7f4' },
+        { accent: '#3c6382', light: '#e6edf2' }
       ],
       themeIdx: 0
     },
@@ -148,7 +149,6 @@ export default createPage({
       // ===== 删除不存在的方法调用（修复报错核心）=====
       // this.updateWordStatus('dontKnow');
       // this.addToTempUnknowWords(currentWord);
-      // this.addToNewWords(currentWord);
     
       // ===== 保留本地缓存记录错词逻辑 =====
       this.saveWrongWordToLocal(currentWord);
@@ -248,8 +248,11 @@ export default createPage({
   
     // 核心修改：打卡逻辑（始终可点，条件触发）
     handleCheckIn() {
+      // 同一页面只允许打卡一次（「已打卡」只能由「去打卡」转变）
+      if (this.$data.checkedIn) return;
+
       const { currentIndex, totalWords, hasMadeChoice } = this.$data;
-      
+
       // ✅ 正确判断逻辑：
       // 1. 单词总数 > 0（避免空列表误判）
       // 2. 当前索引 == 最后一个单词索引（totalWords - 1）
@@ -269,7 +272,7 @@ export default createPage({
   
       // 复习完：执行打卡逻辑（原有代码不变）
       const newCheckCount = this.$data.checkCount + 1;
-      this.setData({ checkCount: newCheckCount });
+      this.setData({ checkCount: newCheckCount, checkedIn: true });
   
       const pages = getCurrentPages();
       const prevPage = pages[pages.length - 2];

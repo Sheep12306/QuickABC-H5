@@ -1,8 +1,10 @@
 .page-study-record .record-container,
 .page-study-record.record-container {
   min-height: 100vh;
-  padding: 0.3733rem;
+  padding: 0.419rem 0.49rem 0.64rem;
   box-sizing: border-box;
+  background: var(--page-paper);
+  color: var(--page-ink);
 }
 
 .page-study-record .calendar-header,
@@ -10,37 +12,44 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.2133rem 0.1067rem 0.2667rem;
+  padding: 0.1067rem 0.047rem 0.279rem;
 }
 
 .page-study-record .month-btn,
 .page-study-record.month-btn {
-  font-size: 0.4267rem;
-  color: #8A9B8B;
-  padding: 0.1067rem 0.2667rem;
-  background: transparent;
-  border: none;
+  width: 0.744rem;
+  height: 0.744rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.32rem;
+  color: #6f7569;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0.093rem 0.279rem rgba(58, 88, 58, 0.05);
 }
 
 .page-study-record .current-month,
 .page-study-record.current-month {
-  font-size: 0.4267rem;
-  color: #2C3E2D;
-  font-weight: 600;
+  font-family: var(--font-serif);
+  font-size: 0.465rem;
+  color: var(--page-ink);
+  font-weight: 700;
+  letter-spacing: 0.012rem;
 }
 
 .page-study-record .week-header,
 .page-study-record.week-header {
   display: flex;
-  padding: 0.16rem 0;
+  padding: 0.093rem 0.047rem 0.209rem;
 }
 
 .page-study-record .week-item,
 .page-study-record.week-item {
   flex: 1;
   text-align: center;
-  font-size: 0.3467rem;
-  color: #8A9B8B;
+  font-size: 0.279rem;
+  color: var(--page-muted);
   font-weight: 500;
 }
 
@@ -48,11 +57,11 @@
 .page-study-record.calendar-body {
   display: flex;
   flex-wrap: wrap;
-  background: rgba(255, 255, 255, 0.62);
-  border-radius: 0.32rem;
-  border: 0.0133rem solid rgba(255, 255, 255, 0.65);
-  box-shadow: 0 0.0533rem 0.2667rem rgba(46, 125, 50, 0.06);
-  padding: 0.1067rem 0;
+  padding: 0.209rem 0.047rem;
+  background: var(--page-card);
+  border-radius: 0.512rem;
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  box-shadow: var(--page-shadow-card);
 }
 
 .page-study-record .date-item,
@@ -69,53 +78,60 @@
 
 .page-study-record .date-text,
 .page-study-record.date-text {
-  font-size: 0.3733rem;
-  color: #2C3E2D;
-  padding: 0.1333rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.746rem;
+  height: 0.746rem;
+  padding: 0;
   border-radius: 50%;
+  font-family: var(--font-num);
+  font-size: 0.302rem;
+  font-weight: 600;
+  color: var(--page-ink);
 }
 
 .page-study-record .not-current,
 .page-study-record.not-current {
-  color: #CCCFCC;
+  color: #cccfcc;
   pointer-events: none;
 }
 
 .page-study-record .check-in,
 .page-study-record.check-in {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .page-study-record .selected,
 .page-study-record.selected {
-  color: #FFFFFF !important;
+  color: #ffffff !important;
 }
 
 .page-study-record .check-mark,
 .page-study-record.check-mark {
-  width: 0.1333rem;
-  height: 0.1333rem;
+  width: 0.116rem;
+  height: 0.116rem;
   border-radius: 50%;
   position: absolute;
-  bottom: 0.24rem;
+  bottom: 0.186rem;
 }
 
 .page-study-record .detail-card,
 .page-study-record.detail-card {
-  background: rgba(255, 255, 255, 0.62);
-  border-radius: 0.32rem;
-  border: 0.0133rem solid rgba(255, 255, 255, 0.65);
-  box-shadow: 0 0.0533rem 0.2667rem rgba(46, 125, 50, 0.06);
-  margin-top: 0.2667rem;
+  background: var(--page-card-soft);
+  border-radius: 0.465rem;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: var(--page-shadow-soft);
+  margin-top: 0.279rem;
   padding: 0.4267rem 0.3733rem;
   text-align: center;
 }
 
 .page-study-record .detail-title,
 .page-study-record.detail-title {
-  font-size: 0.3733rem;
-  color: #2C3E2D;
-  margin-bottom: 0.2133rem;
+  font-size: 0.302rem;
+  color: var(--page-muted);
+  margin-bottom: 0.209rem;
   display: block;
 }
 

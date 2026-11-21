@@ -1,5 +1,5 @@
 <template>
-<div class="mode-container page-test-list" :style="&quot;background:&quot; + (cardThemes[themeIdx].bg) + &quot;;&quot;"><div class="mode-top"><span class="mode-title">单词听写</span></div><div v-if="dictationWordList.length > 0" class="mode-scroll mp-scroll-y" data-scroll-y="1"><div v-for="(item, index) in dictationWordList" :key="item.date" @click="mp('goToDictation', $event)" class="mode-card" :data-date="item.date" :data-words-json="JSON.stringify(item.words)" :data-index="index"><div class="mode-card-left"><span class="mode-date">{{item.date}}</span><span class="mode-count">共{{item.words.length}}个单词</span></div><div class="mode-card-right"><div class="go-btn" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span class="go-btn-text">去听写</span></div></div></div><div class="scroll-bottom-space"></div></div><div v-else class="mode-empty"><span >暂无听写计划</span><span class="mode-empty-sub">快去添加单词开始听写吧</span></div></div>
+<div class="mode-container page-test-list"><div class="mode-top"><span class="mode-title">单词听写</span></div><div v-if="dictationWordList.length > 0" class="mode-scroll mp-scroll-y" data-scroll-y="1"><div v-for="(item, index) in dictationWordList" :key="item.date" @click="mp('goToDictation', $event)" class="mode-card" :data-date="item.date" :data-words-json="JSON.stringify(item.words)" :data-index="index"><div class="mode-card-left"><span class="mode-date">{{item.date}}</span><span class="mode-count">共{{item.words.length}}个单词</span></div><div class="mode-card-right"><div class="go-btn" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span class="go-btn-text">去听写</span></div></div></div><div class="scroll-bottom-space"></div></div><div v-else class="mode-empty"><AppIcon name="headphones" class="mode-empty-icon" /><span>暂无听写计划</span><span class="mode-empty-sub">快去添加单词开始听写吧</span></div></div>
 </template>
 
 <script>
@@ -12,19 +12,19 @@ export default createPage({
       currentBookId: 1,     // 当前选中的单词本ID
       emptyText: "暂无可听写的单词",
       themeColors: [
-        { accent: '#43A047', light: '#E8F5E9' },
-        { accent: '#00897B', light: '#E0F2F1' },
-        { accent: '#F57C00', light: '#FFF3E0' },
-        { accent: '#7B1FA2', light: '#F3E5F5' },
-        { accent: '#1976D2', light: '#E3F2FD' }
+        { accent: '#326d43', light: '#e6efe2' },
+        { accent: '#2f6f6a', light: '#e2efed' },
+        { accent: '#a9692c', light: '#f6e9da' },
+        { accent: '#6f5686', light: '#eee7f4' },
+        { accent: '#3c6382', light: '#e6edf2' }
       ],
       themeIdx: 0,
       cardThemes: [
-        { bg: 'linear-gradient(175deg, #C8E6C9 0%, #E8F5E9 30%, #F1F8F4 100%)' },
-        { bg: 'linear-gradient(175deg, #B2DFDB 0%, #E0F2F1 30%, #F1F8F7 100%)' },
-        { bg: 'linear-gradient(175deg, #FFE0B2 0%, #FFF3E0 30%, #FFF8F5 100%)' },
-        { bg: 'linear-gradient(175deg, #E1BEE7 0%, #F3E5F5 30%, #F8F4FA 100%)' },
-        { bg: 'linear-gradient(175deg, #BBDEFB 0%, #E3F2FD 30%, #F5F8FC 100%)' }
+        { bg: 'linear-gradient(175deg, #C8E6C9 0%, #e6efe2 30%, #F1F8F4 100%)' },
+        { bg: 'linear-gradient(175deg, #B2DFDB 0%, #e2efed 30%, #F1F8F7 100%)' },
+        { bg: 'linear-gradient(175deg, #FFE0B2 0%, #f6e9da 30%, #FFF8F5 100%)' },
+        { bg: 'linear-gradient(175deg, #E1BEE7 0%, #eee7f4 30%, #F8F4FA 100%)' },
+        { bg: 'linear-gradient(175deg, #BBDEFB 0%, #e6edf2 30%, #F5F8FC 100%)' }
       ]
     },
   

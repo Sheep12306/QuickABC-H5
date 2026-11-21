@@ -13,8 +13,8 @@ import { computed } from 'vue';
 const props = defineProps({
   percent: { type: [Number, String], default: 0 },
   strokeWidth: { type: [Number, String], default: 6 },
-  activeColor: { type: String, default: '#43A047' },
-  backgroundColor: { type: String, default: 'rgba(67,160,71,0.10)' },
+  activeColor: { type: String, default: '#326d43' },
+  backgroundColor: { type: String, default: 'rgba(50,109,67,0.10)' },
 });
 
 const safePercent = computed(() => {

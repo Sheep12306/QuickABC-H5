@@ -2,8 +2,8 @@
 .page-vocab-paper,
 .page-vocab-paper.paper-container {
   min-height: 100vh;
-  padding: 0.3733rem;
-  background: linear-gradient(180deg, #e8f5e9 0%, #f1f8f4 38%, #f7faf7 100%);
+  padding: 0.419rem 0.49rem 0.64rem;
+  background: var(--page-paper);
 }
 
 /* ---------- 出卷设置 ---------- */
@@ -14,24 +14,26 @@
 }
 
 .page-vocab-paper .paper-intro {
-  background: rgba(255, 255, 255, 0.68);
-  border: 0.0133rem solid rgba(255, 255, 255, 0.7);
-  border-radius: 0.4267rem;
-  box-shadow: 0 0.08rem 0.4rem rgba(46, 125, 50, 0.08);
+  background: var(--page-card);
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  border-radius: 0.512rem;
+  box-shadow: var(--page-shadow-card);
   padding: 0.48rem 0.4267rem;
 }
 
 .page-vocab-paper .paper-intro-title {
+  font-family: var(--font-serif);
   font-size: 0.48rem;
   font-weight: 700;
-  color: #2c3e2d;
+  letter-spacing: 0.012rem;
+  color: #24372b;
   margin-bottom: 0.16rem;
 }
 
 .page-vocab-paper .paper-intro-desc {
   font-size: 0.32rem;
   line-height: 1.6;
-  color: #6a7b6b;
+  color: var(--page-muted);
 }
 
 .page-vocab-paper .level-tabs {
@@ -46,10 +48,10 @@
   align-items: flex-start;
   gap: 0.0533rem;
   padding: 0.32rem 0.3467rem;
-  border-radius: 0.3467rem;
-  background: rgba(255, 255, 255, 0.62);
-  border: 0.0267rem solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 0.0533rem 0.24rem rgba(46, 125, 50, 0.06);
+  border-radius: 0.465rem;
+  background: var(--page-card-soft);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: var(--page-shadow-soft);
   text-align: left;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
@@ -57,40 +59,40 @@
 .page-vocab-paper .level-tab .level-name {
   font-size: 0.3733rem;
   font-weight: 700;
-  color: #2c3e2d;
+  color: #24372b;
 }
 
 .page-vocab-paper .level-tab .level-sub {
   font-size: 0.2667rem;
   letter-spacing: 0.04em;
-  color: #8a9b8b;
+  color: var(--page-muted);
 }
 
 .page-vocab-paper .level-tab.cet4.active {
-  background: rgba(67, 160, 71, 0.13);
-  border-color: #43a047;
+  background: #e6efe2;
+  border-color: var(--page-green);
 }
 
 .page-vocab-paper .level-tab.cet4.active .level-name,
 .page-vocab-paper .level-tab.cet4.active .level-sub {
-  color: #2e7d32;
+  color: #2d6b40;
 }
 
 .page-vocab-paper .level-tab.cet6.active {
-  background: rgba(25, 118, 210, 0.1);
-  border-color: #1976d2;
+  background: #e7edf2;
+  border-color: #5b7591;
 }
 
 .page-vocab-paper .level-tab.cet6.active .level-name,
 .page-vocab-paper .level-tab.cet6.active .level-sub {
-  color: #1565c0;
+  color: #4f6b86;
 }
 
 .page-vocab-paper .words-panel {
-  background: rgba(255, 255, 255, 0.68);
-  border: 0.0133rem solid rgba(255, 255, 255, 0.7);
-  border-radius: 0.4267rem;
-  box-shadow: 0 0.08rem 0.4rem rgba(46, 125, 50, 0.08);
+  background: var(--page-card);
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  border-radius: 0.512rem;
+  box-shadow: var(--page-shadow-card);
   padding: 0.4rem;
 }
 
@@ -104,13 +106,13 @@
 .page-vocab-paper .panel-title {
   font-size: 0.3733rem;
   font-weight: 600;
-  color: #2c3e2d;
+  color: #24372b;
 }
 
 .page-vocab-paper .panel-title em {
   font-style: normal;
   font-size: 0.32rem;
-  color: #43a047;
+  color: #326d43;
 }
 
 .page-vocab-paper .panel-title em.warn {
@@ -119,9 +121,9 @@
 
 .page-vocab-paper .panel-action {
   font-size: 0.2933rem;
-  color: #43a047;
-  background: rgba(67, 160, 71, 0.1);
-  border-radius: 0.2133rem;
+  color: #326d43;
+  background: #e6efe2;
+  border-radius: 0.233rem;
   padding: 0.1333rem 0.24rem;
 }
 
@@ -134,34 +136,34 @@
   min-height: 4.8rem;
   padding: 0.2667rem 0.2933rem;
   border-radius: 0.2667rem;
-  border: 0.0133rem solid rgba(67, 160, 71, 0.22);
-  background: rgba(255, 255, 255, 0.86);
-  color: #2c3e2d;
+  border: 1px solid var(--page-line);
+  background: #fffefa;
+  color: #24372b;
   font-size: 0.32rem;
   line-height: 1.65;
-  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-word);
   resize: vertical;
   outline: none;
   box-sizing: border-box;
 }
 
 .page-vocab-paper .words-input:focus {
-  border-color: #43a047;
-  box-shadow: 0 0 0 0.0533rem rgba(67, 160, 71, 0.12);
+  border-color: #326d43;
+  box-shadow: 0 0 0 0.0533rem rgba(50, 109, 67, 0.12);
 }
 
 .page-vocab-paper .fill-hint {
   margin-top: 0.16rem;
   font-size: 0.2667rem;
   line-height: 1.5;
-  color: #2e7d32;
+  color: #2d6b40;
 }
 
 .page-vocab-paper .panel-tip {
   margin-top: 0.2133rem;
   font-size: 0.2667rem;
   line-height: 1.55;
-  color: #8a9b8b;
+  color: var(--page-muted);
 }
 
 .page-vocab-paper .paper-error {
@@ -181,12 +183,12 @@
   gap: 0.16rem;
   width: 100%;
   padding: 0.3733rem 0;
-  border-radius: 0.3467rem;
-  background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
+  border-radius: 0.233rem;
+  background: linear-gradient(100deg, #4d895a, #2d6b40);
   color: #ffffff;
   font-size: 0.4rem;
-  font-weight: 700;
-  box-shadow: 0 0.1067rem 0.32rem rgba(46, 125, 50, 0.24);
+  font-weight: 650;
+  box-shadow: 0 0.093rem 0.233rem rgba(45, 104, 62, 0.12);
 }
 
 .page-vocab-paper .generate-btn:disabled {
@@ -216,7 +218,7 @@
   margin-top: -0.16rem;
   text-align: center;
   font-size: 0.2667rem;
-  color: #8a9b8b;
+  color: var(--page-muted);
 }
 
 .page-vocab-paper .sample-entry {
@@ -226,10 +228,10 @@
 
 .page-vocab-paper .sample-btn {
   font-size: 0.2933rem;
-  color: #2e7d32;
+  color: #2d6b40;
   padding: 0.16rem 0.32rem;
-  border-radius: 0.24rem;
-  background: rgba(67, 160, 71, 0.08);
+  border-radius: 0.293rem;
+  background: #e6efe2;
 }
 
 .page-vocab-paper .sample-btn:active {
@@ -237,10 +239,11 @@
 }
 
 .page-vocab-paper .paper-history {
-  background: rgba(255, 255, 255, 0.62);
-  border-radius: 0.4267rem;
+  background: var(--page-card-soft);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 0.465rem;
   padding: 0.3467rem 0.4rem 0.1333rem;
-  box-shadow: 0 0.0533rem 0.32rem rgba(46, 125, 50, 0.06);
+  box-shadow: var(--page-shadow-soft);
 }
 
 .page-vocab-paper .history-head {
@@ -249,13 +252,13 @@
   justify-content: space-between;
   font-size: 0.32rem;
   font-weight: 600;
-  color: #2c3e2d;
+  color: #24372b;
   margin-bottom: 0.16rem;
 }
 
 .page-vocab-paper .history-clear {
   font-size: 0.2667rem;
-  color: #8a9b8b;
+  color: var(--page-muted);
   background: transparent;
 }
 
@@ -274,24 +277,24 @@
   font-weight: 600;
   padding: 0.0533rem 0.1333rem;
   border-radius: 0.1067rem;
-  background: rgba(67, 160, 71, 0.12);
-  color: #2e7d32;
+  background: rgba(50, 109, 67, 0.12);
+  color: #2d6b40;
 }
 
 .page-vocab-paper .history-level.cet6 {
   background: rgba(25, 118, 210, 0.1);
-  color: #1565c0;
+  color: #4f6b86;
 }
 
 .page-vocab-paper .history-date {
   flex: 1;
   font-size: 0.2933rem;
-  color: #2c3e2d;
+  color: #24372b;
 }
 
 .page-vocab-paper .history-words {
   font-size: 0.2667rem;
-  color: #8a9b8b;
+  color: var(--page-muted);
 }
 
 .page-vocab-paper .history-arrow {
@@ -321,18 +324,25 @@
 }
 
 .page-vocab-paper .tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.07rem;
   font-size: 0.2933rem;
-  color: #2e7d32;
-  background: rgba(67, 160, 71, 0.1);
-  border-radius: 0.2133rem;
+  color: #2d6b40;
+  background: #e6efe2;
+  border-radius: 0.233rem;
   padding: 0.16rem 0.24rem;
   white-space: nowrap;
+}
+
+.page-vocab-paper .tool-btn-icon {
+  font-size: 0.279rem;
 }
 
 .page-vocab-paper .tool-btn.primary {
   margin-left: auto;
   color: #ffffff;
-  background: #43a047;
+  background: #326d43;
   font-weight: 600;
 }
 
@@ -352,12 +362,12 @@
   font-weight: 600;
   padding: 0.0533rem 0.16rem;
   border-radius: 0.1067rem;
-  color: #2e7d32;
-  background: rgba(67, 160, 71, 0.12);
+  color: #2d6b40;
+  background: rgba(50, 109, 67, 0.12);
 }
 
 .page-vocab-paper .toolbar-level.cet6 {
-  color: #1565c0;
+  color: #4f6b86;
   background: rgba(25, 118, 210, 0.1);
 }
 
@@ -607,7 +617,7 @@
   }
 
   .app-navbar,
-  .app-tabbar,
+  .lg-tabbar,
   .mp-toast,
   .mp-modal-mask,
   .mp-loading-mask,

@@ -1,40 +1,131 @@
 .page-review-mode .mode-container,
 .page-review-mode.mode-container {
   min-height: 100vh;
-  background: linear-gradient(175deg, #C8E6C9 0%, #E8F5E9 30%, #F1F8F4 100%);
+  background: var(--page-paper);
   display: flex;
   flex-direction: column;
 }
 
 .page-review-mode .mode-top,
 .page-review-mode.mode-top {
-  padding: 0.3733rem 0.48rem;
+  padding: 0.419rem 0.49rem 0.279rem;
 }
 
 .page-review-mode .mode-title,
 .page-review-mode.mode-title {
-  font-size: 0.3733rem;
-  font-weight: 600;
-  color: #2C3E2D;
+  display: none;
+  font-family: var(--font-serif);
+  font-size: 0.465rem;
+  font-weight: 700;
+  letter-spacing: 0.012rem;
+  color: var(--page-ink);
 }
 
 .page-review-mode .mode-scroll,
 .page-review-mode.mode-scroll {
   flex: 1;
-  padding: 0 0.4267rem;
+  padding: 0 0.49rem;
 }
 
 .page-review-mode .mode-card,
 .page-review-mode.mode-card {
-  background: rgba(255, 255, 255, 0.65);
-  border-radius: 0.2133rem;
-  border: 0.0133rem solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 0.0267rem 0.16rem rgba(46, 125, 50, 0.05);
-  padding: 0.32rem 0.3733rem;
-  margin-bottom: 0.16rem;
+  background: var(--page-card);
+  border-radius: 0.465rem;
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  box-shadow: var(--page-shadow-soft);
+  padding: 0.349rem 0.372rem;
+  margin-bottom: 0.256rem;
+  display: block;
+}
+
+.page-review-mode .mode-card-main,
+.page-review-mode.mode-card-main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/* 卡片左上角分类标签 */
+.page-review-mode .mode-card-tag,
+.page-review-mode.mode-card-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.04rem 0.16rem;
+  border-radius: 0.18rem;
+  margin-bottom: 0.14rem;
+  font-family: var(--font-ui);
+  font-size: 0.24rem;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+.page-review-mode .mode-card-tag--due,
+.page-review-mode.mode-card-tag--due {
+  color: #a9692c;
+  background: #f6e9da;
+}
+
+.page-review-mode .mode-card-tag--checked,
+.page-review-mode.mode-card-tag--checked {
+  color: #326d43;
+  background: #e6efe2;
+}
+
+.page-review-mode .mode-card-tag--notDue,
+.page-review-mode.mode-card-tag--notDue {
+  color: #8b8d84;
+  background: #efeee5;
+}
+
+/* 分类分组 + 收缩 */
+.page-review-mode .mode-group,
+.page-review-mode.mode-group {
+  margin-bottom: 0.32rem;
+}
+
+.page-review-mode .mode-group-head,
+.page-review-mode.mode-group-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.12rem 0.08rem 0.18rem;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.page-review-mode .mode-group-title,
+.page-review-mode.mode-group-title {
+  display: flex;
+  align-items: center;
+  gap: 0.12rem;
+  font-family: var(--font-ui);
+  font-size: 0.3rem;
+  font-weight: 600;
+  color: var(--page-ink);
+}
+
+.page-review-mode .mode-group-count,
+.page-review-mode.mode-group-count {
+  font-family: var(--font-num);
+  font-size: 0.26rem;
+  font-weight: 700;
+  color: var(--page-muted);
+}
+
+.page-review-mode .mode-group-chevron,
+.page-review-mode.mode-group-chevron {
+  width: 0.36rem;
+  height: 0.36rem;
+  color: var(--page-muted);
+  flex-shrink: 0;
+}
+
+.page-review-mode .mode-group-body,
+.page-review-mode.mode-group-body {
+  display: flex;
+  flex-direction: column;
 }
 
 .page-review-mode .mode-card:active,
@@ -50,17 +141,18 @@
 
 .page-review-mode .mode-date,
 .page-review-mode.mode-date {
+  font-family: var(--font-num);
   font-size: 0.4rem;
-  font-weight: 600;
-  color: #1A1A1A;
+  font-weight: 700;
+  color: var(--page-ink);
   display: block;
 }
 
 .page-review-mode .mode-count,
 .page-review-mode.mode-count {
-  font-size: 0.32rem;
-  color: #999;
-  margin-top: 0.0533rem;
+  font-size: 0.279rem;
+  color: var(--page-muted);
+  margin-top: 0.093rem;
 }
 
 .page-review-mode .mode-card-right,
@@ -87,27 +179,28 @@
 
 .page-review-mode .mode-tag-num,
 .page-review-mode.mode-tag-num {
+  font-family: var(--font-num);
   font-size: 0.3733rem;
   font-weight: 700;
 }
 
 .page-review-mode .mode-status,
 .page-review-mode.mode-status {
-  padding: 0.08rem 0;
-  border-radius: 0.2133rem;
+  padding: 0.093rem 0;
+  border-radius: 0.233rem;
   width: 100%;
   text-align: center;
   flex-shrink: 0;
 }
 
-.page-review-mode .mode-status.checked,
-.page-review-mode.mode-status.checked {
-  background: #E8F5E9;
+.page-review-mode .mode-status--checked,
+.page-review-mode.mode-status--checked {
+  background: #e6efe2;
 }
 
-.page-review-mode .mode-status.unchecked,
-.page-review-mode.mode-status.unchecked {
-  background: #F2F2F7;
+.page-review-mode .mode-status--notDue,
+.page-review-mode.mode-status--notDue {
+  background: #efeee5;
 }
 
 .page-review-mode .mode-status-text,
@@ -116,14 +209,20 @@
   font-weight: 500;
 }
 
-.page-review-mode .mode-status.checked .mode-status-text,
-.page-review-mode.mode-status.checked .mode-status-text {
-  color: #43A047;
+.page-review-mode .mode-status--checked .mode-status-text,
+.page-review-mode.mode-status--checked .mode-status-text {
+  color: #326d43;
 }
 
-.page-review-mode .mode-status.unchecked .mode-status-text,
-.page-review-mode.mode-status.unchecked .mode-status-text {
+.page-review-mode .mode-status--notDue .mode-status-text,
+.page-review-mode.mode-status--notDue .mode-status-text {
   color: #999;
+}
+
+/* 无需打卡的卡片整体弱化，但仍可见日期与组数 */
+.page-review-mode .mode-card--notDue .mode-date,
+.page-review-mode.mode-card--notDue .mode-date {
+  color: var(--page-muted);
 }
 
 .page-review-mode .scroll-bottom-space,
@@ -135,8 +234,10 @@
 .page-review-mode.mode-empty {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.16rem;
   font-size: 0.4rem;
-  color: #8A9B8B;
+  color: #a7aa9f;
 }

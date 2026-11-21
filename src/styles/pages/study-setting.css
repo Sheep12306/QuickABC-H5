@@ -1,8 +1,10 @@
 .page-study-setting .setting-container,
 .page-study-setting.setting-container {
   min-height: 100vh;
-  padding: 0.3733rem;
+  padding: 0.49rem;
   box-sizing: border-box;
+  background: var(--page-paper);
+  color: var(--page-ink);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,10 +12,10 @@
 
 .page-study-setting .setting-card,
 .page-study-setting.setting-card {
-  background: rgba(255, 255, 255, 0.62);
-  border-radius: 0.48rem;
-  border: 0.0133rem solid rgba(255, 255, 255, 0.65);
-  box-shadow: 0 0.0533rem 0.32rem rgba(46, 125, 50, 0.08);
+  background: var(--page-card);
+  border-radius: 0.512rem;
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  box-shadow: var(--page-shadow-card);
   padding: 0.8rem 0.5333rem;
   display: flex;
   flex-direction: column;
@@ -25,7 +27,7 @@
 .page-study-setting.setting-icon-wrap {
   width: 1.1733rem;
   height: 1.1733rem;
-  border-radius: 0.5867rem;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,14 +42,16 @@
 
 .page-study-setting .setting-tip,
 .page-study-setting.setting-tip {
+  font-family: var(--font-serif);
   font-size: 0.4rem;
-  color: #2C3E2D;
+  color: #24372b;
   font-weight: 600;
+  letter-spacing: 0.012rem;
   margin-bottom: 0.1333rem;
 }
 
 .page-study-setting .setting-sub,
 .page-study-setting.setting-sub {
   font-size: 0.32rem;
-  color: #8A9B8B;
+  color: #8c9187;
 }

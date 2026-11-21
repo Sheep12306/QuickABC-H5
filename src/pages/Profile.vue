@@ -1,5 +1,5 @@
 <template>
-<div class="profile-container page-profile" :style="&quot;background:&quot; + (cardThemes[themeIdx].bg) + &quot;;&quot;"><div @click="mp('chooseAvatar', $event)" class="avatar-card"><img class="avatar-img" :src="userInfo.avatar || '/images/avatar.png'" /><div class="avatar-hint"><div class="avatar-hint-icon" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span class="avatar-plus">+</span></div><span class="avatar-hint-text">点击更换头像</span></div></div><div class="form-card"><div class="form-item"><span class="form-label">昵称</span><input @input="mp('onNicknameInput', $event)" class="form-input" placeholder="请输入昵称" :value="userInfo.nickname" maxlength="20" /></div><div class="form-item"><span class="form-label">年级</span><select class="form-input grade-select" @change="mp('onGradeChange', $event)" :value="gradeIndex">
+<div class="profile-container page-profile"><div @click="mp('chooseAvatar', $event)" class="avatar-card"><img class="avatar-img" :src="userInfo.avatar || '/images/logo.png'" /><div class="avatar-hint"><div class="avatar-hint-icon" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span class="avatar-plus"><AppIcon name="plus" /></span></div><span class="avatar-hint-text">点击更换头像</span></div></div><div class="form-card"><div class="form-item"><span class="form-label">昵称</span><input @input="mp('onNicknameInput', $event)" class="form-input" placeholder="请输入昵称" :value="userInfo.nickname" maxlength="20" /></div><div class="form-item"><span class="form-label">年级</span><select class="form-input grade-select" @change="mp('onGradeChange', $event)" :value="gradeIndex">
             <option value="-1" disabled :selected="gradeIndex < 0">请选择年级</option>
             <option v-for="(g, i) in gradeList" :key="g" :value="i" :selected="i === gradeIndex">{{ g }}</option>
           </select></div><div class="form-item"><span class="form-label">手机号</span><input @input="mp('onPhoneInput', $event)" class="form-input" placeholder="请输入手机号" :value="userInfo.phone" type="number" maxlength="11" /></div><div class="form-item form-item-last"><span class="form-label">学校</span><input @input="mp('onSchoolInput', $event)" class="form-input" placeholder="请输入学校名称" :value="userInfo.school" maxlength="30" /></div></div><div @click="mp('saveProfile', $event)" :class="&quot;save-btn &quot; + (isSaving ? 'saving' : '')" :style="&quot;background:&quot; + (isSaving ? '#A5D6A7' : themeColors[themeIdx].accent) + &quot;;&quot;"><span class="save-text">{{isSaving ? '保存中...' : '保存'}}</span></div></div>
@@ -25,19 +25,19 @@ export default createPage({
       gradeIndex: -1,
       isSaving: false,
       themeColors: [
-        { accent: '#43A047', light: '#E8F5E9' },
-        { accent: '#00897B', light: '#E0F2F1' },
-        { accent: '#F57C00', light: '#FFF3E0' },
-        { accent: '#7B1FA2', light: '#F3E5F5' },
-        { accent: '#1976D2', light: '#E3F2FD' }
+        { accent: '#326d43', light: '#e6efe2' },
+        { accent: '#2f6f6a', light: '#e2efed' },
+        { accent: '#a9692c', light: '#f6e9da' },
+        { accent: '#6f5686', light: '#eee7f4' },
+        { accent: '#3c6382', light: '#e6edf2' }
       ],
       themeIdx: 0,
       cardThemes: [
-        { bg: 'linear-gradient(175deg, #C8E6C9 0%, #E8F5E9 30%, #F1F8F4 100%)' },
-        { bg: 'linear-gradient(175deg, #B2DFDB 0%, #E0F2F1 30%, #F1F8F7 100%)' },
-        { bg: 'linear-gradient(175deg, #FFE0B2 0%, #FFF3E0 30%, #FFF8F5 100%)' },
-        { bg: 'linear-gradient(175deg, #E1BEE7 0%, #F3E5F5 30%, #F8F4FA 100%)' },
-        { bg: 'linear-gradient(175deg, #BBDEFB 0%, #E3F2FD 30%, #F5F8FC 100%)' }
+        { bg: 'linear-gradient(175deg, #C8E6C9 0%, #e6efe2 30%, #F1F8F4 100%)' },
+        { bg: 'linear-gradient(175deg, #B2DFDB 0%, #e2efed 30%, #F1F8F7 100%)' },
+        { bg: 'linear-gradient(175deg, #FFE0B2 0%, #f6e9da 30%, #FFF8F5 100%)' },
+        { bg: 'linear-gradient(175deg, #E1BEE7 0%, #eee7f4 30%, #F8F4FA 100%)' },
+        { bg: 'linear-gradient(175deg, #BBDEFB 0%, #e6edf2 30%, #F5F8FC 100%)' }
       ]
     },
 

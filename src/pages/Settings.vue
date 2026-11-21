@@ -1,36 +1,115 @@
 <template>
-<div class="settings-container page-settings" :style="&quot;background:&quot; + (cardThemes[themeIdx].bg) + &quot;;&quot;"><div class="settings-group"><div @click="mp('clearCache', $event)" class="settings-item"><div class="settings-icon-circle" :style="&quot;background:&quot; + (themeColors[themeIdx].light) + &quot;;&quot;"><span class="settings-icon-inner" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">D</span></div><span class="settings-label">清除缓存</span><span class="settings-arrow">></span></div><div @click="mp('showAbout', $event)" class="settings-item"><div class="settings-icon-circle" :style="&quot;background:&quot; + (themeColors[themeIdx].light) + &quot;;&quot;"><span class="settings-icon-inner" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">A</span></div><span class="settings-label">关于快背单词</span><span class="settings-arrow">></span></div><div @click="mp('showFeedback', $event)" class="settings-item settings-item-last"><div class="settings-icon-circle" :style="&quot;background:&quot; + (themeColors[themeIdx].light) + &quot;;&quot;"><span class="settings-icon-inner" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">F</span></div><span class="settings-label">意见反馈</span><span class="settings-arrow">></span></div></div><div class="version-info"><span class="version-text">快背单词 v1.0.0</span><span class="version-sub">H5 版 · Powered by Vue 3</span></div></div>
+<div class="settings-container page-settings"><div class="settings-group"><div class="settings-group-head"><span class="settings-group-title">四六级出题</span><span class="settings-group-desc">仅用于「四六级词汇卷」AI 出卷，不影响其他功能</span></div><div @click="mp('editApiKey', $event)" class="settings-item"><div class="settings-icon-circle"><span class="settings-icon-inner" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><AppIcon name="key" /></span></div><span class="settings-label">API Key</span><span class="settings-value">{{ practiceApiKey ? '已配置 · ' + practiceApiMasked : '未配置' }}</span><span class="settings-arrow"><AppIcon name="chevron-right" /></span></div><div @click="mp('editBaseUrl', $event)" class="settings-item"><div class="settings-icon-circle"><span class="settings-icon-inner" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><AppIcon name="globe" /></span></div><span class="settings-label">接口地址</span><span class="settings-value">{{ practiceBase || '默认官方地址' }}</span><span class="settings-arrow"><AppIcon name="chevron-right" /></span></div><div @click="mp('editModel', $event)" class="settings-item settings-item-last"><div class="settings-icon-circle"><span class="settings-icon-inner" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><AppIcon name="cpu" /></span></div><span class="settings-label">模型</span><span class="settings-value">{{ practiceModel || 'claude-opus-5-5' }}</span><span class="settings-arrow"><AppIcon name="chevron-right" /></span></div><div class="settings-note">Key 只保存在本机，出卷时随请求发送到后端；留空保存即可清除。</div></div><div class="settings-group"><div @click="mp('clearCache', $event)" class="settings-item"><div class="settings-icon-circle"><span class="settings-icon-inner" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><AppIcon name="trash" /></span></div><span class="settings-label">清除缓存</span><span class="settings-arrow"><AppIcon name="chevron-right" /></span></div><div @click="mp('showAbout', $event)" class="settings-item"><div class="settings-icon-circle"><span class="settings-icon-inner" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><AppIcon name="info" /></span></div><span class="settings-label">关于快背单词</span><span class="settings-arrow"><AppIcon name="chevron-right" /></span></div><div @click="mp('showFeedback', $event)" class="settings-item settings-item-last"><div class="settings-icon-circle"><span class="settings-icon-inner" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><AppIcon name="message" /></span></div><span class="settings-label">意见反馈</span><span class="settings-arrow"><AppIcon name="chevron-right" /></span></div></div><div class="version-info"><span class="version-text">快背单词 v1.0.0</span><span class="version-sub">H5 版 · Powered by Vue 3</span></div></div>
 </template>
 
 <script>
 
 import { createPage } from '@/mp/page';
+import {
+  DEFAULT_PRACTICE_MODEL,
+  getPracticeApiSettings,
+  maskApiKey,
+  savePracticeApiSettings
+} from '@/utils/practiceApi';
 
 export default createPage({
     data: {
       themeColors: [
-        { accent: '#43A047', light: '#E8F5E9' },
-        { accent: '#00897B', light: '#E0F2F1' },
-        { accent: '#F57C00', light: '#FFF3E0' },
-        { accent: '#7B1FA2', light: '#F3E5F5' },
-        { accent: '#1976D2', light: '#E3F2FD' }
+        { accent: '#326d43', light: '#e6efe2' },
+        { accent: '#2f6f6a', light: '#e2efed' },
+        { accent: '#a9692c', light: '#f6e9da' },
+        { accent: '#6f5686', light: '#eee7f4' },
+        { accent: '#3c6382', light: '#e6edf2' }
       ],
       themeIdx: 0,
+      // 四六级出题接口配置（仅该板块使用）
+      practiceApiKey: '',
+      practiceApiMasked: '',
+      practiceBase: '',
+      practiceModel: '',
       cardThemes: [
-        { bg: 'linear-gradient(175deg, #C8E6C9 0%, #E8F5E9 30%, #F1F8F4 100%)' },
-        { bg: 'linear-gradient(175deg, #B2DFDB 0%, #E0F2F1 30%, #F1F8F7 100%)' },
-        { bg: 'linear-gradient(175deg, #FFE0B2 0%, #FFF3E0 30%, #FFF8F5 100%)' },
-        { bg: 'linear-gradient(175deg, #E1BEE7 0%, #F3E5F5 30%, #F8F4FA 100%)' },
-        { bg: 'linear-gradient(175deg, #BBDEFB 0%, #E3F2FD 30%, #F5F8FC 100%)' }
+        { bg: 'linear-gradient(175deg, #C8E6C9 0%, #e6efe2 30%, #F1F8F4 100%)' },
+        { bg: 'linear-gradient(175deg, #B2DFDB 0%, #e2efed 30%, #F1F8F7 100%)' },
+        { bg: 'linear-gradient(175deg, #FFE0B2 0%, #f6e9da 30%, #FFF8F5 100%)' },
+        { bg: 'linear-gradient(175deg, #E1BEE7 0%, #eee7f4 30%, #F8F4FA 100%)' },
+        { bg: 'linear-gradient(175deg, #BBDEFB 0%, #e6edf2 30%, #F5F8FC 100%)' }
       ]
     },
 
     onLoad() {
       this.setData({ themeIdx: getApp().globalData.cardThemeIndex || 0 });
+      this.loadPracticeApi();
     },
 
     onShow() {
       this.setData({ themeIdx: getApp().globalData.cardThemeIndex || 0 });
+      this.loadPracticeApi();
+    },
+
+    loadPracticeApi() {
+      const settings = getPracticeApiSettings();
+      this.setData({
+        practiceApiKey: settings.apiKey,
+        practiceApiMasked: maskApiKey(settings.apiKey),
+        practiceBase: settings.baseUrl,
+        practiceModel: settings.model
+      });
+    },
+
+    editApiKey() {
+      wx.showModal({
+        title: '四六级出题 API Key',
+        editable: true,
+        content: '',
+        placeholderText: 'sk-ant-...（留空保存可清除）',
+        success: (res) => {
+          if (!res.confirm) return;
+          const apiKey = String(res.content || '').trim();
+          savePracticeApiSettings({ apiKey });
+          this.loadPracticeApi();
+          wx.showToast({ title: apiKey ? 'API Key 已保存' : 'API Key 已清除', icon: 'none' });
+        }
+      });
+    },
+
+    editBaseUrl() {
+      wx.showModal({
+        title: '接口地址（可选）',
+        editable: true,
+        content: this.$data.practiceBase,
+        placeholderText: 'https://api.anthropic.com',
+        success: (res) => {
+          if (!res.confirm) return;
+          const baseUrl = String(res.content || '').trim();
+          if (baseUrl && !/^https?:\/\/[^\s]+$/i.test(baseUrl)) {
+            wx.showToast({ title: '请输入 http(s) 开头的地址', icon: 'none' });
+            return;
+          }
+          savePracticeApiSettings({ baseUrl });
+          this.loadPracticeApi();
+          wx.showToast({ title: baseUrl ? '接口地址已保存' : '已恢复默认地址', icon: 'none' });
+        }
+      });
+    },
+
+    editModel() {
+      wx.showModal({
+        title: '出卷模型（可选）',
+        editable: true,
+        content: this.$data.practiceModel,
+        placeholderText: DEFAULT_PRACTICE_MODEL,
+        success: (res) => {
+          if (!res.confirm) return;
+          const model = String(res.content || '').trim();
+          if (model && !/^[A-Za-z0-9._-]{1,64}$/.test(model)) {
+            wx.showToast({ title: '模型名只能包含字母、数字、. _ -', icon: 'none' });
+            return;
+          }
+          savePracticeApiSettings({ model });
+          this.loadPracticeApi();
+          wx.showToast({ title: model ? '模型已保存' : '已恢复默认模型', icon: 'none' });
+        }
+      });
     },
 
     clearCache() {

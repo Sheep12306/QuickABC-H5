@@ -1,8 +1,8 @@
 <template>
   <!-- Toast -->
   <div v-if="uiState.toast" class="mp-toast">
-    <span v-if="uiState.toast.icon === 'success'" class="mp-toast-icon">✓</span>
-    <span v-else-if="uiState.toast.icon === 'error'" class="mp-toast-icon">✕</span>
+    <AppIcon v-if="uiState.toast.icon === 'success'" name="check" class="mp-toast-icon is-success" />
+    <AppIcon v-else-if="uiState.toast.icon === 'error'" name="close" class="mp-toast-icon is-error" />
     <span v-else-if="uiState.toast.icon === 'loading'" class="mp-toast-icon">…</span>
     {{ uiState.toast.title }}
   </div>

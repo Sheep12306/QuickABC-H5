@@ -1,32 +1,44 @@
+/* ===== 字体分层 token ===== */
+:root {
+  /* 展示层 / 阅读层：中文衬线（大字、释义），核心片优先，分片兜底 */
+  --font-serif: 'Noto Serif SC Core', 'Noto Serif SC', 'Songti SC', SimSun, serif;
+  /* 英文单词：Inter */
+  --font-word: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* 操作层：UI 小字、按钮、标签 */
+  --font-ui: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+  /* 数字 / 西文衬线（百分比、缩写） */
+  --font-num: Georgia, 'Times New Roman', serif;
+}
+
 body {
-  
-  --g-green-900: #1B5E20;
-  --g-green-700: #2E7D32;
-  --g-green-500: #43A047;
-  --g-green-400: #66BB6A;
-  --g-green-200: #A5D6A7;
-  --g-green-100: #C8E6C9;
-  --g-green-50: #E8F5E9;
+
+  --g-green-900: #24402c;
+  --g-green-700: #2d6b40;
+  --g-green-500: #326d43;
+  --g-green-400: #4d8759;
+  --g-green-200: #b9cdb0;
+  --g-green-100: #d7e2d1;
+  --g-green-50: #e6efe2;
 
   
-  --g-glass-white: rgba(255, 255, 255, 0.82);
-  --g-glass-light: rgba(255, 255, 255, 0.65);
-  --g-glass-green: rgba(232, 245, 233, 0.70);
-  --g-glass-border: rgba(255, 255, 255, 0.45);
-  --g-glass-border-green: rgba(76, 175, 80, 0.12);
+  --g-glass-white: #fbfaf3;
+  --g-glass-light: rgba(255, 255, 255, 0.55);
+  --g-glass-green: rgba(230, 239, 226, 0.7);
+  --g-glass-border: rgba(255, 255, 255, 0.9);
+  --g-glass-border-green: rgba(50, 109, 67, 0.12);
 
   
   --g-text-white: #FFFFFF;
   --g-text-light: rgba(255, 255, 255, 0.85);
   --g-text-muted: rgba(255, 255, 255, 0.60);
-  --g-text-dark: #2C3E2D;
-  --g-text-body: #4A5B4B;
-  --g-text-subtle: #8A9B8B;
+  --g-text-dark: #24372b;
+  --g-text-body: #4f574c;
+  --g-text-subtle: #8c9187;
 
   
-  --g-shadow-card: 0 0.0533rem 0.32rem rgba(46, 125, 50, 0.10);
-  --g-shadow-soft: 0 0.0267rem 0.16rem rgba(46, 125, 50, 0.07);
-  --g-shadow-glow: 0 0 0.5333rem rgba(67, 160, 71, 0.12);
+  --g-shadow-card: 0 0.186rem 0.581rem rgba(58, 88, 58, 0.08);
+  --g-shadow-soft: 0 0.093rem 0.279rem rgba(58, 88, 58, 0.06);
+  --g-shadow-glow: 0 0 0.5333rem rgba(126, 170, 128, 0.14);
 
   
   --g-radius-lg: 0.4267rem;
@@ -41,8 +53,8 @@ body {
   --g-space-lg: 0.4rem;
   --g-space-xl: 0.5333rem;
 
-  background: #F0F7F0;
-  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  background: #f6f5ed;
+  font-family: var(--font-ui);
   font-size: 0.3733rem;
   color: var(--g-text-dark);
   line-height: 1.5;

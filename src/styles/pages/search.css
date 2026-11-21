@@ -1,0 +1,152 @@
+/* ===== 搜索页：沿用全站的纸张底色与细线卡片 ===== */
+.search-page .search-header {
+  display: flex;
+  align-items: center;
+  margin: 0.1rem 0 0.18rem;
+}
+
+.search-page .search-box {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.14rem;
+  height: 0.84rem;
+  padding: 0 0.24rem;
+  border: 1px solid var(--page-line);
+  border-radius: 0.42rem;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.search-page .search-box-icon {
+  flex: none;
+  font-size: 0.3rem;
+  color: #8f9389;
+}
+
+.search-page .search-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  outline: none;
+  font-family: var(--font-ui);
+  font-size: 0.32rem;
+  color: var(--page-ink);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.search-page .search-input::placeholder {
+  color: #a5a89d;
+}
+
+.search-page .search-input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.search-page .search-clear {
+  flex: none;
+  width: 0.44rem;
+  height: 0.44rem;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(143, 147, 137, 0.14);
+  color: #8f9389;
+  font-size: 0.26rem;
+}
+
+.search-page .search-scope {
+  margin: 0 0 0.26rem 0.05rem;
+  font-size: 0.24rem;
+  color: #a5a89d;
+}
+
+.search-page .search-state {
+  padding: 1.3rem 0;
+  text-align: center;
+  font-size: 0.3rem;
+  color: #8f9389;
+}
+
+.search-page .search-state--error {
+  color: #b4544b;
+}
+
+.search-page .search-item {
+  display: flex;
+  width: 100%;
+  margin-top: 0.18rem;
+  padding: 0.3rem 0.32rem;
+  border: 1px solid var(--page-line);
+  border-radius: 0.28rem;
+  background: rgba(255, 255, 255, 0.46);
+  text-align: left;
+  font-family: var(--font-ui);
+  transition: background 0.16s ease;
+}
+
+.search-page .search-item:active {
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.search-page .search-item-main {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.search-page .search-item-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.14rem;
+}
+
+.search-page .search-word {
+  font-family: var(--font-word);
+  font-size: 0.42rem;
+  font-weight: 600;
+  letter-spacing: 0.008rem;
+  color: var(--page-ink);
+}
+
+.search-page .search-phonetic {
+  font-family: var(--font-ui);
+  font-size: 0.26rem;
+  color: #8f9389;
+}
+
+.search-page .search-audio {
+  margin-left: auto;
+  font-size: 0.3rem;
+  color: #7f857b;
+}
+
+.search-page .search-meaning {
+  display: block;
+  margin-top: 0.12rem;
+  font-family: var(--font-ui);
+  font-size: 0.29rem;
+  line-height: 1.5;
+  color: #4f574c;
+}
+
+.search-page .search-books {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.12rem;
+  margin-top: 0.16rem;
+}
+
+.search-page .search-book {
+  padding: 0.04rem 0.16rem;
+  border-radius: 999px;
+  background: #e6efe2;
+  color: #4f6b52;
+  font-size: 0.22rem;
+  line-height: 1.5;
+}

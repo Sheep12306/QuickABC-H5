@@ -1,5 +1,5 @@
 <template>
-<div class="review-container page-new-word-review"><div class="review-top"><span class="review-title">错词本</span><span class="review-subtitle">{{currentIndex + 1}}/{{totalWords || 0}}</span></div><div class="word-area"><div v-if="currentWord" class="word-main"><div class="word-display"><span class="word-en">{{currentWord.en}}</span><div class="word-meta"><span class="word-phonetic" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">[{{currentWord.phonetic}}]</span><div @click="mp('playCurrentAudio', $event)" class="audio-icon" :style="&quot;background:&quot; + (themeColors[themeIdx].light) + &quot;;&quot;"><div class="audio-shape" :style="&quot;border-left-color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"></div></div></div></div><div :class="&quot;answer-area &quot; + (showAnswer ? 'show' : 'hide')"><div class="meaning-text">{{currentWord.part}} {{currentWord.meaning}}</div><div v-if="showAnswer && currentMarkedAsKnow" @click="mp('correctToDontKnow', $event)" class="correct-btn"><span >更正为不认识</span></div></div><div v-if="!hasMadeChoice" class="action-buttons"><div @click="mp('markDontKnow', $event)" class="btn-action btn-dont-know"><span >仍不认识</span></div><div @click="mp('markKnow', $event)" class="btn-action btn-know" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span >已掌握</span></div></div><div v-if="hasMadeChoice" class="next-btn-area"><div @click="mp('nextWord', $event)" class="btn-next" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span >{{currentIndex < totalWords - 1 ? '下一个' : '继续复习'}}</span></div></div></div><div v-else class="empty-tip"><span >暂无错词，继续加油！</span></div></div><div class="stats-section"><div class="stats-row"><div class="stat-item"><span class="stat-value">{{knowCount || 0}}</span><span class="stat-label">已掌握</span></div><div class="stat-divider"></div><div class="stat-item"><span class="stat-value">{{totalWords || 0}}</span><span class="stat-label">需复习</span></div><div class="stat-divider"></div><div @click="mp('shuffleWords', $event)" class="stat-item"><span class="stat-value" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">↻</span><span class="stat-label">随机复习</span></div></div></div></div>
+<div class="review-container page-new-word-review"><div class="review-top"><span class="review-subtitle">{{currentWord ? currentIndex + 1 : 0}}/{{totalWords || 0}}</span></div><div class="word-area"><div v-if="currentWord" class="word-main"><div class="word-display"><span class="word-en">{{currentWord.en}}</span><div class="word-meta"><span class="word-phonetic" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">[{{currentWord.phonetic}}]</span><div @click="mp('playCurrentAudio', $event)" class="audio-icon" :style="&quot;background:&quot; + (themeColors[themeIdx].light) + &quot;;&quot;"><AppIcon name="volume" class="audio-glyph" /></div></div></div><div :class="&quot;answer-area &quot; + (showAnswer ? 'show' : 'hide')"><div class="meaning-text">{{currentWord.part}} {{currentWord.meaning}}</div><div v-if="showAnswer && currentMarkedAsKnow" @click="mp('correctToDontKnow', $event)" class="correct-btn"><span >更正为不认识</span></div></div><div v-if="!hasMadeChoice" class="action-buttons"><div @click="mp('markDontKnow', $event)" class="btn-action btn-dont-know"><span >仍不认识</span></div><div @click="mp('markKnow', $event)" class="btn-action btn-know" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span >已掌握</span></div></div><div v-if="hasMadeChoice" class="next-btn-area"><div @click="mp('nextWord', $event)" class="btn-next" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span >{{currentIndex < totalWords - 1 ? '下一个' : '继续复习'}}</span></div></div></div><div v-else class="empty-tip"><AppIcon name="check" class="empty-state-icon" /><span>暂无错词，继续加油！</span></div></div><div class="stats-section"><div class="stats-row"><div class="stat-item"><span class="stat-value">{{knowCount || 0}}</span><span class="stat-label">已掌握</span></div><div class="stat-divider"></div><div class="stat-item"><span class="stat-value">{{totalWords || 0}}</span><span class="stat-label">需复习</span></div><div class="stat-divider"></div><div @click="mp('shuffleWords', $event)" class="stat-item"><span class="stat-value" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><AppIcon name="refresh" /></span><span class="stat-label">随机复习</span></div></div></div></div>
 </template>
 
 <script>
@@ -19,17 +19,19 @@ export default createPage({
       dontKnowCount: 0,
       isWrongWordMode: false,
       themeColors: [
-        { accent: '#43A047', light: '#E8F5E9' },
-        { accent: '#00897B', light: '#E0F2F1' },
-        { accent: '#F57C00', light: '#FFF3E0' },
-        { accent: '#7B1FA2', light: '#F3E5F5' },
-        { accent: '#1976D2', light: '#E3F2FD' }
+        { accent: '#326d43', light: '#e6efe2' },
+        { accent: '#2f6f6a', light: '#e2efed' },
+        { accent: '#a9692c', light: '#f6e9da' },
+        { accent: '#6f5686', light: '#eee7f4' },
+        { accent: '#3c6382', light: '#e6edf2' }
       ],
       themeIdx: 0
     },
 
     onLoad(options) {
       this.setData({ themeIdx: getApp().globalData.cardThemeIndex || 0 });
+      // 每个词在本轮复习中的连续「认识」次数：连续两次才移出错词本
+      this._knowStreak = {};
       const { bookId, words, isWrongWordMode } = options;
       this.setData({ isWrongWordMode: isWrongWordMode === 'true' });
 
@@ -52,6 +54,7 @@ export default createPage({
     // 加载本地错词缓存
     loadWrongWordsFromLocal() {
       try {
+        this._knowStreak = {};
         let wrongWords = wx.getStorageSync('wrong_words') || [];
         if (!Array.isArray(wrongWords)) {
           wrongWords = [];
@@ -88,33 +91,56 @@ export default createPage({
       }
     },
 
-    // 标记为认识 — 显示答案，2秒后消去该词
+    // 单词唯一键：错词本按 en 去重
+    wordKey(word) {
+      return (word && word.en) || '';
+    },
+
+    // 标记为认识 — 连续两次认识才移出错词本；第一次认识后重新排队
     markKnow() {
       if (!this.$data.currentWord || this.$data.hasMadeChoice || this._tapLock) return;
       this._tapLock = true;
+
+      const word = this.$data.currentWord;
+      const key = this.wordKey(word);
+      const streak = (this._knowStreak[key] || 0) + 1;
+      this._knowStreak[key] = streak;
+      const mastered = streak >= 2;
 
       this.setData({
         hasMadeChoice: true,
         currentMarkedAsKnow: true,
         showAnswer: true,
-        knowCount: this.$data.knowCount + 1,
+        knowCount: this.$data.isWrongWordMode
+          ? this.$data.knowCount
+          : this.$data.knowCount + 1,
         dontKnowCount: Math.max(0, this.$data.dontKnowCount - 1)
       }, () => {
         this.playCurrentAudio();
-        if (this.$data.isWrongWordMode) {
+        if (!this.$data.isWrongWordMode) return;
+        if (mastered) {
           this.setData({
             answerTimer: setTimeout(() => {
               this.removeWrongWord();
+            }, 2000)
+          });
+        } else {
+          wx.showToast({ title: '再认识一次即可掌握', icon: 'none', duration: 1500 });
+          this.setData({
+            answerTimer: setTimeout(() => {
+              this.nextWord();
             }, 2000)
           });
         }
       });
     },
 
-    // 标记为不认识 — 保留该词，2秒后移到下一个
+    // 标记为不认识 — 保留该词并打断连续认识，2秒后移到下一个
     markDontKnow() {
       if (!this.$data.currentWord || this.$data.hasMadeChoice || this._tapLock) return;
       this._tapLock = true;
+
+      this._knowStreak[this.wordKey(this.$data.currentWord)] = 0;
 
       this.setData({
         showAnswer: true,
@@ -131,24 +157,32 @@ export default createPage({
       });
     },
 
-    // 更正为不认识：撤回认识，错词模式加回列表
+    // 更正为不认识：撤回认识并打断连续次数；该词仍在列表中，不再重复插入
     correctToDontKnow() {
       if (!this.$data.currentWord) return;
       if (this.$data.answerTimer) {
         clearTimeout(this.$data.answerTimer);
         this.setData({ answerTimer: null });
       }
-      // 错词模式：把刚移除的词加回去
+
+      const word = this.$data.currentWord;
+      const key = this.wordKey(word);
+      this._knowStreak[key] = 0;
+      this._tapLock = false;
+
       if (this.$data.isWrongWordMode) {
-        const word = this.$data.currentWord;
-        const newList = [word, ...this.$data.wrongWordsList];
-        wx.setStorageSync('wrong_words', newList);
-        this.setData({
-          wrongWordsList: newList,
-          totalWords: newList.length,
-          currentMarkedAsKnow: false,
-          knowCount: Math.max(0, this.$data.knowCount - 1)
-        });
+        const exists = this.$data.wrongWordsList.some(item => this.wordKey(item) === key);
+        if (exists) {
+          this.setData({ currentMarkedAsKnow: false });
+        } else {
+          const newList = [word, ...this.$data.wrongWordsList];
+          wx.setStorageSync('wrong_words', newList);
+          this.setData({
+            wrongWordsList: newList,
+            totalWords: newList.length,
+            currentMarkedAsKnow: false
+          });
+        }
       } else {
         this.setData({
           currentMarkedAsKnow: false,
@@ -167,8 +201,10 @@ export default createPage({
       const { wrongWordsList, currentIndex, currentWord } = this.$data;
       if (!currentWord || wrongWordsList.length === 0) return;
 
-      const newWrongList = wrongWordsList.filter((_, idx) => idx !== currentIndex);
+      const key = this.wordKey(currentWord);
+      const newWrongList = wrongWordsList.filter(item => this.wordKey(item) !== key);
       wx.setStorageSync('wrong_words', newWrongList);
+      delete this._knowStreak[key];
 
       if (newWrongList.length === 0) {
         this.setData({
@@ -178,6 +214,7 @@ export default createPage({
           hasMadeChoice: false,
           showAnswer: false,
           currentMarkedAsKnow: false,
+          knowCount: this.$data.knowCount + 1,
           dontKnowCount: 0
         });
         this._tapLock = false;
@@ -196,6 +233,7 @@ export default createPage({
         hasMadeChoice: false,
         showAnswer: false,
         currentMarkedAsKnow: false,
+        knowCount: this.$data.knowCount + 1,
         dontKnowCount: Math.max(0, this.$data.dontKnowCount - 1)
       });
       this._tapLock = false;

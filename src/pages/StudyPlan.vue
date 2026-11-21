@@ -1,63 +1,80 @@
 <template>
-<div class="plan-bg page-study-plan" :style="&quot;background:&quot; + (cardThemes[themeIdx].bg) + &quot;;&quot;"><div class="plan-header"><span class="plan-title">学习计划</span><span class="plan-desc">设置每日背单词目标，达成后即可打卡</span></div><div class="goal-card"><span class="goal-label">当前每日目标</span><div class="goal-display" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span class="goal-num">{{dailyGoal}}</span><span class="goal-unit">词 / 天</span></div><span class="goal-hint">目标必须是 5 的倍数</span></div><div class="options-card"><span class="options-title">快速选择</span><div class="options-grid"><div v-for="(item, index) in quickOptions" :key="item" @click="mp('selectGoal', $event)" :class="&quot;option-btn &quot; + (dailyGoal === item ? 'active' : '')" :data-goal="item" :style="(dailyGoal === item ? 'background:' + themeColors[themeIdx].accent + ';color:#fff;' : '')"><span class="option-text">{{item}} 词</span></div></div></div><div class="custom-card"><span class="custom-label">自定义目标</span><div class="custom-row"><input @input="mp('onCustomInput', $event)" class="custom-input" type="number" placeholder="输入5的倍数" :value="dailyGoal" /><span class="custom-unit">词 / 天</span></div><div @click="mp('saveCustom', $event)" class="custom-save" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span class="custom-save-text">保存</span></div></div></div>
+<div class="plan-bg page-study-plan"><div class="plan-header"><span class="plan-title">学习计划</span><span class="plan-desc">设置每日打卡目标（按组计算），达成后自动打卡</span></div><div class="goal-card"><span class="goal-label">当前每日目标</span><div class="goal-display" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span class="goal-num">{{dailyGoal}}</span><span class="goal-unit">组 / 天</span></div><span class="goal-hint">每组 {{groupSize}} 个单词，约 {{dailyGoal * groupSize}} 词 / 天</span></div><div class="options-card"><span class="options-title">快速选择</span><div class="options-grid"><div v-for="(item, index) in quickOptions" :key="item" @click="mp('selectGoal', $event)" :class="&quot;option-btn &quot; + (dailyGoal === item ? 'active' : '')" :data-goal="item" :style="(dailyGoal === item ? 'background:' + themeColors[themeIdx].accent + ';color:#fff;' : '')"><span class="option-text">{{item}} 组</span></div></div></div><div class="custom-card"><span class="custom-label">自定义目标</span><div class="custom-row"><input @input="mp('onCustomInput', $event)" class="custom-input" type="number" placeholder="1 - 10 组" :value="dailyGoal" /><span class="custom-unit">组 / 天</span></div><div @click="mp('saveCustom', $event)" class="custom-save" :style="&quot;background:&quot; + themeColors[themeIdx].accent + &quot;;&quot;"><span class="custom-save-text">保存</span></div></div></div>
 </template>
 
 <script>
 
 import { createPage } from '@/mp/page';
+import { GROUP_SIZE } from '@/utils/ebbinghaus';
+import {
+  getCheckInGoal,
+  maybeAutoCheckIn,
+  setCheckInGoal,
+  MAX_CHECKIN_GOAL
+} from '@/utils/checkin';
 
 export default createPage({
   data: {
     themeIdx: 0,
     themeColors: [
-      { accent: '#43A047', light: '#E8F5E9' },
-      { accent: '#00897B', light: '#E0F2F1' },
-      { accent: '#F57C00', light: '#FFF3E0' },
-      { accent: '#7B1FA2', light: '#F3E5F5' },
-      { accent: '#1976D2', light: '#E3F2FD' }
+      { accent: '#326d43', light: '#e6efe2' },
+      { accent: '#2f6f6a', light: '#e2efed' },
+      { accent: '#a9692c', light: '#f6e9da' },
+      { accent: '#6f5686', light: '#eee7f4' },
+      { accent: '#3c6382', light: '#e6edf2' }
     ],
     cardThemes: [
-      { bg: 'linear-gradient(175deg, #C8E6C9 0%, #E8F5E9 30%, #F1F8F4 100%)' },
-      { bg: 'linear-gradient(175deg, #B2DFDB 0%, #E0F2F1 30%, #F1F8F7 100%)' },
-      { bg: 'linear-gradient(175deg, #FFE0B2 0%, #FFF3E0 30%, #FFF8F5 100%)' },
-      { bg: 'linear-gradient(175deg, #E1BEE7 0%, #F3E5F5 30%, #F8F4FA 100%)' },
-      { bg: 'linear-gradient(175deg, #BBDEFB 0%, #E3F2FD 30%, #F5F8FC 100%)' }
+      { bg: 'linear-gradient(175deg, #C8E6C9 0%, #e6efe2 30%, #F1F8F4 100%)' },
+      { bg: 'linear-gradient(175deg, #B2DFDB 0%, #e2efed 30%, #F1F8F7 100%)' },
+      { bg: 'linear-gradient(175deg, #FFE0B2 0%, #f6e9da 30%, #FFF8F5 100%)' },
+      { bg: 'linear-gradient(175deg, #E1BEE7 0%, #eee7f4 30%, #F8F4FA 100%)' },
+      { bg: 'linear-gradient(175deg, #BBDEFB 0%, #e6edf2 30%, #F5F8FC 100%)' }
     ],
-    dailyGoal: 20,
-    quickOptions: [5, 10, 15, 20, 25, 30, 40, 50]
+    dailyGoal: 2,
+    groupSize: GROUP_SIZE,
+    quickOptions: [1, 2, 3, 4, 5, 6, 8, 10]
   },
 
   onLoad() {
     this.setData({ themeIdx: getApp().globalData.cardThemeIndex || 0 });
-    const goal = wx.getStorageSync('dailyGoal') || 20;
-    this.setData({ dailyGoal: goal });
+    this.setData({ dailyGoal: getCheckInGoal() });
   },
 
   onShow() {
-    this.setData({ themeIdx: getApp().globalData.cardThemeIndex || 0 });
+    this.setData({
+      themeIdx: getApp().globalData.cardThemeIndex || 0,
+      dailyGoal: getCheckInGoal()
+    });
+  },
+
+  async applyGoal(goal) {
+    const saved = setCheckInGoal(goal);
+    this.setData({ dailyGoal: saved });
+    const result = await maybeAutoCheckIn();
+    wx.showToast({
+      title: result.checked ? '目标已达成，已自动打卡' : '每日目标已设为 ' + saved + ' 组',
+      icon: 'none',
+      duration: 1500
+    });
   },
 
   selectGoal(e) {
-    const goal = parseInt(e.currentTarget.dataset.goal);
-    if (isNaN(goal) || goal < 5 || goal % 5 !== 0) return;
-    this.setData({ dailyGoal: goal });
-    wx.setStorageSync('dailyGoal', goal);
-    wx.showToast({ title: '每日目标已设为 ' + goal + ' 词', icon: 'success', duration: 1200 });
+    const goal = parseInt(e.currentTarget.dataset.goal, 10);
+    if (!Number.isInteger(goal) || goal < 1 || goal > MAX_CHECKIN_GOAL) return;
+    this.applyGoal(goal);
   },
 
   onCustomInput(e) {
-    this.setData({ customValue: parseInt(e.detail.value) || 0 });
+    this.setData({ customValue: parseInt(e.detail.value, 10) || 0 });
   },
 
   saveCustom() {
     const val = this.$data.customValue;
-    if (!val || val < 5 || val % 5 !== 0) {
-      wx.showToast({ title: '请输入5的倍数（最小5）', icon: 'none' });
+    if (!Number.isInteger(val) || val < 1 || val > MAX_CHECKIN_GOAL) {
+      wx.showToast({ title: `请输入 1 - ${MAX_CHECKIN_GOAL} 之间的组数`, icon: 'none' });
       return;
     }
-    this.setData({ dailyGoal: val });
-    wx.setStorageSync('dailyGoal', val);
-    wx.showToast({ title: '每日目标已设为 ' + val + ' 词', icon: 'success', duration: 1200 });
+    this.applyGoal(val);
   },
 
   goBack() {

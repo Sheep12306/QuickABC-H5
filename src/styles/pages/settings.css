@@ -1,17 +1,18 @@
 .page-settings .settings-container,
 .page-settings.settings-container {
   min-height: 100vh;
-  padding: 0.3733rem;
+  padding: 0.419rem 0.49rem 0.64rem;
   box-sizing: border-box;
+  background: var(--page-paper);
+  color: var(--page-ink);
 }
 
 .page-settings .settings-group,
 .page-settings.settings-group {
-  background: rgba(255, 255, 255, 0.58);
-  border-radius: 0.3733rem;
-  border: 0.0133rem solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0.04rem 0.2133rem rgba(46, 125, 50, 0.06);
-  padding: 0 0.3733rem;
+  background: rgba(255, 255, 255, 0.38);
+  border-radius: 0.32rem;
+  border: 1px solid var(--page-line);
+  padding: 0 0.372rem;
   margin-bottom: 0.48rem;
 }
 
@@ -19,8 +20,8 @@
 .page-settings.settings-item {
   display: flex;
   align-items: center;
-  padding: 0.3733rem 0;
-  border-bottom: 0.0133rem solid rgba(46, 125, 50, 0.06);
+  padding: 0.279rem 0;
+  border-bottom: 1px solid var(--page-line);
 }
 
 .page-settings .settings-item:active,
@@ -35,33 +36,32 @@
 
 .page-settings .settings-icon-circle,
 .page-settings.settings-icon-circle {
-  width: 0.5867rem;
-  height: 0.5867rem;
-  border-radius: 0.2933rem;
+  width: 0.465rem;
+  height: 0.465rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 0.2133rem;
+  margin-right: 0.209rem;
 }
 
 .page-settings .settings-icon-inner,
 .page-settings.settings-icon-inner {
-  font-size: 0.32rem;
-  font-weight: 700;
+  font-size: 0.349rem;
+  font-weight: 400;
 }
 
 .page-settings .settings-label,
 .page-settings.settings-label {
   flex: 1;
-  font-size: 0.4rem;
-  color: #2C3E2D;
-  font-weight: 500;
+  font-size: 0.349rem;
+  color: var(--page-ink);
+  font-weight: 600;
 }
 
 .page-settings .settings-arrow,
 .page-settings.settings-arrow {
-  font-size: 0.3733rem;
-  color: #B0B8B0;
+  font-size: 0.279rem;
+  color: #b6b8ae;
 }
 
 .page-settings .version-info,
@@ -72,14 +72,56 @@
 
 .page-settings .version-text,
 .page-settings.version-text {
-  font-size: 0.32rem;
-  color: #A5B8A5;
+  font-size: 0.302rem;
+  color: #a5a89d;
   display: block;
   margin-bottom: 0.08rem;
 }
 
 .page-settings .version-sub,
 .page-settings.version-sub {
-  font-size: 0.2933rem;
-  color: #C0C8C0;
+  font-size: 0.279rem;
+  color: #b6b8ae;
+}
+
+/* ---- 四六级出题接口配置 ---- */
+.page-settings .settings-group-head,
+.page-settings.settings-group-head {
+  padding: 0.28rem 0 0.16rem;
+}
+
+.page-settings .settings-group-title,
+.page-settings.settings-group-title {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 0.326rem;
+  font-weight: 700;
+  color: var(--page-ink);
+}
+
+.page-settings .settings-group-desc,
+.page-settings.settings-group-desc {
+  display: block;
+  margin-top: 0.06rem;
+  font-size: 0.24rem;
+  color: #8f9389;
+}
+
+.page-settings .settings-value,
+.page-settings.settings-value {
+  max-width: 46%;
+  margin-right: 0.12rem;
+  overflow: hidden;
+  font-size: 0.256rem;
+  color: #8f9389;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.page-settings .settings-note,
+.page-settings.settings-note {
+  padding: 0.2rem 0 0.26rem;
+  font-size: 0.24rem;
+  line-height: 1.55;
+  color: #a5a89d;
 }

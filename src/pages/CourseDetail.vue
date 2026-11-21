@@ -1,75 +1,11 @@
 <template>
-<span >pages/course-detail/course-detail.wxml</span>
+  <PagePlaceholder
+    title="课程详情"
+    description="课程详情页还在准备中。"
+    icon="book-open"
+  />
 </template>
 
-<script>
-
-import { createPage } from '@/mp/page';
-
-// pages/course-detail/course-detail.js
-export default createPage({
-
-  /**
-   * 页面的初始数据
-   */
-  data: {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
-})
+<script setup>
+import PagePlaceholder from '@/components/PagePlaceholder.vue';
 </script>

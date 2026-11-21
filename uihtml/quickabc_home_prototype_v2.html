@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>快背单词｜首页</title>
+<style>
+:root{--ink:#24372b;--green:#326d43;--green2:#4d8759;--muted:#8c9187;--paper:#f6f5ed;--line:#e7e5da;--white:#fbfaf5}
+*{box-sizing:border-box}
+body{margin:0;background:#e9e9df;color:var(--ink);font-family:"SF Pro Display","PingFang SC","Microsoft YaHei",sans-serif}
+button{font:inherit}
+.app{width:min(100%,430px);min-height:100vh;margin:auto;background:var(--paper);position:relative;overflow:hidden;padding:17px 21px 104px}
+.app:before{content:"";position:absolute;top:-105px;right:-100px;width:330px;height:390px;background:radial-gradient(ellipse,rgba(178,198,157,.24),transparent 68%);pointer-events:none}
+.status{height:28px;display:flex;justify-content:space-between;align-items:center;padding:0 5px;font-size:14px;font-weight:650;position:relative}
+.header{display:flex;justify-content:space-between;align-items:center;margin:36px 2px 35px;position:relative}
+.greeting{font-family:"Songti SC","Noto Serif SC",serif;font-size:27px;font-weight:700;letter-spacing:-1px}
+.tagline{font-family:"Songti SC","Noto Serif SC",serif;color:#85887e;font-size:14px;margin-top:10px;letter-spacing:1px}
+.album{width:48px;height:48px;border:0;background:transparent;position:relative;display:grid;place-items:center;padding:0}
+.disc{width:39px;height:39px;border-radius:50%;background:repeating-radial-gradient(circle,#151916 0 2px,#242923 3px 4px);box-shadow:0 3px 10px #a6aa9c;display:grid;place-items:center}
+.disc:after{content:"";width:12px;height:12px;border-radius:50%;background:#56805c;border:2px solid #d7dfce}
+.dot{position:absolute;right:2px;top:1px;width:9px;height:9px;border-radius:50%;background:#6b9b69;border:2px solid var(--paper)}
+.book{position:relative;background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.9);border-radius:27px;padding:25px 23px 21px;min-height:258px;box-shadow:0 12px 30px rgba(53,68,48,.055);overflow:hidden}
+.book:after{content:"";position:absolute;right:-52px;top:-55px;width:210px;height:210px;border:1px solid rgba(116,153,111,.13);border-radius:50%;box-shadow:0 0 0 17px rgba(116,153,111,.035),0 0 0 34px rgba(116,153,111,.025)}
+.cover{position:absolute;left:25px;top:32px;width:100px;height:144px;border-radius:7px 10px 10px 7px;background:linear-gradient(155deg,#82ad86,#3f7650 72%,#315e40);box-shadow:5px 7px 0 rgba(42,79,47,.13),0 12px 20px rgba(42,79,47,.13);display:flex;flex-direction:column;justify-content:center;align-items:center;color:#f7f4e9;z-index:1;transform:rotate(-2deg)}
+.cover:before{content:"";position:absolute;left:7px;top:0;bottom:0;width:1px;background:rgba(255,255,255,.35)}
+.cover b{font-family:Georgia,serif;font-size:23px;letter-spacing:.5px}.cover small{font-family:"Songti SC",serif;font-size:11px;margin-top:8px;letter-spacing:2px}
+.book-info{margin-left:124px;position:relative;z-index:2}
+.eyebrow{font-size:11px;letter-spacing:2px;color:#9a9d91}
+.book-title{font-family:"Songti SC","Noto Serif SC",serif;font-size:21px;font-weight:700;margin:12px 0 11px;white-space:nowrap}
+.book-title button{border:0;background:none;color:#90968a;font-size:17px;padding:0 0 0 3px}
+.count{font-size:13px;color:#888d82;white-space:nowrap}
+.progress-line{height:6px;background:#e3e4d9;border-radius:8px;margin:18px 0 12px;overflow:hidden}
+.progress-line span{display:block;width:42%;height:100%;background:#4f875b;border-radius:8px}
+.percent{position:absolute;right:0;top:74px;font-family:Georgia,serif;font-size:29px;color:var(--green)}
+.group{font-size:13px;color:#858a80}
+.change{display:block;border:0;background:none;color:var(--green);font-size:12px;font-weight:650;padding:16px 0 0}
+.primary{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;height:62px;margin:19px 0 17px;border:0;border-radius:32px;background:linear-gradient(100deg,#4d895a,#2d6b40);color:white;font-size:18px;font-weight:650;letter-spacing:1px;box-shadow:0 8px 16px rgba(45,104,62,.17)}
+.play{font-size:16px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);padding:19px 4px 17px;background:rgba(255,255,255,.48);border:1px solid rgba(255,255,255,.72);border-radius:24px}
+.stat{text-align:center;border-right:1px solid #e5e4da}.stat:last-child{border:0}
+.stat strong{font-family:Georgia,"Times New Roman",serif;font-size:27px;font-weight:500;letter-spacing:.3px}
+.stat span{display:block;margin-top:6px;font-size:12px;color:#898d83}
+.section{margin-top:29px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:0 2px 17px}
+.section-title{font-family:"Songti SC","Noto Serif SC",serif;font-size:20px;font-weight:700;letter-spacing:.5px}
+.more{border:0;background:none;color:#999b91;font-size:12px}
+.chart{height:111px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 5px 0}
+.day{height:100%;flex:1;display:flex;align-items:center;justify-content:flex-end;flex-direction:column;gap:8px;font-size:11px;color:#92968d}
+.bar{width:25px;height:var(--h);max-height:85px;background:#d7e2d1;border-radius:7px 7px 2px 2px}
+.day.active{color:#4c7b50}.day.active .bar{background:linear-gradient(#65966a,#3e784b)}
+.rule{height:1px;background:var(--line);margin:22px 0 21px}
+.shelf{display:flex;gap:13px;overflow-x:auto;padding:1px 1px 9px;scrollbar-width:none}.shelf::-webkit-scrollbar{display:none}
+.booklet{flex:0 0 108px;height:132px;border-radius:10px;padding:16px 12px 12px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 5px 12px rgba(57,68,49,.09);position:relative;overflow:hidden}
+.booklet:after{content:"";position:absolute;width:110px;height:60px;border:1px solid rgba(255,255,255,.23);border-radius:50%;bottom:-28px;right:-20px;transform:rotate(-20deg)}
+.booklet b{font-family:Georgia,"Songti SC",serif;font-size:19px;font-weight:600;position:relative;z-index:1}
+.booklet small{font-size:10px;opacity:.8;position:relative;z-index:1}
+.b1{background:linear-gradient(145deg,#8fb397,#477b55);color:#f8f5e9}.b2{background:linear-gradient(145deg,#eee4d0,#c8b58e);color:#5f5742}.b3{background:linear-gradient(145deg,#789a82,#45694e);color:#f8f5e9}.b4{background:linear-gradient(145deg,#c5d4d9,#8ea8b3);color:#405d67}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,430px);height:76px;background:rgba(249,248,242,.96);border-top:1px solid rgba(226,225,216,.85);display:flex;justify-content:space-around;align-items:center;padding-bottom:8px}
+.navitem{display:flex;flex-direction:column;align-items:center;gap:4px;color:#999d95;font-size:11px}.navitem.active{color:#397348;font-weight:650}
+.navicon{font-size:22px;line-height:1}
+.overlay{display:none;position:fixed;inset:0;background:rgba(28,39,29,.28);z-index:9;align-items:flex-end;justify-content:center}.overlay.show{display:flex}
+.sheet{width:min(100%,430px);background:#f8f7f0;border-radius:25px 25px 0 0;padding:23px 22px 34px;max-height:75vh;overflow:auto}
+.sheethead{display:flex;justify-content:space-between;align-items:center;font-family:"Songti SC",serif;font-size:19px;font-weight:700;margin-bottom:15px}
+.close{border:0;background:#ecece3;border-radius:50%;width:30px;height:30px;font-size:20px;color:#667366}
+.option{padding:15px 14px;background:#fffefa;border:1px solid #eeeee5;border-radius:14px;margin:9px 0;display:flex;justify-content:space-between;align-items:center}
+.option.active{background:#e9f0e5;border-color:#d4e2d0;color:#326d43}
+.option small{display:block;color:#92958c;font-size:11px;margin-top:5px}
+@media(min-width:700px){body{padding:22px 0}.app{border-radius:28px;min-height:900px}.nav{position:absolute;border-radius:0 0 28px 28px}.overlay{align-items:center}.sheet{border-radius:25px}}
+</style>
+</head>
+<body>
+<main class="app">
+ <div class="status"><span>9:41</span><span>▮▮▮　◔　▰</span></div>
+ <header class="header">
+  <div><div class="greeting">你好，Shawn</div><div class="tagline">坚持学习，遇见更好的自己</div></div>
+  <button class="album" aria-label="随心听" onclick="openListen()"><span class="disc"></span><i class="dot"></i></button>
+ </header>
+ <section class="book">
+  <div class="cover" id="cover"><b>CET-4</b><small>核心词汇</small></div>
+  <div class="book-info">
+   <div class="eyebrow">CURRENT WORDBOOK</div>
+   <div class="book-title" id="bookTitle">CET-4 核心词汇 <button onclick="openBooks()" aria-label="切换词书">⌄</button></div>
+   <div class="count" id="count">已掌握 2,310 / 5,500</div>
+   <div class="progress-line"><span id="progress"></span></div>
+   <div class="percent" id="percent">42%</div>
+   <div class="group" id="group">第 12 / 30 组</div>
+   <button class="change" onclick="openBooks()">切换词书　↗</button>
+  </div>
+ </section>
+ <button class="primary" onclick="alert('这里接入独立的背单词页面')"><span class="play">▶</span>继续背单词</button>
+ <section class="stats">
+  <div class="stat"><strong>1,250</strong><span>累计掌握</span></div>
+  <div class="stat"><strong>86</strong><span>待复习</span></div>
+  <div class="stat"><strong>12 天</strong><span>连续学习</span></div>
+ </section>
+ <section class="section">
+  <div class="section-head"><div class="section-title">学习轨迹</div><button class="more" onclick="alert('查看完整学习记录')">查看详情　›</button></div>
+  <div class="chart">
+   <div class="day"><i class="bar" style="--h:35%"></i>周一</div><div class="day"><i class="bar" style="--h:55%"></i>周二</div><div class="day"><i class="bar" style="--h:42%"></i>周三</div><div class="day"><i class="bar" style="--h:78%"></i>周四</div><div class="day"><i class="bar" style="--h:61%"></i>周五</div><div class="day active"><i class="bar" style="--h:95%"></i>周六</div><div class="day"><i class="bar" style="--h:48%"></i>周日</div>
+  </div>
+ </section>
+ <div class="rule"></div>
+ <section>
+  <div class="section-head"><div class="section-title">我的词库</div><button class="more" onclick="openBooks()">管理　›</button></div>
+  <div class="shelf">
+   <div class="booklet b1"><b>CET-4</b><small>核心词汇 · 42%</small></div><div class="booklet b2"><b>CET-6</b><small>核心词汇 · 18%</small></div><div class="booklet b3"><b>考研英语</b><small>核心词汇 · 0%</small></div><div class="booklet b4"><b>TOEFL</b><small>核心词汇 · 0%</small></div>
+  </div>
+ </section>
+ <nav class="nav"><div class="navitem active"><span class="navicon">⌂</span>单词</div><div class="navitem"><span class="navicon">◎</span>发现</div><div class="navitem"><span class="navicon">♙</span>我的</div></nav>
+</main>
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeSheet()"><div class="sheet"><div class="sheethead"><span id="sheetTitle">选择单词书</span><button class="close" onclick="closeSheet()">×</button></div><div id="sheetContent"></div></div></div>
+<script>
+const books=[
+ {name:'CET-4 核心词汇',short:'CET-4',total:5500,learned:2310,pct:42,group:12,groups:30},
+ {name:'CET-6 核心词汇',short:'CET-6',total:6000,learned:1080,pct:18,group:6,groups:32},
+ {name:'考研英语核心词汇',short:'考研',total:5500,learned:0,pct:0,group:1,groups:30},
+ {name:'TOEFL 核心词汇',short:'TOEFL',total:4500,learned:0,pct:0,group:1,groups:25}
+];let selected=0;
+function openBooks(){document.getElementById('sheetTitle').textContent='选择单词书';document.getElementById('sheetContent').innerHTML=books.map((b,i)=>`<div class="option ${i===selected?'active':''}" onclick="choose(${i})"><div><b>${b.name}</b><small>${b.total.toLocaleString()} 词 · 已掌握 ${b.learned.toLocaleString()} · ${b.pct}%</small></div><span>${i===selected?'✓':'›'}</span></div>`).join('');document.getElementById('overlay').classList.add('show')}
+function openListen(){const items=[{t:'听今天背过的单词',d:'复习今日学习内容',m:'listen'},{t:'单词跟读',d:'跟随发音练习开口',m:'follow'},{t:'单词听写',d:'听音辨词，检验记忆',m:'dictation'},{t:'听听力',d:'沉浸式英语听力',m:'listening'}];document.getElementById('sheetTitle').textContent='随心听';document.getElementById('sheetContent').innerHTML=items.map(x=>`<div class="option" onclick="openWalkman('${x.m}')"><div><b>${x.t}</b><small>${x.d}</small></div><span>›</span></div>`).join('');document.getElementById('overlay').classList.add('show')}
+function openWalkman(mode){closeSheet();location.href='quickabc_walkman.html?mode='+mode+'&embed=1'}
+function choose(i){selected=i;const b=books[i];document.getElementById('bookTitle').innerHTML=b.name+' <button onclick="openBooks()">⌄</button>';document.getElementById('count').textContent=`已掌握 ${b.learned.toLocaleString()} / ${b.total.toLocaleString()}`;document.getElementById('progress').style.width=b.pct+'%';document.getElementById('percent').textContent=b.pct+'%';document.getElementById('group').textContent=`第 ${b.group} / ${b.groups} 组`;document.querySelector('#cover b').textContent=b.short;closeSheet()}
+function closeSheet(){document.getElementById('overlay').classList.remove('show')}
+</script>
+</body></html>

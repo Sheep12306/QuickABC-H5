@@ -1,13 +1,168 @@
 <template>
-<div class="my-container page-my" :style="&quot;background:&quot; + (cardThemes[themeIdx].bg) + &quot;;&quot;"><div class="user-info-section"><div class="avatar-info"><div @click="mp('goToProfile', $event)" class="avatar-wrap"><img class="avatar" :src="isLogin ? userInfo.avatarUrl : '/images/avatar.png'" /><div v-if="isLogin" class="avatar-edit-tip"><span class="avatar-edit-icon">✎</span></div></div><div class="user-base"><div @click="mp('goToProfile', $event)" class="user-name-row"><span class="user-name">{{isLogin ? userInfo.nickName : '未登录用户'}}</span><span v-if="isLogin" class="user-name-edit" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">✎</span></div><div v-if="isLogin" class="user-level" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">Lv.{{userLevel}}</div><span v-if="isLogin" @click="mp('showPhoneModal', $event)" class="phone-bind-text">
-          {{userPhone || '绑定手机号'}}
-        </span><div v-if="!isLogin" @click="mp('wechatAuthLogin', $event)" class="onekey-login-btn" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span class="login-btn-text">H5 登录</span></div></div></div></div><div class="stats-row"><div class="stat-card stat-main"><span class="stat-num" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">{{todayWords}}</span><span class="stat-label">累计已背</span></div><div @click="mp('goToVocabDetail', $event)" class="stat-card stat-main"><span class="stat-num" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">{{totalWords}}</span><span class="stat-label">当前词汇量</span></div></div><div class="tools-section"><span class="section-title">学习工具</span><div class="tools-grid"><div @click="mp('goToVocabTest', $event)" class="tool-item"><div class="tool-icon-circle" :style="&quot;background:&quot; + (themeColors[themeIdx].light) + &quot;;&quot;"><span class="tool-icon-inner" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">T</span></div><span class="tool-label">词汇测试</span></div><div @click="mp('goToStudyPlan', $event)" class="tool-item"><div class="tool-icon-circle" :style="&quot;background:&quot; + (themeColors[themeIdx].light) + &quot;;&quot;"><span class="tool-icon-inner" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">P</span></div><span class="tool-label">学习计划</span></div><div @click="mp('checkInStats', $event)" class="tool-item"><div class="tool-icon-circle" :style="&quot;background:&quot; + (themeColors[themeIdx].light) + &quot;;&quot;"><span class="tool-icon-inner" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">C</span></div><span class="tool-label">打卡日历</span></div></div></div><div class="data-list-section"><div @click="mp('goToWrongWords', $event)" class="data-list-item"><div class="dl-icon-circle wrong-icon"><span class="dl-icon-inner">W</span></div><span class="dl-label">我的错词</span><span class="dl-value">{{wrongWordsCount}}个</span><span class="dl-arrow">></span></div><div @click="mp('goToVocabBook', $event)" class="data-list-item"><div class="dl-icon-circle" :style="&quot;background:&quot; + (themeColors[themeIdx].light) + &quot;;&quot;"><span class="dl-icon-inner" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">V</span></div><span class="dl-label">我的生词本</span><span class="dl-value">{{vocabBookCount}}个</span><span class="dl-arrow">></span></div><div @click="mp('goToDictationRecords', $event)" class="data-list-item data-list-item-last"><div class="dl-icon-circle dictation-icon"><span class="dl-icon-inner">D</span></div><span class="dl-label">听写记录</span><span class="dl-value">{{dictationCount}}条</span><span class="dl-arrow">></span></div></div><div class="setting-section"><div @click="mp('goToStudySetting', $event)" class="setting-item"><div class="setting-icon-circle study" :style="&quot;background:&quot; + (themeColors[themeIdx].light) + &quot;;&quot;"><span class="setting-icon-inner" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">S</span></div><span class="setting-name">学习设置</span><span class="setting-arrow">></span></div><div @click="mp('nextTheme', $event)" class="setting-item"><div class="setting-icon-circle" :style="&quot;background:&quot; + (themeColors[themeIdx].light) + &quot;;&quot;"><span class="setting-icon-inner" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">T</span></div><span class="setting-name">个性换肤</span><div class="skin-controls"><span @click.stop="mp('prevTheme', $event)" class="skin-arrow">◀</span><span class="setting-value skin-name" :style="&quot;color:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;">{{cardThemes[themeIdx].name}}</span><span @click.stop="mp('nextTheme', $event)" class="skin-arrow">▶</span></div></div><div @click="mp('goToSetting', $event)" class="setting-item"><div class="setting-icon-circle config"><span class="setting-icon-inner config-icon">C</span></div><span class="setting-name">设置</span><span class="setting-arrow">></span></div></div><div class="theme-footer"><span class="theme-foot-text">当前主题: {{cardThemes[themeIdx].name || '默认'}}</span></div></div>
+  <div
+    class="my-page page-shell"
+    :style="{ '--accent': themeColors[themeIdx].accent, '--accent-soft': themeColors[themeIdx].light }"
+  >
+    <header class="page-header">
+      <div class="page-heading">
+        <h1 class="page-title">我的</h1>
+        <p class="page-subtitle">记录每一次小小的进步</p>
+      </div>
+      <button class="my-settings" type="button" aria-label="设置" title="设置" @click="mp('goToSetting', $event)">
+        <AppSketch name="sliders" :stroke-width="8" class="my-settings-icon" />
+      </button>
+    </header>
+
+    <section class="profile-card">
+      <button class="avatar-wrap" type="button" aria-label="编辑资料" @click="mp('goToProfile', $event)">
+        <img
+          class="avatar"
+          :src="isLogin && userInfo.avatarUrl ? userInfo.avatarUrl : '/images/logo.png'"
+          alt=""
+        />
+        <span v-if="isLogin" class="avatar-edit" aria-hidden="true">
+          <AppSketch name="pencil" :stroke-width="12" />
+        </span>
+      </button>
+
+      <div class="profile-body">
+        <button class="profile-name-row" type="button" @click="mp('goToProfile', $event)">
+          <span class="profile-name">{{ isLogin ? userInfo.nickName || '同学' : '未登录用户' }}</span>
+          <AppSketch v-if="isLogin" name="pencil" :stroke-width="12" class="profile-edit" />
+        </button>
+        <div v-if="isLogin" class="profile-meta">
+          <span class="level-pill">Lv.{{ userLevel }}</span>
+          <button class="phone-link" type="button" @click="mp('showPhoneModal', $event)">
+            {{ userPhone || '绑定手机号' }}
+          </button>
+        </div>
+        <span v-else class="profile-hint">登录后同步学习记录</span>
+      </div>
+
+      <button v-if="!isLogin" class="login-btn" type="button" @click="mp('wechatAuthLogin', $event)">
+        H5 登录
+      </button>
+      <button v-else class="profile-enter" type="button" aria-label="查看资料" @click="mp('goToProfile', $event)">
+        <AppIcon name="chevron-right" />
+      </button>
+    </section>
+
+    <section class="stats-card">
+      <button class="stat-cell" type="button" @click="mp('checkInStats', $event)">
+        <span class="stat-num">{{ streakDays }}<small>天</small></span>
+        <span class="stat-label">连续打卡</span>
+      </button>
+      <div class="stat-cell">
+        <span class="stat-num">{{ todayWords }}</span>
+        <span class="stat-label">累计已背</span>
+      </div>
+      <button class="stat-cell" type="button" @click="mp('goToVocabDetail', $event)">
+        <span class="stat-num">{{ totalWords || lastVocabScore }}</span>
+        <span class="stat-label">当前词汇量</span>
+      </button>
+    </section>
+
+    <section class="quick-stack" aria-label="学习入口">
+      <button class="quick-card quick-card--test" type="button" @click="mp('goToVocabTest', $event)">
+        <span class="quick-card-text">
+          <span class="quick-card-title">测词汇</span>
+          <span class="quick-card-meta">{{ vocabCaption() }}</span>
+        </span>
+        <AppSketch name="gauge" class="quick-card-art" />
+      </button>
+
+      <button class="quick-card quick-card--plan" type="button" @click="mp('goToStudyPlan', $event)">
+        <span class="quick-card-text">
+          <span class="quick-card-title">做计划</span>
+          <span class="quick-card-meta">按计划推进</span>
+        </span>
+        <AppSketch name="plan" class="quick-card-art" />
+      </button>
+    </section>
+
+    <section class="page-section">
+      <div class="section-head">
+        <h2 class="section-title">今日打卡</h2>
+      </div>
+      <div class="quiet-list">
+        <button class="quiet-row" type="button" @click="mp('openGoalModal', $event)">
+          <AppSketch name="target" :stroke-width="8" class="row-sketch" />
+          <span class="quiet-label">打卡目标</span>
+          <span class="quiet-meta">
+            {{ todayGroups }}/{{ checkInGoal }} 组{{ checkedInToday ? ' · 已打卡' : '' }}
+          </span>
+          <AppIcon name="chevron-right" class="quiet-chevron" />
+        </button>
+        <button class="quiet-row" type="button" @click="mp('checkInStats', $event)">
+          <AppSketch name="calendar" :stroke-width="8" class="row-sketch" />
+          <span class="quiet-label">打卡日历</span>
+          <AppIcon name="chevron-right" class="quiet-chevron" />
+        </button>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="section-head">
+        <h2 class="section-title">偏好设置</h2>
+      </div>
+      <div class="quiet-list">
+        <button class="quiet-row" type="button" @click="mp('goToStudySetting', $event)">
+          <AppSketch name="book" :stroke-width="8" class="row-sketch" />
+          <span class="quiet-label">学习设置</span>
+          <AppIcon name="chevron-right" class="quiet-chevron" />
+        </button>
+        <div class="quiet-row" @click="mp('nextTheme', $event)">
+          <AppSketch name="palette" :stroke-width="8" class="row-sketch" />
+          <span class="quiet-label">个性换肤</span>
+          <span class="skin-controls">
+            <button class="skin-arrow" type="button" aria-label="上一个主题" @click.stop="mp('prevTheme', $event)">
+              <AppIcon name="chevron-left" />
+            </button>
+            <span class="skin-dot"></span>
+            <span class="skin-name">{{ cardThemes[themeIdx].name }}</span>
+            <button class="skin-arrow" type="button" aria-label="下一个主题" @click.stop="mp('nextTheme', $event)">
+              <AppIcon name="chevron-right" />
+            </button>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="my-footer">快背单词 · 当前主题「{{ cardThemes[themeIdx].name }}」</footer>
+
+    <div v-if="showGoalModal" class="goal-mask" @click="mp('closeGoalModal', $event)">
+      <div class="goal-sheet" @click.stop>
+        <h3 class="goal-title">每日打卡目标</h3>
+        <p class="goal-hint">每天背完 {{ goalDraft }} 组（{{ goalDraft * groupSize }} 个单词）即自动打卡</p>
+        <div class="goal-grid">
+          <button
+            v-for="n in goalOptions"
+            :key="n"
+            type="button"
+            class="goal-option"
+            :class="{ 'goal-option--active': goalDraft === n }"
+            :data-goal="n"
+            @click="mp('pickGoal', $event)"
+          >{{ n }} 组</button>
+        </div>
+        <button type="button" class="goal-save" @click="mp('saveGoal', $event)">保存</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import api from '@/utils/api';
 import { ensureLogin } from '@/utils/auth';
 import { createPage } from '@/mp/page';
+import { GROUP_SIZE } from '@/utils/ebbinghaus';
+import {
+  DEFAULT_CHECKIN_GOAL,
+  getCheckInState,
+  maybeAutoCheckIn,
+  setCheckInGoal,
+  MAX_CHECKIN_GOAL
+} from '@/utils/checkin';
 
 
 const { resolveAvatarUrl } = api;
@@ -27,19 +182,20 @@ export default createPage({
       phoneNumbers: [],
       selectedPhone: '',
 
+      // 首页的绿色作为默认主题色；换肤只改强调色，页面底色统一用纸张色
       themeColors: [
-        { accent: '#43A047', light: '#E8F5E9' },
-        { accent: '#00897B', light: '#E0F2F1' },
-        { accent: '#F57C00', light: '#FFF3E0' },
-        { accent: '#7B1FA2', light: '#F3E5F5' },
-        { accent: '#1976D2', light: '#E3F2FD' }
+        { accent: '#326d43', light: '#e6efe2' },
+        { accent: '#2f6f6a', light: '#e2efed' },
+        { accent: '#a9692c', light: '#f6e9da' },
+        { accent: '#6f5686', light: '#eee7f4' },
+        { accent: '#3c6382', light: '#e6edf2' }
       ],
       cardThemes: [
-        { bg: 'linear-gradient(175deg, #C8E6C9 0%, #E8F5E9 30%, #F1F8F4 100%)', name: '森林' },
-        { bg: 'linear-gradient(175deg, #B2DFDB 0%, #E0F2F1 30%, #F1F8F7 100%)', name: '海洋' },
-        { bg: 'linear-gradient(175deg, #FFE0B2 0%, #FFF3E0 30%, #FFF8F5 100%)', name: '日落' },
-        { bg: 'linear-gradient(175deg, #E1BEE7 0%, #F3E5F5 30%, #F8F4FA 100%)', name: '薰衣草' },
-        { bg: 'linear-gradient(175deg, #BBDEFB 0%, #E3F2FD 30%, #F5F8FC 100%)', name: '天空' }
+        { name: '森林' },
+        { name: '海洋' },
+        { name: '日落' },
+        { name: '薰衣草' },
+        { name: '天空' }
       ],
       themeIdx: 0,
 
@@ -47,10 +203,15 @@ export default createPage({
       totalWords: 0,
       accuracy: 0,
       streakDays: 0,
-      wrongWordsCount: 0,
-      vocabBookCount: 0,
-      dictationCount: 0,
-      dailyGoal: 30,
+
+      // 每日打卡目标（按「组」计），今日组数达到目标后自动打卡
+      checkInGoal: DEFAULT_CHECKIN_GOAL,
+      todayGroups: 0,
+      checkedInToday: false,
+      goalDraft: DEFAULT_CHECKIN_GOAL,
+      goalOptions: Array.from({ length: MAX_CHECKIN_GOAL }, (_, i) => i + 1),
+      showGoalModal: false,
+      groupSize: GROUP_SIZE,
 
       showPhoneModal: false
     },
@@ -70,21 +231,25 @@ export default createPage({
       }
       this.loadLocalStats();
       this.checkLocalLoginStatus();
+      this.refreshCheckIn();
     },
 
     loadLocalStats() {
       try {
         this.setData({
           todayWords: wx.getStorageSync('totalLearned') || 0,
+          totalWords: wx.getStorageSync('lastVocabScore') || 0,
           accuracy: wx.getStorageSync('accuracy') || 0,
-          streakDays: wx.getStorageSync('checkInDays') || 0,
-          wrongWordsCount: (wx.getStorageSync('wrong_words') || []).length,
-          vocabBookCount: (wx.getStorageSync('newWords') || []).length,
-          dictationCount: (wx.getStorageSync('dictationRecords') || []).length
+          streakDays: wx.getStorageSync('checkInDays') || 0
         });
       } catch (e) {
         // ignore
       }
+    },
+
+    vocabCaption() {
+      const count = this.$data.totalWords || this.$data.lastVocabScore;
+      return count ? `${count} 词` : '测测词汇量';
     },
 
     showPhoneModal() {
@@ -254,6 +419,7 @@ export default createPage({
           this.setData({
             checkInDays: d.checkInDays || 0,
             lastVocabScore: d.vocabCount || 0,
+            totalWords: d.vocabCount || this.$data.totalWords,
             userLevel: d.level || 1
           });
           wx.setStorageSync('checkInDays', d.checkInDays || 0);
@@ -264,39 +430,58 @@ export default createPage({
       }
     },
 
-    async saveStudyData() {
-      if (!this.$data.isLogin) {
-        wx.showToast({ title: '请先登录', icon: 'none' });
-        return;
-      }
+    // 进入页面时兜底：若今日组数已达标但还没记打卡，自动补上
+    async refreshCheckIn() {
       try {
-        await api.saveStudyData({
-          checkInDays: this.$data.checkInDays,
-          vocabCount: this.$data.lastVocabScore,
-          level: this.$data.userLevel
-        });
+        const result = await maybeAutoCheckIn();
+        this.applyCheckInState(result, true);
       } catch (err) {
-        console.error('save failed', err);
+        const state = getCheckInState();
+        this.applyCheckInState(state, true);
       }
     },
 
-    async checkIn() {
-      if (!this.$data.isLogin) {
-        wx.showToast({ title: '请先登录', icon: 'none' });
-        return;
+    applyCheckInState(state, syncDays) {
+      const patch = {
+        checkInGoal: state.goal,
+        todayGroups: state.groups,
+        checkedInToday: state.checkedToday,
+        goalDraft: state.goal
+      };
+      if (syncDays) {
+        patch.streakDays = state.days;
+        patch.checkInDays = state.days;
       }
-      wx.showLoading({ title: '打卡中...' });
-      try {
-        const newDays = this.$data.checkInDays + 1;
-        this.setData({ checkInDays: newDays });
-        wx.setStorageSync('checkInDays', newDays);
-        await this.saveStudyData();
-        wx.showToast({ title: '打卡成功', icon: 'success' });
-      } catch (err) {
-        wx.showToast({ title: '打卡失败', icon: 'none' });
-      } finally {
-        wx.hideLoading();
+      this.setData(patch);
+    },
+
+    openGoalModal() {
+      this.setData({
+        showGoalModal: true,
+        goalDraft: this.$data.checkInGoal
+      });
+    },
+
+    closeGoalModal() {
+      this.setData({ showGoalModal: false });
+    },
+
+    pickGoal(e) {
+      const goal = Number(e.currentTarget.dataset.goal);
+      if (goal >= 1 && goal <= MAX_CHECKIN_GOAL) {
+        this.setData({ goalDraft: goal });
       }
+    },
+
+    async saveGoal() {
+      const goal = setCheckInGoal(this.$data.goalDraft);
+      this.setData({ showGoalModal: false, checkInGoal: goal, goalDraft: goal });
+      const result = await maybeAutoCheckIn();
+      this.applyCheckInState(result, true);
+      wx.showToast({
+        title: result.checked ? '目标已达成，已自动打卡' : '打卡目标已更新',
+        icon: 'none'
+      });
     },
 
     goToProfile() {
@@ -319,15 +504,6 @@ export default createPage({
     },
     goToSetting() {
       wx.navigateTo({ url: '/pages/settings/settings' });
-    },
-    goToWrongWords() {
-      wx.navigateTo({ url: '/pages/new-word-review/new-word-review?isWrongWordMode=true' });
-    },
-    goToVocabBook() {
-      wx.navigateTo({ url: '/pages/wordBookList/wordBookList' });
-    },
-    goToDictationRecords() {
-      wx.showToast({ title: '功能开发中，敬请期待', icon: 'none' });
     },
     switchTheme() {
       const total = this.$data.cardThemes.length;
