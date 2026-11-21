@@ -3,11 +3,11 @@
 当前方案：GitHub Actions 在每次 push 到 `main` 时构建，并用 rsync 把 `dist/` 同步到服务器。
 
 ```text
-域名    ：h5.kuaikeli.tech（需解析到 115.29.149.87）
+域名    ：quickabc.kuaikeli.tech（需解析到 115.29.149.87）
 服务器  ：115.29.149.87（Alibaba Cloud Linux 3，宝塔面板）
 部署目录：/opt/QuickABC/vocab-server/h5（alex 用户可写，Nginx 只读）
 后端    ：127.0.0.1:3001（PM2: quickabc-server）
-Nginx   ：见 deploy/nginx-h5.kuaikeli.tech.conf
+Nginx   ：见 deploy/nginx-quickabc.kuaikeli.tech.conf
 ```
 
 ## GitHub Actions
@@ -48,8 +48,8 @@ mkdir -p /opt/QuickABC/vocab-server/h5
 mkdir -p /opt/QuickABC/vocab-server/acme/.well-known/acme-challenge   # HTTP-01 验证目录
 
 # 站点配置（需要 root）
-# 文件：/www/server/panel/vhost/nginx/h5.kuaikeli.tech.conf
-# 内容：deploy/nginx-h5.kuaikeli.tech.conf
+# 文件：/www/server/panel/vhost/nginx/quickabc.kuaikeli.tech.conf
+# 内容：deploy/nginx-quickabc.kuaikeli.tech.conf
 # 注意：本机 nginx 不是默认 /etc/nginx，必须显式指定配置：
 sudo /www/server/nginx/sbin/nginx -t -c /www/server/nginx/conf/nginx.conf
 sudo /www/server/nginx/sbin/nginx -s reload -c /www/server/nginx/conf/nginx.conf
@@ -60,17 +60,17 @@ sudo /www/server/nginx/sbin/nginx -s reload -c /www/server/nginx/conf/nginx.conf
 服务器已安装 `/root/.acme.sh/acme.sh`。DNS 解析生效后签发并安装到宝塔证书目录：
 
 ```bash
-sudo /root/.acme.sh/acme.sh --issue -d h5.kuaikeli.tech \
+sudo /root/.acme.sh/acme.sh --issue -d quickabc.kuaikeli.tech \
   --webroot /opt/QuickABC/vocab-server/acme
 
-sudo mkdir -p /www/server/panel/vhost/cert/h5.kuaikeli.tech
-sudo /root/.acme.sh/acme.sh --install-cert -d h5.kuaikeli.tech \
-  --key-file       /www/server/panel/vhost/cert/h5.kuaikeli.tech/privkey.pem \
-  --fullchain-file /www/server/panel/vhost/cert/h5.kuaikeli.tech/fullchain.pem \
+sudo mkdir -p /www/server/panel/vhost/cert/quickabc.kuaikeli.tech
+sudo /root/.acme.sh/acme.sh --install-cert -d quickabc.kuaikeli.tech \
+  --key-file       /www/server/panel/vhost/cert/quickabc.kuaikeli.tech/privkey.pem \
+  --fullchain-file /www/server/panel/vhost/cert/quickabc.kuaikeli.tech/fullchain.pem \
   --reloadcmd      "/www/server/nginx/sbin/nginx -s reload -c /www/server/nginx/conf/nginx.conf"
 ```
 
-安装证书后把站点配置切换为 `deploy/nginx-h5.kuaikeli.tech.conf` 的 443 版本。
+安装证书后把站点配置切换为 `deploy/nginx-quickabc.kuaikeli.tech.conf` 的 443 版本。
 
 ## 手动部署（备用）
 
@@ -82,6 +82,6 @@ rsync -az --delete --chmod=D755,F644 dist/ alex@115.29.149.87:/opt/QuickABC/voca
 ## 验证
 
 ```bash
-curl -I https://h5.kuaikeli.tech/
-curl https://h5.kuaikeli.tech/health   # 经 Nginx 转发到后端 127.0.0.1:3001/health
+curl -I https://quickabc.kuaikeli.tech/
+curl https://quickabc.kuaikeli.tech/health   # 经 Nginx 转发到后端 127.0.0.1:3001/health
 ```

@@ -78,7 +78,7 @@ VITE_API_BASE=/api VITE_SERVER_BASE= npm run build
 ### CI/CD
 
 push 到 `main` 后，GitHub Actions（`.github/workflows/deploy.yml`）会自动构建并 rsync 到
-`115.29.149.87:/opt/QuickABC/vocab-server/h5`，线上地址 `https://h5.kuaikeli.tech`。
+`115.29.149.87:/opt/QuickABC/vocab-server/h5`，线上地址 `https://quickabc.kuaikeli.tech`。
 
 首次使用需要在仓库 Settings → Secrets 配置 `DEPLOY_HOST` / `DEPLOY_USER` / `DEPLOY_SSH_KEY`，
 详见 [deploy/README.md](deploy/README.md)。
