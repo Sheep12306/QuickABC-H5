@@ -43,14 +43,34 @@ Secrets 未配置时工作流只构建、不部署，并在日志里给出警告
 ## 服务器一次性初始化
 
 ```bash
-# 部署目录
+# 部署目录（alex 可写）
 mkdir -p /opt/QuickABC/vocab-server/h5
+mkdir -p /opt/QuickABC/vocab-server/acme/.well-known/acme-challenge   # HTTP-01 验证目录
 
-# Nginx（需要 root）
-# 1) DNS 添加 A 记录：h5.kuaikeli.tech -> 115.29.149.87
-# 2) 宝塔新建静态站点并申请证书，或直接使用 deploy/nginx-h5.kuaikeli.tech.conf
-nginx -t && nginx -s reload
+# 站点配置（需要 root）
+# 文件：/www/server/panel/vhost/nginx/h5.kuaikeli.tech.conf
+# 内容：deploy/nginx-h5.kuaikeli.tech.conf
+# 注意：本机 nginx 不是默认 /etc/nginx，必须显式指定配置：
+sudo /www/server/nginx/sbin/nginx -t -c /www/server/nginx/conf/nginx.conf
+sudo /www/server/nginx/sbin/nginx -s reload -c /www/server/nginx/conf/nginx.conf
 ```
+
+### TLS 证书（acme.sh）
+
+服务器已安装 `/root/.acme.sh/acme.sh`。DNS 解析生效后签发并安装到宝塔证书目录：
+
+```bash
+sudo /root/.acme.sh/acme.sh --issue -d h5.kuaikeli.tech \
+  --webroot /opt/QuickABC/vocab-server/acme
+
+sudo mkdir -p /www/server/panel/vhost/cert/h5.kuaikeli.tech
+sudo /root/.acme.sh/acme.sh --install-cert -d h5.kuaikeli.tech \
+  --key-file       /www/server/panel/vhost/cert/h5.kuaikeli.tech/privkey.pem \
+  --fullchain-file /www/server/panel/vhost/cert/h5.kuaikeli.tech/fullchain.pem \
+  --reloadcmd      "/www/server/nginx/sbin/nginx -s reload -c /www/server/nginx/conf/nginx.conf"
+```
+
+安装证书后把站点配置切换为 `deploy/nginx-h5.kuaikeli.tech.conf` 的 443 版本。
 
 ## 手动部署（备用）
 
