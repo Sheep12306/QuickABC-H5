@@ -109,6 +109,13 @@
   color: #24372b;
 }
 
+/* 手机号是登录账号，资料页只展示不可改 */
+.page-profile .form-static,
+.page-profile.form-static {
+  display: block;
+  color: #8c9187;
+}
+
 .page-profile .picker-display,
 .page-profile.picker-display {
   display: flex;

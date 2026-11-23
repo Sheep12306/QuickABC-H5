@@ -1,0 +1,350 @@
+/* ===== 登录 / 注册 / 找回密码：纸张底色 + 墨绿 ===== */
+.page-auth {
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: calc(env(safe-area-inset-top) + 0.7rem) 0.62rem 0.7rem;
+  background: var(--page-paper);
+  color: var(--page-ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page-auth::before {
+  content: '';
+  position: absolute;
+  top: -2.4rem;
+  right: -2.2rem;
+  width: 7.4rem;
+  height: 8.6rem;
+  background: radial-gradient(ellipse, rgba(178, 198, 157, 0.26), transparent 68%);
+  pointer-events: none;
+}
+
+.page-auth::after {
+  content: '';
+  position: absolute;
+  bottom: -3.2rem;
+  left: -2.4rem;
+  width: 6.4rem;
+  height: 6.4rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(50, 109, 67, 0.07), transparent 66%);
+  pointer-events: none;
+}
+
+/* ---- 返回 ---- */
+.auth-back {
+  position: absolute;
+  top: calc(env(safe-area-inset-top) + 0.32rem);
+  left: 0.34rem;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 50%;
+  color: var(--page-ink);
+  text-decoration: none;
+}
+
+.auth-back .app-icon {
+  font-size: 0.42rem;
+}
+
+.auth-back:active {
+  background: rgba(50, 109, 67, 0.07);
+}
+
+/* ---- 头部 ---- */
+.auth-head {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin: 0.16rem 0 0.5rem;
+}
+
+.auth-mark {
+  display: grid;
+  place-items: center;
+  width: 0.9rem;
+  height: 0.9rem;
+  margin: 0 auto 0.24rem;
+  border-radius: 50%;
+  background: var(--page-card);
+  border: 1px solid var(--page-line);
+  color: var(--page-green);
+  box-shadow: var(--page-shadow-soft);
+}
+
+.auth-mark .app-icon {
+  font-size: 0.46rem;
+}
+
+.auth-title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.012rem;
+}
+
+.auth-sub {
+  margin: 0.16rem 0 0;
+  font-size: 0.3rem;
+  line-height: 1.4;
+  color: var(--page-muted);
+}
+
+/* ---- 表单卡片 ---- */
+.auth-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 0.46rem 0.42rem 0.4rem;
+  background: var(--page-card);
+  border: 1px solid var(--page-line);
+  border-radius: 0.42rem;
+  box-shadow: var(--page-shadow-soft);
+}
+
+.auth-field {
+  display: block;
+}
+
+.auth-field + .auth-field {
+  margin-top: 0.3rem;
+}
+
+.auth-label {
+  display: block;
+  margin-bottom: 0.1rem;
+  font-size: 0.26rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--page-muted);
+}
+
+.auth-control {
+  display: flex;
+  align-items: center;
+  gap: 0.16rem;
+  padding: 0.2rem 0.22rem;
+  border: 1px solid var(--page-line);
+  border-radius: 0.22rem;
+  background: rgba(255, 255, 255, 0.55);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.auth-control:focus-within {
+  border-color: rgba(50, 109, 67, 0.55);
+  box-shadow: 0 0 0 0.06rem rgba(50, 109, 67, 0.1);
+}
+
+.auth-icon {
+  font-size: 0.34rem;
+  color: #a3aa9c;
+}
+
+.auth-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  padding: 0;
+  font-size: 0.36rem;
+  line-height: 1.4;
+  color: var(--page-ink);
+  background: transparent;
+}
+
+.auth-input--num {
+  font-family: var(--font-num);
+  letter-spacing: 0.02em;
+}
+
+.auth-input--date {
+  font-family: var(--font-num);
+  letter-spacing: 0.02em;
+  color: var(--page-ink);
+}
+
+.auth-input--date::-webkit-calendar-picker-indicator {
+  opacity: 0.55;
+}
+
+.auth-input::placeholder {
+  color: #b3b9b0;
+}
+
+.auth-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 0.2rem;
+  background-image: linear-gradient(45deg, transparent 50%, #9aa294 50%),
+    linear-gradient(135deg, #9aa294 50%, transparent 50%);
+  background-position: calc(100% - 0.16rem) 52%, calc(100% - 0.1rem) 52%;
+  background-size: 0.09rem 0.09rem, 0.09rem 0.09rem;
+  background-repeat: no-repeat;
+  color: var(--page-ink);
+}
+
+.auth-select:invalid,
+.auth-select option[disabled] {
+  color: #b3b9b0;
+}
+
+.auth-eye {
+  display: grid;
+  place-items: center;
+  width: 0.46rem;
+  height: 0.46rem;
+  color: #8c9187;
+}
+
+.auth-eye .app-icon {
+  font-size: 0.32rem;
+}
+
+.auth-control--textarea {
+  align-items: flex-start;
+  padding: 0.16rem 0.22rem;
+}
+
+.auth-textarea {
+  resize: none;
+  font-family: var(--font-ui);
+  line-height: 1.5;
+}
+
+.auth-note {
+  margin: 0 0 0.34rem;
+  padding: 0.18rem 0.2rem;
+  border-left: 0.04rem solid rgba(50, 109, 67, 0.35);
+  background: rgba(230, 239, 226, 0.5);
+  border-radius: 0 0.14rem 0.14rem 0;
+  font-size: 0.26rem;
+  line-height: 1.65;
+  color: #6e7869;
+}
+
+.auth-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.1rem;
+  margin: 0.28rem 0 0;
+  padding: 0.14rem 0.18rem;
+  border-radius: 0.14rem;
+  background: rgba(169, 68, 56, 0.08);
+  font-size: 0.26rem;
+  line-height: 1.5;
+  color: #a94438;
+}
+
+.auth-error .app-icon {
+  flex: none;
+  margin-top: 0.03rem;
+  font-size: 0.28rem;
+}
+
+.auth-submit {
+  display: block;
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 0.26rem 0.2rem;
+  border-radius: 0.24rem;
+  background: var(--page-green);
+  color: #fff;
+  font-size: 0.36rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 0.12rem 0.34rem rgba(50, 109, 67, 0.18);
+}
+
+.auth-submit:active {
+  background: var(--page-green-dark);
+}
+
+.auth-submit:disabled {
+  opacity: 0.6;
+  box-shadow: none;
+}
+
+.auth-submit--link {
+  margin-top: 0.36rem;
+}
+
+.auth-links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+  font-size: 0.27rem;
+  color: var(--page-muted);
+}
+
+.auth-links--center {
+  justify-content: center;
+  gap: 0.12rem;
+}
+
+.auth-links a {
+  color: var(--page-green);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-links a:active {
+  opacity: 0.7;
+}
+
+.auth-foot {
+  margin-top: auto;
+  padding-top: 0.42rem;
+  text-align: center;
+  font-size: 0.24rem;
+  line-height: 1.6;
+  color: #a5a89d;
+}
+
+/* ---- 找回密码：提交成功 ---- */
+.auth-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0.56rem 0.42rem 0.44rem;
+}
+
+.auth-success-mark {
+  display: grid;
+  place-items: center;
+  width: 0.92rem;
+  height: 0.92rem;
+  margin-bottom: 0.22rem;
+  border-radius: 50%;
+  background: rgba(50, 109, 67, 0.1);
+  color: var(--page-green);
+}
+
+.auth-success-mark .app-icon {
+  font-size: 0.46rem;
+}
+
+.auth-success-title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 0.44rem;
+  font-weight: 700;
+}
+
+.auth-success-text {
+  margin: 0.18rem 0 0;
+  font-size: 0.29rem;
+  line-height: 1.75;
+  color: var(--page-muted);
+}

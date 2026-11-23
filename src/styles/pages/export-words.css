@@ -1,0 +1,116 @@
+.page-export-words.export-page {
+  min-height: 100vh;
+  padding: 0.326rem 0.49rem calc(0.8rem + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  background: var(--page-paper);
+  color: var(--page-ink);
+}
+
+.page-export-words .export-hint {
+  margin: 0 0.047rem 0.279rem;
+  font-family: var(--font-ui);
+  font-size: 0.279rem;
+  line-height: 1.5;
+  color: var(--page-muted);
+}
+
+.page-export-words .export-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.233rem;
+}
+
+.page-export-words .export-card {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  width: 100%;
+  padding: 0.326rem 0.372rem;
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  border-radius: 0.42rem;
+  background: var(--page-card);
+  box-shadow: var(--page-shadow-soft);
+  text-align: left;
+  transition: background 0.16s ease, transform 0.16s ease;
+}
+
+.page-export-words .export-card:active {
+  background: #f3f2e9;
+}
+
+.page-export-words .export-card--today {
+  border-color: rgba(50, 109, 67, 0.35);
+  background: linear-gradient(120deg, #e9f0e3 0%, #fbfaf3 78%);
+}
+
+.page-export-words .export-card-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.09rem;
+}
+
+.page-export-words .export-date {
+  font-family: var(--font-num);
+  font-size: 0.42rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.01rem;
+  color: var(--page-ink);
+}
+
+.page-export-words .export-meta {
+  font-family: var(--font-ui);
+  font-size: 0.256rem;
+  color: var(--page-muted);
+}
+
+.page-export-words .export-badge {
+  flex: none;
+  padding: 0.05rem 0.16rem;
+  border-radius: 999px;
+  background: var(--page-green);
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 0.233rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.page-export-words .export-chevron {
+  flex: none;
+  font-size: 0.32rem;
+  color: #b6b8ae;
+}
+
+.page-export-words .export-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.2rem 0.4rem 0.6rem;
+  text-align: center;
+}
+
+.page-export-words .export-empty-icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-bottom: 0.279rem;
+  color: rgba(50, 109, 67, 0.35);
+}
+
+.page-export-words .export-empty-title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 0.36rem;
+  font-weight: 700;
+  color: #4f574c;
+}
+
+.page-export-words .export-empty-sub {
+  margin: 0.14rem 0 0;
+  font-family: var(--font-ui);
+  font-size: 0.256rem;
+  line-height: 1.6;
+  color: var(--page-muted);
+}

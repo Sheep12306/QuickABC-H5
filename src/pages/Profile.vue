@@ -2,7 +2,7 @@
 <div class="profile-container page-profile"><div @click="mp('chooseAvatar', $event)" class="avatar-card"><img class="avatar-img" :src="userInfo.avatar || '/images/logo.png'" /><div class="avatar-hint"><div class="avatar-hint-icon" :style="&quot;background:&quot; + (themeColors[themeIdx].accent) + &quot;;&quot;"><span class="avatar-plus"><AppIcon name="plus" /></span></div><span class="avatar-hint-text">点击更换头像</span></div></div><div class="form-card"><div class="form-item"><span class="form-label">昵称</span><input @input="mp('onNicknameInput', $event)" class="form-input" placeholder="请输入昵称" :value="userInfo.nickname" maxlength="20" /></div><div class="form-item"><span class="form-label">年级</span><select class="form-input grade-select" @change="mp('onGradeChange', $event)" :value="gradeIndex">
             <option value="-1" disabled :selected="gradeIndex < 0">请选择年级</option>
             <option v-for="(g, i) in gradeList" :key="g" :value="i" :selected="i === gradeIndex">{{ g }}</option>
-          </select></div><div class="form-item"><span class="form-label">手机号</span><input @input="mp('onPhoneInput', $event)" class="form-input" placeholder="请输入手机号" :value="userInfo.phone" type="number" maxlength="11" /></div><div class="form-item form-item-last"><span class="form-label">学校</span><input @input="mp('onSchoolInput', $event)" class="form-input" placeholder="请输入学校名称" :value="userInfo.school" maxlength="30" /></div></div><div @click="mp('saveProfile', $event)" :class="&quot;save-btn &quot; + (isSaving ? 'saving' : '')" :style="&quot;background:&quot; + (isSaving ? '#A5D6A7' : themeColors[themeIdx].accent) + &quot;;&quot;"><span class="save-text">{{isSaving ? '保存中...' : '保存'}}</span></div></div>
+          </select></div><div class="form-item"><span class="form-label">手机号</span><span class="form-input form-static">{{ userInfo.phone || '未绑定' }}</span></div><div class="form-item form-item-last"><span class="form-label">学校</span><input @input="mp('onSchoolInput', $event)" class="form-input" placeholder="请输入学校名称" :value="userInfo.school" maxlength="30" /></div></div><div @click="mp('saveProfile', $event)" :class="&quot;save-btn &quot; + (isSaving ? 'saving' : '')" :style="&quot;background:&quot; + (isSaving ? '#A5D6A7' : themeColors[themeIdx].accent) + &quot;;&quot;"><span class="save-text">{{isSaving ? '保存中...' : '保存'}}</span></div></div>
 </template>
 
 <script>
@@ -170,10 +170,6 @@ export default createPage({
         gradeIndex: index,
         'userInfo.grade': this.$data.gradeList[index] || ''
       });
-    },
-
-    onPhoneInput(e) {
-      this.setData({ 'userInfo.phone': e.detail.value || '' });
     },
 
     onSchoolInput(e) {

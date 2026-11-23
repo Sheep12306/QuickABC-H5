@@ -13,8 +13,8 @@ export function resolveAvatarUrl(url) {
   return url;
 }
 
-// 登录进行中的 Promise：未拿到 token 时，请求先等它结束再发，
-// 这样首屏可以立即渲染，同时避免启动阶段因缺少 token 请求失败。
+// 可选的登录门闩：登录页之外如果需要在 token 就绪后再发请求，可由启动代码设置。
+// 手机号登录流程本身不走这个门闩（skipAuthGate），避免互相等待。
 let authGate = null;
 
 export function setAuthGate(promise) {
@@ -68,6 +68,10 @@ async function request(method, path, data, options = {}) {
     }
     if (res.status === 401 || body.code === 401) {
       wx.removeStorageSync('token');
+      // 通知 App 清理登录态并回到登录页（登录接口本身不会返回 401）
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('quickabc:unauthorized'));
+      }
       throw new Error(body.msg || '登录已过期');
     }
     if (!res.ok) {
@@ -83,11 +87,13 @@ const api = {
   resolveAvatarUrl,
   setAuthGate,
 
-  // 认证（小程序保留；H5 使用 h5Login）
+  // 认证：H5 使用手机号 + 密码；login 保留给微信小程序
   login: (code, userInfo) => request('POST', '/auth/login', { code, userInfo }),
-  // 登录请求本身不能等待 authGate，否则会互相等待
-  h5Login: (deviceId, userInfo) =>
-    request('POST', '/auth/h5-login', { deviceId, userInfo }, { skipAuthGate: true }),
+  register: (data) => request('POST', '/auth/register', data, { skipAuthGate: true }),
+  phoneLogin: (phone, password) =>
+    request('POST', '/auth/phone-login', { phone, password }, { skipAuthGate: true }),
+  requestPasswordReset: (phone, note) =>
+    request('POST', '/auth/password-reset-request', { phone, note }, { skipAuthGate: true }),
   getUserInfo: () => request('GET', '/auth/userinfo'),
 
   // 单词书
@@ -143,6 +149,13 @@ const api = {
   },
   getStudyData: () => request('GET', '/user/study-data'),
   saveStudyData: (data) => request('PUT', '/user/study-data', data),
+
+  // 课时会话（1 课时 = 60 分钟，进入学习页时由后端扣课时）
+  startLesson: (hours, bookId, teacherCode) =>
+    request('POST', '/lesson/start', { hours, bookId, teacherCode }),
+  endLesson: (sessionId, endedEarly = false) =>
+    request('POST', '/lesson/end', { sessionId, endedEarly }),
+  getActiveLesson: () => request('GET', '/lesson/active'),
 
   // 词汇测试
   getVocabTestRecords: () => request('GET', '/vocab-test/records'),

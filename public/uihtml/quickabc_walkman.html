@@ -494,7 +494,7 @@
   .lyric-line.active .lyric-phon { max-height: 24px; opacity: .9; margin-top: 6px; font-size: 11.5px; }
   .lyric-line.active .lyric-trans { max-height: 28px; opacity: 1; margin-top: 5px; font-size: 13.5px; }
 
-  /* 听写模式：用左下角小眼睛按钮显示 / 隐藏歌词 */
+  /* 单词模式：用左下角小眼睛按钮显示 / 隐藏歌词 */
   .screen.hide-words .lyric-word {
     filter: blur(9px);
     user-select: none;
@@ -518,7 +518,7 @@
     font-size: 10px; letter-spacing: .03em;
     transition: color .18s ease, border-color .18s ease, background .18s ease, transform .16s ease;
   }
-  .screen[data-audio-mode="dictation"] .eye-btn { display: inline-flex; }
+  .screen[data-audio-mode="word"] .eye-btn { display: inline-flex; }
   .eye-btn svg { width: 13px; height: 13px; }
   .eye-btn:active { transform: scale(.95); }
   .eye-btn.active {
@@ -567,8 +567,8 @@
     white-space: nowrap;
   }
   .toast.show { opacity: 1; transform: translate(-50%, 0); }
-  .layer { position: absolute; inset: 0; z-index: 50; opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s ease; }
-  .layer.open { opacity: 1; visibility: visible; }
+  .layer { position: absolute; inset: 0; z-index: 50; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .25s ease, visibility .25s ease; }
+  .layer.open { opacity: 1; visibility: visible; pointer-events: auto; }
   .layer-scrim { position: absolute; inset: 0; background: rgba(18, 20, 16, .26); }
   .screen[data-mode="dark"] .layer-scrim { background: rgba(0, 0, 0, .52); }
 
@@ -629,6 +629,51 @@
   .mode-check svg { width: 15px; height: 15px; }
   .mode-item.on .mode-check { opacity: 1; transform: none; }
 
+  /* 学习模式里的播放设置 */
+  .mode-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 8px;
+    padding: 10px 5px 2px;
+    border-top: 1px solid var(--hairline);
+  }
+  .settings-title {
+    margin-bottom: 1px;
+    font-size: 8.5px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .setting-label { font-size: 11px; color: var(--text-soft); }
+  .stepper { display: flex; align-items: center; gap: 6px; }
+  .stepper button {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--text) 5%, transparent);
+    border: 1px solid var(--hairline);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1;
+  }
+  .stepper button:active { transform: scale(.92); }
+  .stepper b {
+    min-width: 34px;
+    text-align: center;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--accent-text);
+    font-variant-numeric: tabular-nums;
+  }
   /* 歌单底部弹层 */
   .sheet {
     position: absolute; left: 0; right: 0; bottom: 0;
@@ -1013,7 +1058,7 @@
         </div>
         <div class="topbar-meta">
           <span class="topbar-title">CET-4 核心词汇</span>
-          <span class="topbar-sub" id="topbarSub">第 1 组 · 听单词</span>
+          <span class="topbar-sub" id="topbarSub">正在加载…</span>
         </div>
         <div class="topbar-side topbar-right">
           <button class="icon-btn music-btn" id="musicBtn" type="button" aria-label="切换学习模式" aria-expanded="false">
@@ -1049,28 +1094,15 @@
             <div class="tonearm-shaft"></div>
           </div>
         </div>
-        <div class="album-caption">
-          <div class="caption-main" id="captionMain">第 1 组 · 高频词</div>
-          <div class="caption-sub">
-            <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-            <span class="mode-chip">
-              <span id="modeChipIcon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6.5 9H3v6h3.5L11 19V5Z"/><path d="M15 9.5a4 4 0 0 1 0 5"/><path d="M17.6 7a8 8 0 0 1 0 10"/></svg>
-              </span>
-              <span id="modeChipLabel">听单词</span>
-            </span>
-            <span class="caption-side" id="captionSub">SIDE A · 05 TRACKS</span>
-          </div>
-        </div>
       </div>
 
       <div class="lyrics-area">
         <div class="lyrics" id="lyrics"></div>
-        <button class="eye-btn" id="eyeBtn" type="button" aria-label="显示歌词" title="显示歌词">
+        <button class="eye-btn" id="eyeBtn" type="button" aria-label="隐藏单词" title="隐藏单词">
           <span id="eyeIcon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 5.2A10.8 10.8 0 0 1 12 5c5.2 0 9 4.5 9 7a11.6 11.6 0 0 1-2.2 3.6"/><path d="M6.2 6.4C4.1 7.9 3 10.2 3 12c0 2.5 3.8 7 9 7 1.6 0 3.1-.4 4.4-1.1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
           </span>
-          <span id="eyeLabel">显示歌词</span>
+          <span id="eyeLabel">隐藏单词</span>
         </button>
       </div>
 
@@ -1118,9 +1150,29 @@
         <div class="mode-pop" role="dialog" aria-label="选择学习模式">
           <div class="pop-head">
             <span class="pop-title">学习模式</span>
-            <span class="pop-current">当前：<b id="modeCurrent">听单词</b></span>
+            <span class="pop-current">当前：<b id="modeCurrent">单词</b></span>
           </div>
           <div class="mode-list" id="modeList"></div>
+
+          <div class="mode-settings">
+            <div class="settings-title">播放设置</div>
+            <div class="setting-row">
+              <span class="setting-label">单词间隔</span>
+              <div class="stepper">
+                <button id="intervalMinus" type="button" aria-label="减少单词间隔">−</button>
+                <b id="intervalValue">4 秒</b>
+                <button id="intervalPlus" type="button" aria-label="增加单词间隔">+</button>
+              </div>
+            </div>
+            <div class="setting-row">
+              <span class="setting-label">重复遍数</span>
+              <div class="stepper">
+                <button id="repeatMinus" type="button" aria-label="减少重复遍数">−</button>
+                <b id="repeatValue">1 遍</b>
+                <button id="repeatPlus" type="button" aria-label="增加重复遍数">+</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1131,7 +1183,7 @@
           <div class="sheet-head">
             <div>
               <div class="sheet-title">歌单</div>
-              <div class="sheet-sub" id="sheetSub">3 组 · 15 个单词 · 进度 3 / 15</div>
+              <div class="sheet-sub" id="sheetSub">正在加载…</div>
             </div>
             <button class="sheet-close" id="sheetClose" type="button" aria-label="关闭歌单">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg>
@@ -1186,10 +1238,10 @@
     <section class="note">
       <div class="note-title">交互说明</div>
       <ul>
-        <li>右上角音乐图标：听单词 / 听写 / 跟读 / 听听力。</li>
-        <li>左下角切换播放顺序：顺序 / 单曲循环 / 随机。</li>
-        <li>右下角打开歌单，查看各组词数与进度并切换。</li>
-        <li>听写模式默认隐藏歌词，左下角小眼睛可显示 / 隐藏。</li>
+        <li>右上角音乐图标：单词 / 听听力，并可设置单词间隔与重复遍数。</li>
+        <li>单词模式可点左下角小眼睛隐藏 / 显示拼写；听写、跟读已合并到单词模式。</li>
+        <li>播放顺序用左下角按钮切换：顺序 / 单曲 / 随机打乱。</li>
+        <li>右下角打开歌单，按日期查看词数、进度并切换。</li>
         <li>点击唱片 / 播放键开始；空格键播放暂停。</li>
       </ul>
       <p class="note-foot">仅新增预览文件，未改动现有页面与样式。</p>
@@ -1235,6 +1287,104 @@
     }
   ];
 
+  /* ---------- 抗遗忘播放列表（读取 H5 本地学习记录） ---------- */
+  var STORAGE_PREFIX = 'quickabc:';
+
+  function readWxStorage(key) {
+    try {
+      var raw = localStorage.getItem(STORAGE_PREFIX + key);
+      if (raw == null) raw = localStorage.getItem(key);
+      if (raw == null) return null;
+      try { return JSON.parse(raw); } catch (e) { return raw; }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function clampInt(value, fallback, min, max) {
+    var n = Number(value);
+    if (!Number.isFinite(n)) return fallback;
+    return Math.min(max, Math.max(min, Math.round(n)));
+  }
+
+  function wxStorageKeys() {
+    var keys = [];
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        if (key && key.indexOf(STORAGE_PREFIX) === 0) keys.push(key.slice(STORAGE_PREFIX.length));
+      }
+    } catch (e) {
+      // ignore
+    }
+    return keys;
+  }
+
+  function localDateKey(date) {
+    var d = date || new Date();
+    var pad2 = function (n) { return String(n).padStart(2, '0'); };
+    return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  }
+
+  function dateTitle(key) {
+    var match = String(key || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!match) return String(key || '');
+    return Number(match[2]) + '月' + Number(match[3]) + '日';
+  }
+
+  function toWalkmanWord(raw) {
+    if (!raw) return null;
+    var en = String(raw.en || raw.word || '').trim();
+    if (!en) return null;
+    var phonRaw = String(raw.phonetic || '').trim();
+    var phon = '';
+    if (phonRaw) {
+      phon = phonRaw.charAt(0) === '/' ? phonRaw : '/' + phonRaw.replace(/^\/+|\/+$/g, '') + '/';
+    }
+    var trans = [raw.part, raw.meaning].filter(Boolean).join(' ').trim();
+    return { word: en, phon: phon, trans: trans };
+  }
+
+  // Learn 页按天写入 dailyLearnedWords_<bookId>_<date>，
+  // 这里把同一本书的每天单词拼成一组（日期倒序，今天在最前）。
+  function buildReviewGroups(bookId) {
+    var buckets = {};
+    wxStorageKeys().forEach(function (key) {
+      if (key.indexOf('dailyLearnedWords_') !== 0) return;
+      var rest = key.slice('dailyLearnedWords_'.length);
+      var match = rest.match(/^(.+)_(\d{4}-\d{2}-\d{2})$/);
+      if (!match) return;
+      if (bookId && String(match[1]) !== String(bookId)) return;
+
+      var list = readWxStorage(key);
+      if (!Array.isArray(list)) return;
+      var bucket = buckets[match[2]] || (buckets[match[2]] = new Map());
+      list.forEach(function (raw) {
+        var word = toWalkmanWord(raw);
+        if (!word) return;
+        var dedupeKey = word.word.toLowerCase();
+        if (!bucket.has(dedupeKey)) bucket.set(dedupeKey, word);
+      });
+    });
+
+    var today = localDateKey();
+    return Object.keys(buckets)
+      .filter(function (date) { return buckets[date].size > 0; })
+      .sort()
+      .reverse()
+      .map(function (date) {
+        var words = Array.from(buckets[date].values()).sort(function (a, b) {
+          return a.word.localeCompare(b.word, 'en', { sensitivity: 'base' });
+        });
+        return {
+          title: dateTitle(date),
+          side: date === today ? 'TODAY' : 'REVIEW',
+          date: date,
+          words: words
+        };
+      });
+  }
+
   var THEMES = {
     forest:   { accent: '#326d43', deep: '#2d6b40', bright: '#4d8759', label: '森林绿' },
     ocean:    { accent: '#2f6f6a', deep: '#24544f', bright: '#6aa39d', label: '海洋青' },
@@ -1243,21 +1393,60 @@
     sky:      { accent: '#3c6382', deep: '#2b4a63', bright: '#7fa6c0', label: '天空蓝' }
   };
 
+  var savedWalkmanSettings = readWxStorage('walkmanSettings') || {};
   var state = {
-    group: 0, index: 2, playing: false,
+    group: 0, index: 0, playing: false,
     theme: 'forest', mode: 'light', disc: 'vinyl',
-    audioMode: 'listen', order: 'sequence',
+    audioMode: 'word', order: 'sequence',
     hideLyrics: false,
-    groupIndex: [2, -1, -1]
+    repeat: clampInt(savedWalkmanSettings.repeat, 1, 1, 5),
+    intervalSec: clampInt(savedWalkmanSettings.intervalSec, 4, 1, 10),
+    repeatDone: 0,
+    groupIndex: [0, -1, -1]
   };
+  var usingReviewPlaylist = false;
   var timer = null;
   var toastTimer = null;
   var speakingTimer = null;
   var synth = window.speechSynthesis || null;
   var params = new URLSearchParams(window.location.search);
   var embedMode = params.get('embed') === '1';
-  var requestedMode = params.get('mode');
+  var rawMode = params.get('mode');
+  var requestedMode = rawMode === 'listening' ? 'listening' : 'word';
+  if (rawMode === 'dictation') state.hideLyrics = true;
   if (embedMode) document.body.classList.add('embed');
+
+  // App 内打开时，用本机抗遗忘记录替换预览用的示例词。
+  var requestedBookId = params.get('bookId') || '';
+  var currentBook = readWxStorage('currentBook') || {};
+  if (embedMode) {
+    var reviewGroups = [];
+    if (requestedBookId) reviewGroups = buildReviewGroups(requestedBookId);
+    // 当前书没有记录时，兜底展示所有词书的记录
+    if (!reviewGroups.length) reviewGroups = buildReviewGroups('');
+
+    if (reviewGroups.length) {
+      GROUPS = reviewGroups;
+      usingReviewPlaylist = true;
+      state.group = 0;
+      state.index = 0;
+      state.groupIndex = GROUPS.map(function (_, i) { return i === 0 ? 0 : -1; });
+
+      var topbarTitle = document.querySelector('.topbar-title');
+      if (topbarTitle) {
+        var title = '抗遗忘复习';
+        if (
+          currentBook && currentBook.name &&
+          (!requestedBookId || String(currentBook.id) === String(requestedBookId))
+        ) {
+          title = currentBook.name;
+        }
+        topbarTitle.textContent = title;
+      }
+    } else {
+      window.setTimeout(function () { toast('暂无抗遗忘单词，当前为示例'); }, 700);
+    }
+  }
 
   var screen = document.getElementById('screen');
   var deviceWrap = document.getElementById('deviceWrap');
@@ -1272,16 +1461,12 @@
   var curTrack = document.getElementById('curTrack');
   var totTrack = document.getElementById('totTrack');
   var topbarSub = document.getElementById('topbarSub');
-  var captionMain = document.getElementById('captionMain');
-  var captionSub = document.getElementById('captionSub');
   var labelSide = document.getElementById('labelSide');
   var themeName = document.getElementById('themeName');
   var toastEl = document.getElementById('toast');
 
   var musicBtn = document.getElementById('musicBtn');
   var musicGlyph = document.getElementById('musicGlyph');
-  var modeChipIcon = document.getElementById('modeChipIcon');
-  var modeChipLabel = document.getElementById('modeChipLabel');
   var eyeBtn = document.getElementById('eyeBtn');
   var eyeIcon = document.getElementById('eyeIcon');
   var eyeLabel = document.getElementById('eyeLabel');
@@ -1296,6 +1481,12 @@
   var orderIcon = document.getElementById('orderIcon');
   var playlistBtn = document.getElementById('playlistBtn');
   var playlistBadge = document.getElementById('playlistBadge');
+  var intervalValue = document.getElementById('intervalValue');
+  var repeatValue = document.getElementById('repeatValue');
+
+  var shuffleQueue = [];
+  var shufflePos = 0;
+  var shuffleGroup = -1;
 
   var ICON_PLAY = '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" style="margin-left:3px"><path d="M8 5.2v13.6c0 .86.94 1.38 1.68.93l10.5-6.8a1.1 1.1 0 0 0 0-1.86L9.68 4.27C8.94 3.82 8 4.34 8 5.2Z"/></svg>';
   var ICON_PAUSE = '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6.4" y="4.6" width="3.9" height="14.8" rx="1.7"/><rect x="13.7" y="4.6" width="3.9" height="14.8" rx="1.7"/></svg>';
@@ -1310,12 +1501,10 @@
   var ICON_ORDER_SINGLE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2.5 20.5 6 17 9.5"/><path d="M3.5 11V9.4A3.4 3.4 0 0 1 6.9 6h13.6"/><path d="M7 21.5 3.5 18 7 14.5"/><path d="M20.5 13v1.6a3.4 3.4 0 0 1-3.4 3.4H3.5"/><text x="12" y="15" text-anchor="middle" font-size="7.5" font-weight="700" fill="currentColor" stroke="none">1</text></svg>';
   var ICON_ORDER_SHUFFLE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5h3.2c1.4 0 2.7.7 3.5 1.8l4.6 7.4c.8 1.1 2.1 1.8 3.5 1.8H21"/><path d="M3 17.5h3.2c1.4 0 2.7-.7 3.5-1.8l1.3-2.1"/><path d="m15 9.5 1.3-2.1c.8-1.1 2.1-1.8 3.5-1.8H21"/><path d="m18 3.5 3 3-3 3"/><path d="m18 14.5 3 3-3 3"/></svg>';
 
-  var AUDIO_MODE_KEYS = ['listen', 'dictation', 'follow', 'listening'];
+  var AUDIO_MODE_KEYS = ['word', 'listening'];
   var AUDIO_MODES = {
-    listen:    { label: '听单词',   desc: '听发音，记单词',       rate: .88, interval: 3600, icon: ICON_SPEAKER,    buttonIcon: ICON_SPEAKER },
-    dictation: { label: '听写单词', desc: '隐藏拼写，听音写词',   rate: .85, interval: 4400, icon: ICON_PEN,        buttonIcon: ICON_SPEAKER },
-    follow:    { label: '跟读单词', desc: '听一遍，跟读一遍',     rate: .82, interval: 5000, icon: ICON_MIC,        buttonIcon: ICON_MIC },
-    listening: { label: '听听力',   desc: '慢速连听，磨耳朵',     rate: .72, interval: 5600, icon: ICON_HEADPHONES, buttonIcon: ICON_HEADPHONES }
+    word:      { label: '单词',   desc: '听音记词 · 可设间隔与重复', rate: .86, icon: ICON_SPEAKER,    buttonIcon: ICON_SPEAKER },
+    listening: { label: '听听力', desc: '慢速连听，磨耳朵',         rate: .72, icon: ICON_HEADPHONES, buttonIcon: ICON_HEADPHONES }
   };
   var ORDER_KEYS = ['sequence', 'single', 'shuffle'];
   var ORDERS = {
@@ -1348,9 +1537,14 @@
   function renderStatic() {
     var g = GROUPS[state.group];
     var n = g.words.length;
-    topbarSub.textContent = '第 ' + (state.group + 1) + ' 组 · ' + AUDIO_MODES[state.audioMode].label;
-    captionMain.textContent = '第 ' + (state.group + 1) + ' 组 · ' + g.title;
-    captionSub.textContent = g.side + ' · ' + pad(n) + ' TRACKS';
+    var artTitle = document.querySelector('.art-title');
+    var labelTitle = document.querySelector('.label-title');
+    var artSide = document.querySelector('.art-side');
+    if (artTitle) artTitle.textContent = g.title;
+    if (labelTitle) labelTitle.textContent = g.title;
+    if (artSide) artSide.textContent = g.side + ' · ' + n + ' 个单词';
+    topbarSub.textContent =
+      g.title + ' · ' + AUDIO_MODES[state.audioMode].label + ' · ' + n + ' 个单词';
     labelSide.textContent = g.side;
     totTrack.textContent = pad(n);
     playlistBadge.textContent = String(GROUPS.length);
@@ -1360,6 +1554,11 @@
   function updateActive(i, scroll) {
     state.index = i;
     state.groupIndex[state.group] = i;
+    state.repeatDone = 0;
+    if (state.order === 'shuffle' && shuffleGroup === state.group) {
+      var shuffleIndex = shuffleQueue.indexOf(i);
+      if (shuffleIndex >= 0) shufflePos = shuffleIndex;
+    }
     var lines = lyricsEl.querySelectorAll('.lyric-line');
     for (var j = 0; j < lines.length; j++) {
       var on = j === i;
@@ -1415,19 +1614,66 @@
   function schedule() {
     clearInterval(timer);
     if (!state.playing) return;
-    timer = setInterval(advanceAuto, AUDIO_MODES[state.audioMode].interval);
+    timer = setInterval(advanceAuto, state.intervalSec * 1000);
+  }
+
+  function buildShuffleQueue() {
+    var n = words().length;
+    var arr = [];
+    for (var i = 0; i < n; i++) arr.push(i);
+    for (var j = n - 1; j > 0; j--) {
+      var k = Math.floor(Math.random() * (j + 1));
+      var tmp = arr[j];
+      arr[j] = arr[k];
+      arr[k] = tmp;
+    }
+    shuffleQueue = arr;
+    shufflePos = 0;
+    shuffleGroup = state.group;
+    if (arr.length) {
+      state.index = arr[0];
+      state.groupIndex[state.group] = state.index;
+    }
+  }
+
+  function ensureShuffleQueue() {
+    if (shuffleGroup !== state.group || !shuffleQueue.length) buildShuffleQueue();
   }
 
   function advanceAuto() {
     if (!state.playing) return;
+
+    // 单曲循环：每个间隔重复当前词
     if (state.order === 'single') {
       speak(activeWord().word);
       return;
     }
-    if (state.order === 'shuffle') {
-      jumpRandom();
+
+    // 同一个词按设置重复 N 遍，再推进到下一个
+    if (state.repeatDone < state.repeat - 1) {
+      state.repeatDone += 1;
+      speak(activeWord().word);
       return;
     }
+    state.repeatDone = 0;
+
+    if (state.order === 'shuffle') {
+      ensureShuffleQueue();
+      if (shufflePos < shuffleQueue.length - 1) {
+        shufflePos += 1;
+        updateActive(shuffleQueue[shufflePos], true);
+        speak(activeWord().word);
+        return;
+      }
+      if (state.group < GROUPS.length - 1) {
+        selectGroup(state.group + 1);
+        return;
+      }
+      setPlaying(false);
+      toast('本张专辑已播放完毕');
+      return;
+    }
+
     if (state.index < words().length - 1) {
       updateActive(state.index + 1, true);
       speak(activeWord().word);
@@ -1441,41 +1687,13 @@
     toast('本张专辑已播放完毕');
   }
 
-  function jumpRandom() {
-    var total = 0;
-    for (var g = 0; g < GROUPS.length; g++) total += GROUPS[g].words.length;
-    if (total < 2) return;
-    var pickG = state.group;
-    var pickI = state.index;
-    var guard = 0;
-    do {
-      var n = Math.floor(Math.random() * total);
-      var acc = 0;
-      for (var gi = 0; gi < GROUPS.length; gi++) {
-        var len = GROUPS[gi].words.length;
-        if (n < acc + len) { pickG = gi; pickI = n - acc; break; }
-        acc += len;
-      }
-      guard++;
-    } while (pickG === state.group && pickI === state.index && guard < 30);
-    if (pickG !== state.group) {
-      state.group = pickG;
-      state.index = pickI;
-      state.groupIndex[pickG] = pickI;
-      renderStatic();
-      renderLyrics();
-    } else {
-      updateActive(pickI, true);
-    }
-    speak(activeWord().word);
-  }
-
   function setPlaying(on) {
     state.playing = on;
     screen.classList.toggle('is-playing', on);
     playBtn.innerHTML = on ? ICON_PAUSE : ICON_PLAY;
     playBtn.setAttribute('aria-label', on ? '暂停' : '播放');
     if (on) {
+      state.repeatDone = 0;
       speak(activeWord().word);
       schedule();
     } else {
@@ -1487,6 +1705,19 @@
 
   function togglePlaying() { setPlaying(!state.playing); }
 
+  function moveSelection(delta) {
+    if (state.order === 'shuffle') {
+      ensureShuffleQueue();
+      var nextPos = Math.max(0, Math.min(shuffleQueue.length - 1, shufflePos + delta));
+      shufflePos = nextPos;
+      updateActive(shuffleQueue[nextPos], true);
+    } else {
+      var n = words().length;
+      updateActive((state.index + delta + n) % n, true);
+    }
+    resetTimer();
+  }
+
   function resetTimer() {
     if (state.playing) schedule();
   }
@@ -1494,9 +1725,13 @@
   function selectGroup(g) {
     if (g < 0 || g >= GROUPS.length || g === state.group) return;
     state.group = g;
-    var saved = state.groupIndex[g];
-    state.index = saved >= 0 ? saved : 0;
-    state.groupIndex[g] = state.index;
+    if (state.order === 'shuffle') {
+      buildShuffleQueue();
+    } else {
+      var saved = state.groupIndex[g];
+      state.index = saved >= 0 ? saved : 0;
+      state.groupIndex[g] = state.index;
+    }
     renderStatic();
     renderLyrics();
     if (state.playing) {
@@ -1564,17 +1799,15 @@
 
   function applyAudioMode(key, silent) {
     if (!AUDIO_MODES[key]) return;
-    var wasDictation = state.audioMode === 'dictation';
     state.audioMode = key;
     screen.dataset.audioMode = key;
     var m = AUDIO_MODES[key];
     musicGlyph.innerHTML = m.icon;
-    modeChipIcon.innerHTML = m.icon;
-    modeChipLabel.textContent = m.label;
     modeCurrent.textContent = m.label;
-    topbarSub.textContent = '第 ' + (state.group + 1) + ' 组 · ' + m.label;
-    if (key === 'dictation' && !wasDictation) state.hideLyrics = true;
-    if (key !== 'dictation') state.hideLyrics = false;
+    var group = GROUPS[state.group];
+    topbarSub.textContent = group
+      ? group.title + ' · ' + m.label + ' · ' + group.words.length + ' 个单词'
+      : m.label;
     syncWordVisibility();
     var btns = lyricsEl.querySelectorAll('.sound-btn');
     for (var j = 0; j < btns.length; j++) btns[j].innerHTML = m.buttonIcon;
@@ -1584,20 +1817,20 @@
   }
 
   function syncWordVisibility() {
-    var hidden = state.audioMode === 'dictation' && state.hideLyrics;
+    var hidden = state.audioMode === 'word' && state.hideLyrics;
     screen.classList.toggle('hide-words', hidden);
     eyeBtn.classList.toggle('active', hidden);
     eyeIcon.innerHTML = hidden ? ICON_EYE : ICON_EYE_OFF;
-    eyeLabel.textContent = hidden ? '显示歌词' : '隐藏歌词';
-    eyeBtn.setAttribute('aria-label', hidden ? '显示歌词' : '隐藏歌词');
-    eyeBtn.setAttribute('title', hidden ? '显示歌词' : '隐藏歌词');
+    eyeLabel.textContent = hidden ? '显示单词' : '隐藏单词';
+    eyeBtn.setAttribute('aria-label', hidden ? '显示单词' : '隐藏单词');
+    eyeBtn.setAttribute('title', hidden ? '显示单词' : '隐藏单词');
   }
 
   function toggleWords() {
-    if (state.audioMode !== 'dictation') return;
+    if (state.audioMode !== 'word') return;
     state.hideLyrics = !state.hideLyrics;
     syncWordVisibility();
-    toast(state.hideLyrics ? '歌词已隐藏' : '歌词已显示');
+    toast(state.hideLyrics ? '单词已隐藏' : '单词已显示');
   }
 
   function applyOrder(key, silent) {
@@ -1606,8 +1839,56 @@
     var m = ORDERS[key];
     orderIcon.innerHTML = m.icon;
     orderBtn.setAttribute('aria-label', '播放顺序：' + m.label);
-    if (state.playing) schedule();
+
+    if (key === 'shuffle') {
+      buildShuffleQueue();
+      renderLyrics();
+    } else {
+      shuffleQueue = [];
+      shuffleGroup = -1;
+    }
+    renderSettings();
+
+    if (state.playing) {
+      speak(activeWord().word);
+      schedule();
+    }
     if (!silent) toast('播放顺序 · ' + m.label);
+  }
+
+  function renderSettings() {
+    if (intervalValue) intervalValue.textContent = state.intervalSec + ' 秒';
+    if (repeatValue) repeatValue.textContent = state.repeat + ' 遍';
+  }
+
+  function saveWalkmanSettings() {
+    try {
+      localStorage.setItem(
+        STORAGE_PREFIX + 'walkmanSettings',
+        JSON.stringify({ intervalSec: state.intervalSec, repeat: state.repeat })
+      );
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  function changeInterval(delta) {
+    var next = clampInt(state.intervalSec + delta, state.intervalSec, 1, 10);
+    if (next === state.intervalSec) return;
+    state.intervalSec = next;
+    renderSettings();
+    saveWalkmanSettings();
+    resetTimer();
+  }
+
+  function changeRepeat(delta) {
+    var next = clampInt(state.repeat + delta, state.repeat, 1, 5);
+    if (next === state.repeat) return;
+    state.repeat = next;
+    state.repeatDone = 0;
+    renderSettings();
+    saveWalkmanSettings();
+    resetTimer();
   }
 
   function cycleOrder() {
@@ -1622,7 +1903,8 @@
       total += GROUPS[i].words.length;
       if (state.groupIndex[i] >= 0) playedTotal += state.groupIndex[i] + 1;
     }
-    sheetSub.textContent = GROUPS.length + ' 组 · ' + total + ' 个单词 · 进度 ' + playedTotal + ' / ' + total;
+    var unit = usingReviewPlaylist ? '天' : '组';
+    sheetSub.textContent = GROUPS.length + ' ' + unit + ' · ' + total + ' 个单词 · 进度 ' + playedTotal + ' / ' + total;
     sheetList.innerHTML = GROUPS.map(function (group, gi) {
       var n = group.words.length;
       var played = state.groupIndex[gi] >= 0 ? state.groupIndex[gi] + 1 : 0;
@@ -1634,10 +1916,9 @@
           ? '<span class="row-live" aria-label="播放中"><i></i><i></i><i></i><em>播放中</em></span>'
           : '<span class="row-current-label">当前</span>';
       }
-      return '<button class="sheet-row' + (current ? ' current' : '') + '" type="button" data-group="' + gi + '" aria-label="切换到第 ' + (gi + 1) + ' 组">' +
-        '<span class="sheet-index">' + pad(gi + 1) + '</span>' +
+      return '<button class="sheet-row' + (current ? ' current' : '') + '" type="button" data-group="' + gi + '" aria-label="切换到 ' + group.title + '">' +
         '<span class="sheet-info">' +
-          '<span class="sheet-row-title">第 ' + (gi + 1) + ' 组 · ' + group.title + live + '</span>' +
+          '<span class="sheet-row-title">' + group.title + live + '</span>' +
           '<span class="sheet-row-meta">' + group.side + ' · ' + n + ' 个单词</span>' +
           '<span class="sheet-bar"><i style="width:' + pct + '%"></i></span>' +
         '</span>' +
@@ -1649,6 +1930,7 @@
   function openModeMenu() {
     closeSheet();
     renderModeList();
+    renderSettings();
     modeLayer.classList.add('open');
     modeLayer.setAttribute('aria-hidden', 'false');
     musicBtn.setAttribute('aria-expanded', 'true');
@@ -1695,15 +1977,11 @@
   });
 
   prevBtn.addEventListener('click', function () {
-    var n = words().length;
-    updateActive((state.index - 1 + n) % n, true);
-    resetTimer();
+    moveSelection(-1);
   });
 
   nextBtn.addEventListener('click', function () {
-    var n = words().length;
-    updateActive((state.index + 1) % n, true);
-    resetTimer();
+    moveSelection(1);
   });
 
   orderBtn.addEventListener('click', cycleOrder);
@@ -1723,6 +2001,11 @@
     closeModeMenu();
   });
 
+  document.getElementById('intervalMinus').addEventListener('click', function () { changeInterval(-1); });
+  document.getElementById('intervalPlus').addEventListener('click', function () { changeInterval(1); });
+  document.getElementById('repeatMinus').addEventListener('click', function () { changeRepeat(-1); });
+  document.getElementById('repeatPlus').addEventListener('click', function () { changeRepeat(1); });
+
   var closers = document.querySelectorAll('[data-close]');
   for (var c = 0; c < closers.length; c++) {
     closers[c].addEventListener('click', function () {
@@ -1738,7 +2021,7 @@
     var changed = gi !== state.group;
     selectGroup(gi);
     closeSheet();
-    if (changed) toast('已切换到第 ' + (gi + 1) + ' 组');
+    if (changed) toast('已切换到 ' + GROUPS[gi].title);
   });
 
   lyricsEl.addEventListener('click', function (e) {
@@ -1817,8 +2100,9 @@
   applyTheme('forest');
   setMode('light');
   setDisc('vinyl');
-  applyOrder('sequence', true);
-  applyAudioMode(AUDIO_MODES[requestedMode] ? requestedMode : 'listen', true);
+  applyOrder(state.order, true);
+  applyAudioMode(requestedMode, true);
+  renderSettings();
   renderStatic();
   renderLyrics();
   setTimeout(function () {

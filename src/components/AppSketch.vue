@@ -44,6 +44,8 @@ const SKETCHES = {
     '<path d="M66 46l58 4 6 108-60 6Z"/><path d="M92 48l4 108"/><path d="M112 48l-1 30-9-7-8 8 1-31"/><path d="M103 96l15 1"/><path d="M102 114l15 1"/>',
   pencil:
     '<path d="M61 149l11-30 48-55 19 16-49 58-29 11Z"/><path d="M120 64l19 16"/><path d="M72 149l9-23"/><path d="M61 149l26-8"/>',
+  download:
+    '<path d="M100 44l3 62"/><path d="M73 82l30 26 29-24"/><path d="M51 138l2 30 96-3-2-27"/><path d="M74 156l54-2"/>',
 };
 
 const props = defineProps({

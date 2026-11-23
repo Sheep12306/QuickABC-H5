@@ -69,6 +69,64 @@
     font-weight: 600;
 }
 
+/* ---- 课时倒计时条 ---- */
+.page-learn .lesson-bar,
+.page-learn.lesson-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.14rem;
+    margin: 0.28rem 0.3733rem 0;
+    padding: 0.186rem 0.28rem;
+    border: 1px solid var(--page-line);
+    border-radius: 0.24rem;
+    background: linear-gradient(120deg, rgba(230, 239, 226, 0.72), rgba(255, 255, 255, 0.62));
+}
+
+.page-learn .lesson-bar-icon,
+.page-learn.lesson-bar-icon {
+    flex: none;
+    color: var(--page-green);
+    font-size: 0.349rem;
+}
+
+.page-learn .lesson-bar-label,
+.page-learn.lesson-bar-label {
+    flex: none;
+    font-size: 0.279rem;
+    color: #6e7869;
+}
+
+.page-learn .lesson-bar-time,
+.page-learn.lesson-bar-time {
+    flex: 1 1 auto;
+    font-family: var(--font-num);
+    font-size: 0.419rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--page-green);
+}
+
+.page-learn .lesson-bar-credit,
+.page-learn.lesson-bar-credit {
+    flex: none;
+    font-size: 0.24rem;
+    color: #8c9187;
+}
+
+.page-learn .lesson-bar--expired,
+.page-learn.lesson-bar--expired {
+    border-color: rgba(169, 68, 56, 0.18);
+    background: rgba(169, 68, 56, 0.06);
+}
+
+.page-learn .lesson-bar--expired .lesson-bar-time,
+.page-learn.lesson-bar--expired .lesson-bar-time {
+    color: #a94438;
+    font-family: var(--font-serif);
+    font-size: 0.326rem;
+}
+
 .page-learn .review-badge,
 .page-learn.review-badge {
     min-width: 0.32rem;

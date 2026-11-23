@@ -20,12 +20,12 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import MpUI from '@/components/MpUI.vue';
 import LiquidGlassTabbar from '@/components/LiquidGlassTabbar.vue';
-import { navigateBack, switchTab, syncStack } from '@/mp/nav';
-import { authState } from '@/utils/auth';
+import { navigateBack, runBackGuard, switchTab, syncStack } from '@/mp/nav';
+import { authState, logout } from '@/utils/auth';
 import wx from '@/mp/wx';
 
 const route = useRoute();
@@ -42,8 +42,8 @@ const isTab = computed(() => !!route.meta.tab);
 // 首页内容按一屏设计，禁止上下滚动
 const isHome = computed(() => route.path === '/');
 const title = computed(() => route.meta.title || '快背单词');
-// 三个 tab 页使用各自的全屏标题区（与首页同一套纸张版式），不再叠加全局标题栏
-const hideNavbar = computed(() => !!route.meta.tab);
+// 三个 tab 页和登录相关页面使用各自的全屏版式，不再叠加全局标题栏
+const hideNavbar = computed(() => !!route.meta.tab || !!route.meta.auth);
 
 // 启动时先渲染界面、登录在后台完成。新登录成功（本地没有缓存 token）后，
 // 递增 key 重新挂载当前页面，让页面用最新登录态重跑 onLoad/onShow。
@@ -63,8 +63,23 @@ function goTab(path) {
 }
 
 function goBack() {
+  // 学习页等页面可以接管返回（例如课时未结束时二次确认）
+  if (runBackGuard()) return;
   navigateBack({ delta: 1 });
 }
+
+// token 失效时（api.js 派发事件）清理本地登录态并回到登录页
+function handleUnauthorized() {
+  logout();
+  if (route.meta.auth) return;
+  router.replace({
+    path: '/login',
+    query: route.fullPath && route.fullPath !== '/' ? { redirect: route.fullPath } : {},
+  });
+}
+
+onMounted(() => window.addEventListener('quickabc:unauthorized', handleUnauthorized));
+onBeforeUnmount(() => window.removeEventListener('quickabc:unauthorized', handleUnauthorized));
 
 watch(
   () => route.fullPath,
@@ -79,7 +94,7 @@ let authErrorShown = false;
 watch(
   () => authState.error,
   (message) => {
-    if (!message || authErrorShown) return;
+    if (!message || authErrorShown || route.meta.auth) return;
     authErrorShown = true;
     wx.showToast({ title: `登录失败：${message}`, icon: 'none', duration: 2800 });
   },

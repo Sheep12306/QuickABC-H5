@@ -1,6 +1,6 @@
 <template>
   <div class="mode-container page-review-mode">
-    <div class="mode-top"><span class="mode-title">抗遗忘复习</span></div>
+    <div class="mode-top"><span class="mode-title">抗遗忘复习</span><button class="mode-walkman" type="button" @click="mp('openWalkmanDictation', $event)"><AppIcon name="headphones" />听写复习</button></div>
 
     <div v-if="dateWordList.length > 0" class="mode-scroll mp-scroll-y" data-scroll-y="1">
       <section v-for="group in reviewGroups" :key="group.key" class="mode-group">
@@ -121,6 +121,14 @@ export default createPage({
       reviewGroups: buildReviewGroups(items)
     });
     this.persistMeta(items);
+  },
+
+  // 用当前词书的抗遗忘记录直接打开随身听听写
+  openWalkmanDictation() {
+    const base = import.meta.env.BASE_URL || '/';
+    const bookId = this.$data.currentBookId;
+    const bookQuery = bookId ? `&bookId=${encodeURIComponent(bookId)}` : '';
+    window.location.href = `${base}uihtml/quickabc_walkman.html?embed=1&mode=dictation${bookQuery}`;
   },
 
   // 只持久化打卡元数据；单词本身仍在 dailyLearnedWords_<bookId>_<date> 里。

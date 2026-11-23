@@ -31,16 +31,21 @@
           <AppSketch v-if="isLogin" name="pencil" :stroke-width="12" class="profile-edit" />
         </button>
         <div v-if="isLogin" class="profile-meta">
-          <span class="level-pill">Lv.{{ userLevel }}</span>
-          <button class="phone-link" type="button" @click="mp('showPhoneModal', $event)">
-            {{ userPhone || '绑定手机号' }}
-          </button>
+          <span class="level-pill" title="等级由累计学习课时决定">Lv.{{ userLevel }}</span>
+          <span class="phone-link">{{ userPhone || '未绑定手机号' }}</span>
+          <span
+            class="hours-pill"
+            :title="'剩余课时 ' + (lessonHours === null ? '--' : lessonHours) + '，由管理员发放'"
+          >
+            <AppIcon name="clock" />
+            {{ lessonHours === null ? '--' : lessonHours }}<small>课时</small>
+          </span>
         </div>
         <span v-else class="profile-hint">登录后同步学习记录</span>
       </div>
 
-      <button v-if="!isLogin" class="login-btn" type="button" @click="mp('wechatAuthLogin', $event)">
-        H5 登录
+      <button v-if="!isLogin" class="login-btn" type="button" @click="mp('goLogin', $event)">
+        登录 / 注册
       </button>
       <button v-else class="profile-enter" type="button" aria-label="查看资料" @click="mp('goToProfile', $event)">
         <AppIcon name="chevron-right" />
@@ -85,12 +90,10 @@
         <h2 class="section-title">今日打卡</h2>
       </div>
       <div class="quiet-list">
-        <button class="quiet-row" type="button" @click="mp('openGoalModal', $event)">
-          <AppSketch name="target" :stroke-width="8" class="row-sketch" />
-          <span class="quiet-label">打卡目标</span>
-          <span class="quiet-meta">
-            {{ todayGroups }}/{{ checkInGoal }} 组{{ checkedInToday ? ' · 已打卡' : '' }}
-          </span>
+        <button class="quiet-row" type="button" @click="mp('goToExportWords', $event)">
+          <AppSketch name="download" :stroke-width="8" class="row-sketch" />
+          <span class="quiet-label">导出单词</span>
+          <span class="quiet-meta">选日期 · Word / PDF</span>
           <AppIcon name="chevron-right" class="quiet-chevron" />
         </button>
         <button class="quiet-row" type="button" @click="mp('checkInStats', $event)">
@@ -129,43 +132,21 @@
     </section>
 
     <footer class="my-footer">快背单词 · 当前主题「{{ cardThemes[themeIdx].name }}」</footer>
-
-    <div v-if="showGoalModal" class="goal-mask" @click="mp('closeGoalModal', $event)">
-      <div class="goal-sheet" @click.stop>
-        <h3 class="goal-title">每日打卡目标</h3>
-        <p class="goal-hint">每天背完 {{ goalDraft }} 组（{{ goalDraft * groupSize }} 个单词）即自动打卡</p>
-        <div class="goal-grid">
-          <button
-            v-for="n in goalOptions"
-            :key="n"
-            type="button"
-            class="goal-option"
-            :class="{ 'goal-option--active': goalDraft === n }"
-            :data-goal="n"
-            @click="mp('pickGoal', $event)"
-          >{{ n }} 组</button>
-        </div>
-        <button type="button" class="goal-save" @click="mp('saveGoal', $event)">保存</button>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import api from '@/utils/api';
-import { ensureLogin } from '@/utils/auth';
 import { createPage } from '@/mp/page';
-import { GROUP_SIZE } from '@/utils/ebbinghaus';
-import {
-  DEFAULT_CHECKIN_GOAL,
-  getCheckInState,
-  maybeAutoCheckIn,
-  setCheckInGoal,
-  MAX_CHECKIN_GOAL
-} from '@/utils/checkin';
+import { normalizeLessonHours } from '@/utils/lesson';
+import { getCheckInState, maybeAutoCheckIn } from '@/utils/checkin';
 
 
 const { resolveAvatarUrl } = api;
+
+function maskPhone(phone) {
+  return String(phone || '').replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+}
 
 export default createPage({
     data: {
@@ -178,6 +159,7 @@ export default createPage({
       userLevel: 1,
       checkInDays: 0,
       lastVocabScore: 0,
+      lessonHours: null,
       userPhone: '',
       phoneNumbers: [],
       selectedPhone: '',
@@ -202,18 +184,7 @@ export default createPage({
       todayWords: 0,
       totalWords: 0,
       accuracy: 0,
-      streakDays: 0,
-
-      // 每日打卡目标（按「组」计），今日组数达到目标后自动打卡
-      checkInGoal: DEFAULT_CHECKIN_GOAL,
-      todayGroups: 0,
-      checkedInToday: false,
-      goalDraft: DEFAULT_CHECKIN_GOAL,
-      goalOptions: Array.from({ length: MAX_CHECKIN_GOAL }, (_, i) => i + 1),
-      showGoalModal: false,
-      groupSize: GROUP_SIZE,
-
-      showPhoneModal: false
+      streakDays: 0
     },
 
     onLoad() {
@@ -252,38 +223,8 @@ export default createPage({
       return count ? `${count} 词` : '测测词汇量';
     },
 
-    showPhoneModal() {
-      wx.showModal({
-        title: '绑定手机号',
-        editable: true,
-        placeholderText: '请输入手机号',
-        success: (res) => {
-          if (res.confirm && res.content) {
-            const phone = res.content.trim();
-            if (/^1\d{10}$/.test(phone)) {
-              const masked = phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
-              this.setData({ userPhone: masked });
-              wx.setStorageSync('userPhone', phone);
-              this.savePhoneToServer(phone);
-              wx.showToast({ title: '绑定成功', icon: 'success' });
-            } else {
-              wx.showToast({ title: '手机号格式不正确', icon: 'none' });
-            }
-          }
-        }
-      });
-    },
-
-    async savePhoneToServer(phone) {
-      const token = wx.getStorageSync('token');
-      if (!token) return;
-      try {
-        const userInfo = wx.getStorageSync('userInfo') || {};
-        userInfo.phone = phone;
-        await api.saveProfile(userInfo);
-      } catch (err) {
-        console.error('手机号同步失败：', err);
-      }
+    goLogin() {
+      wx.navigateTo({ url: '/login' });
     },
 
     async syncDataFromServer() {
@@ -294,17 +235,23 @@ export default createPage({
 
         const userProfile = await this.pullUserProfile();
         if (userProfile && userProfile.id) {
+          const hours = normalizeLessonHours(
+            userProfile.lessonHours,
+            this.$data.lessonHours
+          );
           this.setData({
             isLogin: true,
             userId: userProfile.id,
+            lessonHours: hours,
             userInfo: {
               avatarUrl: resolveAvatarUrl(userProfile.avatar) || this.$data.userInfo.avatarUrl,
               nickName: userProfile.nickname || this.$data.userInfo.nickName,
               phone: userProfile.phone || '',
               grade: userProfile.grade || '',
-              school: userProfile.school || ''
+              school: userProfile.school || '',
+              lessonHours: hours
             },
-            userPhone: userProfile.phone || this.$data.userPhone
+            userPhone: maskPhone(userProfile.phone) || this.$data.userPhone
           });
           wx.setStorageSync('hasWechatLogin', true);
           wx.setStorageSync('userId', userProfile.id);
@@ -330,7 +277,9 @@ export default createPage({
           avatarUrl: resolveAvatarUrl(rawAvatar),
           nickName: userInfo.nickName || userInfo.nickname || ''
         },
-        userPhone: wx.getStorageSync('userPhone') || '',
+        userPhone: maskPhone(wx.getStorageSync('userPhone')),
+        lessonHours: normalizeLessonHours(userInfo.lessonHours, null),
+        userLevel: Number(wx.getStorageSync('userLevel')) || Number(userInfo.lessonLevel) || 1,
         checkInDays: wx.getStorageSync('checkInDays') || 0
       });
     },
@@ -341,48 +290,12 @@ export default createPage({
       wx.removeStorageSync('userInfo');
       wx.removeStorageSync('token');
       wx.removeStorageSync('openid');
+      wx.removeStorageSync('userPhone');
       this.setData({
         isLogin: false,
         userId: '',
         userInfo: { avatarUrl: '', nickName: '' }
       });
-    },
-
-    async wechatAuthLogin() {
-      // H5 端没有微信登录：用设备 ID + 昵称登录（需要后端 /auth/h5-login）
-      try {
-        const nickname = await new Promise((resolve) => {
-          wx.showModal({
-            title: 'H5 登录',
-            editable: true,
-            placeholderText: '输入昵称（可留空）',
-            content: '',
-            success: (res) => resolve(res.confirm ? (res.content || '').trim() : null),
-            fail: () => resolve(null)
-          });
-        });
-        if (nickname === null) return;
-
-        wx.showLoading({ title: '登录中...' });
-        const result = await ensureLogin(nickname ? { nickName: nickname } : undefined);
-        if (!result.ok) throw new Error(result.error || '登录失败');
-
-        this.setData({
-          isLogin: true,
-          userId: wx.getStorageSync('userId'),
-          userLevel: wx.getStorageSync('userLevel') || 1,
-          checkInDays: wx.getStorageSync('checkInDays') || 0
-        });
-        wx.showToast({ title: '登录成功', icon: 'success' });
-        await this.pullUserProfile();
-        await this.pullLatestStudyData();
-      } catch (err) {
-        console.error(err);
-        wx.showToast({ title: err.message || '登录失败', icon: 'none' });
-        this.clearLoginStatus();
-      } finally {
-        wx.hideLoading();
-      }
     },
 
     async pullUserProfile() {
@@ -392,15 +305,28 @@ export default createPage({
         const res = await api.getUserInfo();
         if (res.code === 200 && res.data) {
           const profile = res.data;
+          const hours = normalizeLessonHours(
+            profile.lessonHours,
+            this.$data.lessonHours
+          );
+          const lessonLevel = Number(profile.lessonLevel) || Number(profile.level) || this.$data.userLevel;
           const userInfo = {
             avatarUrl: resolveAvatarUrl(profile.avatar) || this.$data.userInfo.avatarUrl,
             nickName: profile.nickname || this.$data.userInfo.nickName,
             phone: profile.phone || '',
             grade: profile.grade || '',
-            school: profile.school || ''
+            school: profile.school || '',
+            lessonHours: hours,
+            lessonLevel
           };
-          this.setData({ userInfo, userPhone: profile.phone || this.$data.userPhone });
+          this.setData({
+            userInfo,
+            lessonHours: hours,
+            userLevel: lessonLevel,
+            userPhone: maskPhone(profile.phone) || this.$data.userPhone
+          });
           wx.setStorageSync('userInfo', userInfo);
+          wx.setStorageSync('userLevel', lessonLevel);
           return profile;
         }
       } catch (err) {
@@ -416,14 +342,22 @@ export default createPage({
         const res = await api.getStudyData();
         if (res.code === 200 && res.data) {
           const d = res.data;
+          const hours = normalizeLessonHours(d.lessonHours, this.$data.lessonHours);
+          const lessonLevel = Number(d.lessonLevel) || Number(d.level) || 1;
           this.setData({
             checkInDays: d.checkInDays || 0,
             lastVocabScore: d.vocabCount || 0,
             totalWords: d.vocabCount || this.$data.totalWords,
-            userLevel: d.level || 1
+            userLevel: lessonLevel,
+            lessonHours: hours
           });
           wx.setStorageSync('checkInDays', d.checkInDays || 0);
-          wx.setStorageSync('userLevel', d.level || 1);
+          wx.setStorageSync('userLevel', lessonLevel);
+          if (d.lessonHours !== undefined) {
+            const stored = wx.getStorageSync('userInfo') || {};
+            stored.lessonHours = hours;
+            wx.setStorageSync('userInfo', stored);
+          }
         }
       } catch (err) {
         console.error('pull study data failed', err);
@@ -442,46 +376,15 @@ export default createPage({
     },
 
     applyCheckInState(state, syncDays) {
-      const patch = {
-        checkInGoal: state.goal,
-        todayGroups: state.groups,
-        checkedInToday: state.checkedToday,
-        goalDraft: state.goal
-      };
-      if (syncDays) {
-        patch.streakDays = state.days;
-        patch.checkInDays = state.days;
-      }
-      this.setData(patch);
-    },
-
-    openGoalModal() {
+      if (!syncDays) return;
       this.setData({
-        showGoalModal: true,
-        goalDraft: this.$data.checkInGoal
+        streakDays: state.days,
+        checkInDays: state.days
       });
     },
 
-    closeGoalModal() {
-      this.setData({ showGoalModal: false });
-    },
-
-    pickGoal(e) {
-      const goal = Number(e.currentTarget.dataset.goal);
-      if (goal >= 1 && goal <= MAX_CHECKIN_GOAL) {
-        this.setData({ goalDraft: goal });
-      }
-    },
-
-    async saveGoal() {
-      const goal = setCheckInGoal(this.$data.goalDraft);
-      this.setData({ showGoalModal: false, checkInGoal: goal, goalDraft: goal });
-      const result = await maybeAutoCheckIn();
-      this.applyCheckInState(result, true);
-      wx.showToast({
-        title: result.checked ? '目标已达成，已自动打卡' : '打卡目标已更新',
-        icon: 'none'
-      });
+    goToExportWords() {
+      wx.navigateTo({ url: '/pages/export-words/export-words' });
     },
 
     goToProfile() {

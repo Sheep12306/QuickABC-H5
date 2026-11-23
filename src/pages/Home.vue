@@ -178,12 +178,83 @@
         </div>
       </div>
     </Teleport>
+
+    <Teleport to="body">
+      <div v-if="lessonModalOpen" class="home-sheet-mask" @click.self="closeLessonModal">
+        <div class="home-sheet lesson-sheet">
+          <div class="sheet-handle"></div>
+
+          <h3 class="lesson-title">请选择学习课时</h3>
+          <p class="lesson-hint">
+            1 课时 = 60 分钟 · 当前剩余
+            {{ lessonHourBalance === null ? '--' : lessonHourBalance }} 课时
+          </p>
+
+          <div class="lesson-stepper">
+            <button
+              class="lesson-step"
+              type="button"
+              aria-label="减少课时"
+              :disabled="lessonHourDraft <= 1"
+              @click="decreaseLessonHour"
+            >−</button>
+            <div class="lesson-step-value">
+              <span class="lesson-step-num">{{ lessonHourDraft }}<small>课时</small></span>
+              <span class="lesson-step-time">{{ lessonHourDraft * 60 }} 分钟</span>
+            </div>
+            <button
+              class="lesson-step"
+              type="button"
+              aria-label="增加课时"
+              :disabled="lessonHourBalance === null || lessonHourDraft >= lessonHourBalance"
+              @click="increaseLessonHour"
+            >+</button>
+          </div>
+
+          <label class="lesson-teacher">
+            <span class="lesson-teacher-label">老师编号</span>
+            <input
+              class="lesson-teacher-input"
+              type="text"
+              maxlength="20"
+              autocomplete="off"
+              autocapitalize="characters"
+              placeholder="请输入老师编号，如 T001"
+              :value="lessonTeacherCode"
+              @input="mp('onTeacherCodeInput', $event)"
+            />
+          </label>
+
+          <p v-if="lessonHourBalance === null" class="lesson-warning">
+            无法获取课时余额，请检查网络后重试
+          </p>
+          <p v-else-if="lessonHourBalance <= 0" class="lesson-warning">
+            课时不足，请联系管理员发放
+          </p>
+          <p v-else class="lesson-note">
+            开始将扣除 {{ lessonHourDraft }} 课时，提前结束不退还
+          </p>
+
+          <div class="lesson-actions">
+            <button class="lesson-cancel" type="button" @click="closeLessonModal">取消</button>
+            <button
+              class="lesson-confirm"
+              type="button"
+              :disabled="!canStartLesson() || lessonStarting"
+              @click="confirmStartLesson"
+            >{{ lessonStarting ? '进入中…' : '开始学习' }}</button>
+          </div>
+        </div>
+      </div>
+    </Teleport>
+
   </div>
 </template>
 
 <script>
 import api from '@/utils/api';
 import { createPage } from '@/mp/page';
+import { normalizeLessonHours, readActiveLessonSession } from '@/utils/lesson';
 import { countDueWords, loadReviewItems } from '@/utils/ebbinghaus';
 
 const GROUP_SIZE = 5;
@@ -194,6 +265,14 @@ function pad2(n) {
 
 function dateKey(date) {
   return `${date.getFullYear()}-${pad2(date.getMonth() + 1)}-${pad2(date.getDate())}`;
+}
+
+function normalizeTeacherCode(value) {
+  return String(value == null ? '' : value).trim().slice(0, 20);
+}
+
+function isValidTeacherCode(value) {
+  return /^[A-Za-z0-9_-]{1,20}$/.test(value);
 }
 
 export default createPage({
@@ -214,7 +293,14 @@ export default createPage({
 
     wrongCount: 0,
 
-    sheetOpen: false
+    sheetOpen: false,
+
+    // 开始学习前的课时选择
+    lessonModalOpen: false,
+    lessonHourBalance: null,
+    lessonHourDraft: 1,
+    lessonTeacherCode: '',
+    lessonStarting: false
   },
 
   onLoad() {
@@ -514,13 +600,16 @@ export default createPage({
     wx.showToast({ title: `已切换到 ${book.name}`, icon: 'success' });
   },
 
-  // 随身听：直接进专辑播放页，学习模式在播放页内自己切换
+  // 随身听：直接进专辑播放页，学习模式在播放页内自己切换。
+  // 传入当前词书，播放页会读取本机抗遗忘记录作为歌单。
   openWalkman() {
     const base = import.meta.env.BASE_URL || '/';
-    window.location.href = `${base}uihtml/quickabc_walkman.html?embed=1`;
+    const book = this.$data.currentBook || wx.getStorageSync('currentBook') || {};
+    const bookQuery = book && book.id ? `&bookId=${encodeURIComponent(book.id)}` : '';
+    window.location.href = `${base}uihtml/quickabc_walkman.html?embed=1${bookQuery}`;
   },
 
-  startStudy() {
+  async startStudy() {
     let book = this.$data.currentBook;
     if (!book || !book.id) {
       book = wx.getStorageSync('currentBook') || {};
@@ -530,8 +619,107 @@ export default createPage({
       return;
     }
 
+    // 上次课时还没结束（例如刷新或临时离开浏览器），直接继续计时，不重复扣费
+    const active = readActiveLessonSession();
+    if (active) {
+      const sessionBookId = active.bookId || book.id;
+      const sameBook = String(sessionBookId) === String(book.id);
+      wx.showToast({ title: '继续未结束的课时', icon: 'none' });
+      wx.navigateTo({
+        url: `/pages/learn/learn?bookId=${sessionBookId}&startGroup=${sameBook ? (this.$data.lastGroup || 1) : 1}&mode=normal`
+      });
+      return;
+    }
+
+    wx.showLoading({ title: '读取课时...' });
+    let balance = normalizeLessonHours((wx.getStorageSync('userInfo') || {}).lessonHours, null);
+    try {
+      const res = await api.getUserInfo();
+      if (res && res.code === 200 && res.data) {
+        const fetched = normalizeLessonHours(res.data.lessonHours, null);
+        if (fetched !== null) {
+          balance = fetched;
+          const stored = wx.getStorageSync('userInfo') || {};
+          stored.lessonHours = fetched;
+          wx.setStorageSync('userInfo', stored);
+        }
+      }
+    } catch (err) {
+      console.warn('读取课时余额失败:', err);
+    } finally {
+      wx.hideLoading();
+    }
+
+    const userInfo = wx.getStorageSync('userInfo') || {};
+    this.setData({
+      lessonModalOpen: true,
+      lessonHourBalance: balance,
+      lessonHourDraft: 1,
+      lessonTeacherCode: normalizeTeacherCode(
+        wx.getStorageSync('lessonTeacherCode') || userInfo.teacherCode || ''
+      ),
+      lessonStarting: false
+    });
+  },
+
+  onTeacherCodeInput(e) {
+    const value = String((e && e.detail && e.detail.value) || '');
+    if (value === this.$data.lessonTeacherCode) return;
+    this.setData({ lessonTeacherCode: value });
+  },
+
+  canStartLesson() {
+    const balance = this.$data.lessonHourBalance;
+    const draft = this.$data.lessonHourDraft;
+    return balance !== null && balance > 0 && draft >= 1 && draft <= balance;
+  },
+
+  increaseLessonHour() {
+    const balance = this.$data.lessonHourBalance;
+    const draft = this.$data.lessonHourDraft;
+    if (balance === null || draft >= balance) return;
+    this.setData({ lessonHourDraft: draft + 1 });
+  },
+
+  decreaseLessonHour() {
+    const draft = this.$data.lessonHourDraft;
+    if (draft <= 1) return;
+    this.setData({ lessonHourDraft: draft - 1 });
+  },
+
+  closeLessonModal() {
+    if (this.$data.lessonStarting) return;
+    this.setData({ lessonModalOpen: false });
+  },
+
+  confirmStartLesson() {
+    if (!this.canStartLesson() || this.$data.lessonStarting) return;
+    const book = this.$data.currentBook || wx.getStorageSync('currentBook') || {};
+    if (!book || !book.id) {
+      wx.showToast({ title: '请先选择单词书', icon: 'none' });
+      return;
+    }
+
+    const teacherCode = normalizeTeacherCode(this.$data.lessonTeacherCode);
+    if (!teacherCode) {
+      wx.showToast({ title: '请填写老师编号', icon: 'none' });
+      return;
+    }
+    if (!isValidTeacherCode(teacherCode)) {
+      wx.showToast({ title: '老师编号为 1-20 位字母、数字、下划线或横线', icon: 'none' });
+      return;
+    }
+
+    const hours = this.$data.lessonHourDraft;
+    wx.setStorageSync('lessonTeacherCode', teacherCode);
+    this.setData({ lessonStarting: true, lessonTeacherCode: teacherCode });
     wx.navigateTo({
-      url: `/pages/learn/learn?bookId=${book.id}&startGroup=${this.$data.lastGroup || 1}&mode=normal`
+      url: `/pages/learn/learn?bookId=${book.id}&startGroup=${this.$data.lastGroup || 1}&mode=normal&lessonHours=${hours}&teacherCode=${encodeURIComponent(teacherCode)}`,
+      success: () => this.setData({ lessonModalOpen: false, lessonStarting: false }),
+      fail: () => {
+        this.setData({ lessonStarting: false });
+        wx.showToast({ title: '进入学习页失败，请重试', icon: 'none' });
+      }
     });
   },
 

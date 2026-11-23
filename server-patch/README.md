@@ -1,8 +1,9 @@
-# 后端补丁：H5 设备号登录
+# 后端补丁：H5 设备号登录（已废弃）
 
-> 该补丁已合入独立后端仓库 `Sheep12306/QuickABC-Server`（private）。
+> **2026-11-23 起 H5 改用手机号 + 密码登录**（`/auth/register`、`/auth/phone-login`、`/auth/password-reset-request`），
+> 设备号登录接口 `/auth/h5-login` 已从后端移除。本文件仅作历史记录，新部署不要按下面的步骤加回 h5-login。
 
-H5 端没有 `wx.login`，无法拿微信 `code` 换取 `openid`。本项目用「浏览器设备 ID」代替微信凭证：
+H5 端没有 `wx.login`，无法拿微信 `code` 换取 `openid`。旧方案用「浏览器设备 ID」代替微信凭证：
 
 1. 首次打开 H5 时，前端生成一个随机 `deviceId` 存到 `localStorage`。
 2. 调用 `POST /api/auth/h5-login { deviceId, userInfo? }`。

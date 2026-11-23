@@ -1,10 +1,14 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 import Home from './pages/Home.vue';
+import { isLoggedIn } from './utils/auth';
 
 // 首屏只静态打包首页；其余页面按路由懒加载，各自生成独立 chunk。
 // 页面样式也跟随路由按需加载，避免首屏一次性引入全部 26 个页面的 CSS。
 const pageLoaders = {
+  login: () => import('./pages/Login.vue'),
+  register: () => import('./pages/Register.vue'),
+  'forgot-password': () => import('./pages/ForgotPassword.vue'),
   discover: () => import('./pages/Discover.vue'),
   my: () => import('./pages/My.vue'),
   learn: () => import('./pages/Learn.vue'),
@@ -25,6 +29,7 @@ const pageLoaders = {
   commute: () => import('./pages/CommuteHome.vue'),
   'commute-play': () => import('./pages/CommutePlay.vue'),
   'vocab-paper': () => import('./pages/VocabPaper.vue'),
+  'export-words': () => import('./pages/ExportWords.vue'),
   search: () => import('./pages/Search.vue'),
   profile: () => import('./pages/Profile.vue'),
   settings: () => import('./pages/Settings.vue'),
@@ -47,6 +52,9 @@ function page(key) {
 }
 
 const routes = [
+  { path: '/login', name: 'login', component: page('login'), meta: { title: '登录', public: true, guestOnly: true, auth: true } },
+  { path: '/register', name: 'register', component: page('register'), meta: { title: '注册', public: true, guestOnly: true, auth: true } },
+  { path: '/forgot-password', name: 'forgot-password', component: page('forgot-password'), meta: { title: '找回密码', public: true, guestOnly: true, auth: true } },
   { path: '/', name: 'home', component: Home, meta: { title: '快背单词', tab: true } },
   { path: '/discover', name: 'discover', component: page('discover'), meta: { title: '发现', tab: true } },
   { path: '/my', name: 'my', component: page('my'), meta: { title: '我的', tab: true } },
@@ -68,6 +76,7 @@ const routes = [
   { path: '/commute', name: 'commute', component: page('commute'), meta: { title: '通勤英语' } },
   { path: '/commute/play', name: 'commute-play', component: page('commute-play'), meta: { title: '通勤播放' } },
   { path: '/vocab-paper', name: 'vocab-paper', component: page('vocab-paper'), meta: { title: '四六级词汇卷' } },
+  { path: '/export-words', name: 'export-words', component: page('export-words'), meta: { title: '导出单词' } },
   { path: '/search', name: 'search', component: page('search'), meta: { title: '搜索单词' } },
   { path: '/profile', name: 'profile', component: page('profile'), meta: { title: '个人资料' } },
   { path: '/settings', name: 'settings', component: page('settings'), meta: { title: '设置' } },
@@ -82,6 +91,17 @@ const router = createRouter({
   scrollBehavior() {
     return { top: 0 };
   },
+});
+
+// 未登录只能访问登录 / 注册 / 找回密码；已登录访问这些页面则回首页。
+router.beforeEach((to) => {
+  const loggedIn = isLoggedIn();
+  if (!to.meta.public && !loggedIn) {
+    const redirect = to.fullPath && to.fullPath !== '/' ? { redirect: to.fullPath } : {};
+    return { path: '/login', query: redirect };
+  }
+  if (to.meta.guestOnly && loggedIn) return { path: '/' };
+  return true;
 });
 
 export default router;

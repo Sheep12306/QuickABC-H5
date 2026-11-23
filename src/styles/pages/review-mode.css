@@ -8,7 +8,10 @@
 
 .page-review-mode .mode-top,
 .page-review-mode.mode-top {
-  padding: 0.419rem 0.49rem 0.279rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.326rem 0.49rem 0.2rem;
 }
 
 .page-review-mode .mode-title,
@@ -19,6 +22,32 @@
   font-weight: 700;
   letter-spacing: 0.012rem;
   color: var(--page-ink);
+}
+
+.page-review-mode .mode-walkman,
+.page-review-mode.mode-walkman {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.09rem;
+  padding: 0.116rem 0.24rem;
+  border: 1px solid var(--page-line);
+  border-radius: 999px;
+  background: var(--page-card);
+  color: var(--page-green);
+  font-family: var(--font-ui);
+  font-size: 0.256rem;
+  font-weight: 600;
+  letter-spacing: 0.012rem;
+}
+
+.page-review-mode .mode-walkman .app-icon,
+.page-review-mode.mode-walkman .app-icon {
+  font-size: 0.302rem;
+}
+
+.page-review-mode .mode-walkman:active,
+.page-review-mode.mode-walkman:active {
+  background: #e5eddf;
 }
 
 .page-review-mode .mode-scroll,

@@ -23,6 +23,7 @@ export const ROUTE_MAP = {
   '/pages/commute/index': '/commute',
   '/pages/commute/play': '/commute/play',
   '/pages/vocab-paper/vocab-paper': '/vocab-paper',
+  '/pages/export-words/export-words': '/export-words',
   '/pages/search/search': '/search',
   '/pages/profile/profile': '/profile',
   '/pages/settings/settings': '/settings',
@@ -40,6 +41,27 @@ const registry = new Map();
 
 export function setRouter(r) {
   router = r;
+}
+
+// 页面级返回拦截：返回 true 表示页面已经接管（例如弹框确认是否离开）。
+let backGuard = null;
+
+export function setBackGuard(fn) {
+  backGuard = typeof fn === 'function' ? fn : null;
+}
+
+export function clearBackGuard(fn) {
+  if (!fn || backGuard === fn) backGuard = null;
+}
+
+export function runBackGuard() {
+  if (!backGuard) return false;
+  try {
+    return backGuard() === true;
+  } catch (err) {
+    console.error('[nav] backGuard failed', err);
+    return false;
+  }
 }
 
 export function initStack(fullPath) {

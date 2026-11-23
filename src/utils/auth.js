@@ -1,26 +1,18 @@
-// H5 登录：浏览器没有 wx.login，因此用设备 ID 换取账号
-// 后端需要部署 /api/auth/h5-login（见 server-patch/）
+// H5 登录：手机号 + 密码。注册与找回密码走同一套后端接口。
 import { reactive } from 'vue';
 import api from './api';
 import wx from '@/mp/wx';
 
-const DEVICE_KEY = 'h5_device_id';
+const AUTH_KEYS = ['token', 'userInfo', 'openid', 'userId', 'hasWechatLogin', 'activeLessonSession'];
 
 export const authState = reactive({
-  ready: false,
-  loggedIn: false,
+  ready: true,
+  loggedIn: !!wx.getStorageSync('token'),
   error: '',
 });
 
-export function getDeviceId() {
-  let id = wx.getStorageSync(DEVICE_KEY);
-  if (!id) {
-    id =
-      (typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID()) ||
-      `dev_${Date.now()}_${Math.random().toString(36).slice(2)}`;
-    wx.setStorageSync(DEVICE_KEY, id);
-  }
-  return id;
+export function isLoggedIn() {
+  return !!wx.getStorageSync('token');
 }
 
 function persistLogin(data) {
@@ -37,41 +29,58 @@ function persistLogin(data) {
   wx.setStorageSync('userId', user.id);
   wx.setStorageSync('hasWechatLogin', true);
   wx.setStorageSync('checkInDays', user.checkInDays || 0);
-  wx.setStorageSync('userLevel', user.level || 1);
+  // lessonLevel 由后端按累计课时计算；旧接口没有该字段时回退到 level。
+  wx.setStorageSync('userLevel', user.lessonLevel || user.level || 1);
+  if (user.phone) wx.setStorageSync('userPhone', user.phone);
   authState.loggedIn = true;
+  authState.ready = true;
   authState.error = '';
   return stored;
 }
 
-export async function ensureLogin(userInfo) {
-  const token = wx.getStorageSync('token');
-  if (token) {
-    authState.loggedIn = true;
-    authState.ready = true;
-    return { ok: true, cached: true };
+function friendlyError(err) {
+  const message = (err && err.message) || '请求失败';
+  if (/Failed to fetch|NetworkError|Load failed|aborted/i.test(message)) {
+    return '无法连接服务器，请检查网络';
   }
+  return message;
+}
+
+async function authenticate(action) {
+  authState.error = '';
   try {
-    const res = await api.h5Login(getDeviceId(), userInfo);
-    if (res.code === 200 && res.data) {
+    const res = await action();
+    if (res && res.code === 200 && res.data) {
       persistLogin(res.data);
-      authState.ready = true;
       return { ok: true, user: res.data.user };
     }
-    authState.error = res.msg || '登录失败';
+    authState.error = (res && res.msg) || '登录失败';
   } catch (err) {
-    const message = (err && err.message) || '登录失败';
-    authState.error =
-      message === 'Not Found'
-        ? '后端尚未部署 H5 登录接口'
-        : /Failed to fetch|NetworkError|Load failed|aborted/i.test(message)
-          ? '无法连接服务器'
-          : message;
+    authState.error = friendlyError(err);
   }
-  authState.ready = true;
   return { ok: false, error: authState.error };
 }
 
+export function login(phone, password) {
+  return authenticate(() => api.phoneLogin(phone, password));
+}
+
+export function register({ phone, password, nickname, grade, birthday }) {
+  return authenticate(() => api.register({ phone, password, nickname, grade, birthday }));
+}
+
+export async function requestPasswordReset(phone, note) {
+  try {
+    const res = await api.requestPasswordReset(phone, note);
+    if (res.code === 200) return { ok: true, message: res.msg };
+    return { ok: false, error: res.msg || '提交失败' };
+  } catch (err) {
+    return { ok: false, error: friendlyError(err) };
+  }
+}
+
 export function logout() {
-  ['token', 'userInfo', 'openid', 'userId', 'hasWechatLogin'].forEach((k) => wx.removeStorageSync(k));
+  AUTH_KEYS.forEach((k) => wx.removeStorageSync(k));
   authState.loggedIn = false;
+  authState.error = '';
 }
